@@ -26,12 +26,12 @@ public final class Config {
 	public static final long	INTERVAL_CONTENT_UPDATE				= 30 * 60 * 1000;
 	public static final long	INTERVAL_ATTEMPTS_UPDATE			= 10 * 60 * 1000;
 	public static final long	INTERVAL_COMMANDS_UPDATE			= 10 * 60 * 1000;
-	public static final long	INTERVAL_LOGS_UPDATE				= 04 * 60 * 1000;
+	public static final long	INTERVAL_LOGS_UPDATE				= 4 * 60 * 1000;
 	public static final long	INTERVAL_REPORTS_UPDATE				= 10 * 60 * 1000;
-	public static final long	INTERVAL_HEARTBEAT_UPDATE			= 03 * 60 * 1000;
+	public static final long	INTERVAL_HEARTBEAT_UPDATE			= 3 * 60 * 1000;
 
 	// Open app settings (remember to remove play services library link)
-	public static final boolean	IS_PLAYSTORE_APP					= false;
+	public static final boolean	IS_PLAYSTORE_APP					= true;
 	public static final boolean	IS_TEACHER_ONLY						= true;								// false for
 																											// student
 

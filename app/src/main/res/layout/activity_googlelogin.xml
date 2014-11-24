@@ -20,22 +20,6 @@
             android:layout_marginBottom="30dip"
             android:enabled="false" />
 
-        <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sign_in_button"
-            android:enabled="false"
-            android:text="sign_out_button_name" />
-
-        <Button
-            android:id="@+id/revoke_access_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sign_out_button"
-            android:enabled="false"
-            android:text="revoke_access_button_name" />
-
         <TextView
             android:id="@+id/sign_in_status"
             android:layout_width="wrap_content"
@@ -43,7 +27,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dip"
-            android:text="status_signed_out" />
+            android:text="Sign in using your Google Account" />
     </RelativeLayout>
 
 </RelativeLayout>
