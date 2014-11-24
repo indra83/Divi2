@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="co.in.divi"
+    android:versionCode="212"
+    android:versionName="v2.1.2 (CDN off, OTP off)" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <application
+        android:name=".DiviApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity
+            android:name="co.in.divi.activity.HomeActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.LoginActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Transparent" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.GoogleLoginActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Transparent" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.LearnActivity"
+            android:excludeFromRecents="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.ListAssessmentsActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.AssessmentActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.BlackoutActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.InstructionNotificationActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.AdminSettingsActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="co.in.divi.activity.SyncDownActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" >
+        </activity>
+
+        <service
+            android:name="co.in.divi.content.importer.ContentImportService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.lecture.LiveLectureService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.content.importer.FetchUpdatesService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.db.sync.SyncUpService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.db.sync.SyncDownService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.logs.LogsRecorderService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.logs.LogsSyncService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.progress.AnalyticsFetcherService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="co.in.divi.background.HeartbeatService"
+            android:exported="false" >
+        </service>
+
+        <receiver android:name="co.in.divi.background.TimeChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="co.in.divi.background.BootCompleteReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="co.in.divi.background.SDCardMountReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="SDCardMountReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="co.in.divi.content.importer.DownloadCompleteReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="DownloadCompleteReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="co.in.divi.background.UniversalSyncCheckReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="co.in.divi.DiviLocationBroadcastReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="co.in.divi.intent.LOCATION_BROADCAST" >
+                </action>
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="co.in.divi.db.UserDBProvider"
+            android:authorities="co.in.divi.userdb"
+            android:exported="true"
+            android:label="UserDB" />
+        <provider
+            android:name="co.in.divi.logs.LogsDBProvider"
+            android:authorities="co.in.divi.logsdb"
+            android:exported="false"
+            android:label="LogsDB" />
+        <provider
+            android:name="co.in.divi.content.AllowedAppsProvider"
+            android:authorities="co.in.divi.allowedapps"
+            android:exported="true"
+            android:label="AllowedAppsDB" />
+        <provider
+            android:name="co.in.divi.util.JSAssetProvider"
+            android:authorities="co.in.divi.util.JSAssetProvider"
+            android:exported="false" />
+    </application>
+
+</manifest>

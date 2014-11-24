@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:singleLine="true"
+        android:textColor="#b4bbbf"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/subtitle_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:singleLine="true"
+        android:text="Progress:"
+        android:textColor="#b4bbbf"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/progress_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/subtitle_progress"
+        android:layout_toLeftOf="@+id/points_label"
+        android:text="--"
+        android:textColor="#b4bbbf"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/points_label"
+        style="@style/AssessmentSummarySmallText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/subtitle_progress"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text=" points"
+        android:textSize="15sp" />
+
+    <co.in.divi.ui.SaundProgressBar
+        android:id="@+id/progress_progressbar"
+        style="@style/Widget.ProgressBar.MiniProgressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subtitle_progress"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/subtitle_accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_progressbar"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:singleLine="true"
+        android:text="Accuracy:"
+        android:textColor="#b4bbbf"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/progress_accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/subtitle_accuracy"
+        android:layout_toLeftOf="@+id/accuracy_label"
+        android:text="--"
+        android:textColor="#b4bbbf"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/accuracy_label"
+        style="@style/AssessmentSummarySmallText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/subtitle_accuracy"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text=" %"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#4f5459" />
+
+</RelativeLayout>

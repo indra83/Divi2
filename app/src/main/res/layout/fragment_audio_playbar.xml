@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/playerlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp"
+    android:background="#BF000000" >
+
+    <TextView
+        android:id="@+id/selectedfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="No song is currently playing"
+        android:textColor="@android:color/white" />
+    
+    <ImageButton
+        android:id="@+id/close"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <ImageButton
+        android:id="@+id/play"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_toRightOf="@+id/close"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@android:drawable/ic_media_play" />
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/play"
+        android:layout_centerVertical="true"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/runningdurtion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekbar"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_horizontal"
+        android:singleLine="true"        
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/runningdurtion"
+        android:layout_alignBottom="@+id/runningdurtion"
+        android:layout_alignParentRight="true"
+        android:gravity="center_horizontal"
+        android:singleLine="true"      
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

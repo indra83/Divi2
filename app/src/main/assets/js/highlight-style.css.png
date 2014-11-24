@@ -1,0 +1,15 @@
+/* Typography */
+
+body {
+	font-size:100%;
+	font-size:1.075em;
+}
+
+*.italicYellowBg {
+	font-style: italic;
+	background-color: yellow;
+}
+
+.highlight {
+	background-color: yellow;
+}

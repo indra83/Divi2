@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/q_bg_mcq_option"
+    android:clickable="true"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:button="@drawable/q_checkbox"
+        android:clickable="false"
+        android:enabled="false"
+        android:textColor="#ff444444" />
+
+    <TextView
+        android:id="@+id/optionText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="#ff444444"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/feedback"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerInside" />
+
+</LinearLayout>

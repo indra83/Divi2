@@ -1,0 +1,110 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2B3033" >
+
+    <RelativeLayout
+        android:id="@+id/box"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/bg_topic_normal" >
+
+        <TextView
+            android:id="@+id/topic_title"
+            style="@style/TOCTopicTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
+
+        <View
+            android:id="@+id/separator1"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/topic_title" />
+
+        <LinearLayout
+            android:id="@+id/subtopics"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/separator1"
+            android:orientation="vertical" />
+
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/subtopics" />
+
+        <LinearLayout
+            android:id="@+id/thumbs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/separator2"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <co.in.divi.ui.RecyclingImageView
+                    android:id="@+id/thumb_1_1"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_topic_thumb"
+                    android:scaleType="centerCrop" />
+
+                <co.in.divi.ui.RecyclingImageView
+                    android:id="@+id/thumb_1_2"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_topic_thumb"
+                    android:scaleType="centerCrop" />
+
+                <co.in.divi.ui.RecyclingImageView
+                    android:id="@+id/thumb_1_3"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_topic_thumb"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <co.in.divi.ui.RecyclingImageView
+                    android:id="@+id/thumb_2_1"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_topic_thumb"
+                    android:scaleType="centerCrop" />
+
+                <co.in.divi.ui.RecyclingImageView
+                    android:id="@+id/thumb_2_2"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_topic_thumb"
+                    android:scaleType="centerCrop" />
+
+                <co.in.divi.ui.RecyclingImageView
+                    android:id="@+id/thumb_2_3"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_topic_thumb"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

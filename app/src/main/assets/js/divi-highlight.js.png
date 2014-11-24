@@ -1,0 +1,155 @@
+var workingRange;
+var italicYellowBgApplier;
+var highlighter;
+
+function initRangy() {
+	console.log("initRangy");
+	rangy.init();
+	JavaWindow.finishRangyInit();
+};
+window.onload = initRangy;
+
+function initHilightStuff(savedHighlights) {
+	
+	highlighter = rangy.createHighlighter();
+
+	highlighter.addCssClassApplier(rangy.createCssClassApplier("highlight", {
+		ignoreWhiteSpace: true,
+		tagNames: ["span", "a"]
+	}));
+	
+	if(savedHighlights) {
+		highlighter.deserialize(savedHighlights);
+	}
+	
+	JavaWindow.finishHilightInitialization();
+};
+
+function findPos(obj) {
+	var curleft = curtop = 0;
+		do {
+				curleft += obj.offsetLeft;
+				curtop += obj.offsetTop;
+			} while (obj = obj.offsetParent);
+		return [curleft,curtop];
+}
+
+function getRangeBoundary(r) {
+try{
+	docRange = document.createRange();
+	docRange.setStart(r.startContainer, r.startOffset);
+	docRange.setEnd(r.endContainer, r.endOffset);
+		
+	tempRange = docRange.cloneRange();
+	tempRange.collapse(true);
+	leftBound = tempRange.getClientRects()[0];
+	
+	tempRange = docRange.cloneRange();
+	tempRange.collapse(false);
+	rightBound = tempRange.getClientRects()[0];
+	if(!rightBound) {
+		rightBound = leftBound;
+		console.log("Couldn't compute right bound, using left instead");
+	}
+	
+	return [leftBound.left,leftBound.top, rightBound.left, rightBound.top];
+} catch(err) {
+	console.log(err);
+	return "fail";
+}
+}
+
+function setSelection(r) {
+	docRange = document.createRange();
+	docRange.setStart(r.startContainer, r.startOffset);
+	docRange.setEnd(r.endContainer, r.endOffset);
+	
+	var sel = window.getSelection();
+	sel.removeAllRanges();
+	sel.addRange(docRange);
+}
+
+function translateToJS(x,y) {
+	console.log("in translateToJS: "+x+","+y);
+	touchBounds = getRangeBoundary(document.caretRangeFromPoint(x,y));
+	console.log(JSON.stringify(touchBounds));
+	
+	//var span = document.createElement("span");
+	dist = ((touchBounds[0]-x)*(touchBounds[0]-x)+(touchBounds[1]-y)*(touchBounds[1]-y));
+	console.log("dist ["+touchBounds[0]+","+touchBounds[1]+"]:"+dist);
+	
+	workingRange = document.caretRangeFromPoint(x,y);
+	var rangyRange = rangy.createRange();
+	rangyRange.setStart(workingRange.startContainer, workingRange.startOffset);
+	rangyRange.setEnd(workingRange.endContainer, workingRange.endOffset);
+	workingRange = rangyRange;
+	workingRange.expand('word');
+
+	curBounds = getRangeBoundary(workingRange);
+	console.log("curBounds::"+curBounds);
+	JavaWindow.finishStartSelection(curBounds[0],curBounds[1],curBounds[2],curBounds[3]);
+	//italicYellowBgApplier.applyToRange(workingRange);
+	
+	setSelection(workingRange);
+}
+
+function caretMove(caret, x ,y) {
+	console.log("caretMove:"+x+","+y+":::"+caret);
+	//italicYellowBgApplier.undoToRange(workingRange);
+	
+	newPos = document.caretRangeFromPoint(x,y);
+	touchBounds = getRangeBoundary(newPos);
+	console.log("touched::"+JSON.stringify(touchBounds));
+	
+	dist = ((touchBounds[0]-x)*(touchBounds[0]-x)+(touchBounds[1]-y)*(touchBounds[1]-y));
+	console.log("dist ["+touchBounds[0]+","+touchBounds[1]+"]:"+dist);
+	if(dist>1000) {
+		// no valid position found for caret
+		JavaWindow.finishCaretMove(-1, -1);
+		//italicYellowBgApplier.applyToRange(workingRange);
+		setSelection(workingRange);
+		return;
+	}
+	
+	if(caret==0) {//left caret
+		if(workingRange.comparePoint(newPos.startContainer, newPos.startOffset)<=0) {
+			workingRange.setStart(newPos.startContainer, newPos.startOffset);
+		}
+	}else {
+		if(workingRange.comparePoint(newPos.startContainer, newPos.startOffset)>=0) {
+			workingRange.setEnd(newPos.startContainer, newPos.startOffset);
+		}
+	}
+	
+	newBounds = getRangeBoundary(workingRange);
+	if(caret==0)
+		JavaWindow.finishCaretMove(newBounds[0],newBounds[1]);
+	else
+		JavaWindow.finishCaretMove(newBounds[2],newBounds[3]);
+
+	//italicYellowBgApplier.applyToRange(workingRange);
+	setSelection(workingRange);
+	
+	console.log(JSON.stringify(newBounds));
+}
+
+function cancel() {
+	var sel = window.getSelection();
+	sel.removeAllRanges();
+	workingRange = null;
+	JavaWindow.finishCancel();
+}
+
+function highlightSelectedText() {
+	var newHighlights = highlighter.highlightSelection("highlight");
+	serializedHighlights = highlighter.serialize();
+	JavaWindow.finishHighlight(serializedHighlights);
+	highlighter.deserialize(serializedHighlights);
+}
+
+function removeHighlightFromSelectedText() {
+	highlighter.unhighlightSelection();
+	serializedHighlights = highlighter.serialize();
+	JavaWindow.finishHighlight(serializedHighlights);
+	highlighter.deserialize(serializedHighlights);
+}

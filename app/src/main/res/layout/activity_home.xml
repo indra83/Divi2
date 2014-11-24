@@ -1,0 +1,337 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <fragment
+        android:id="@+id/header"
+        android:name="co.in.divi.fragment.HeaderFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_height" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/header"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/home_left_container"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_panel" >
+
+            <LinearLayout
+                android:id="@+id/battery_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_clock" />
+
+                <TextView
+                    android:id="@+id/time_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_weight="1"
+                    android:textColor="#B4BBBF" />
+
+                <ImageView
+                    android:id="@+id/battery_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/battery_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_weight="1"
+                    android:textColor="#B4BBBF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sync_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/battery_time"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/sync_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/update_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:textColor="#B4BBBF" />
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/wifi_widget"
+                android:name="co.in.divi.fragment.WiFiFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/sync_container"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+
+            <LinearLayout
+                android:id="@+id/home_learn"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/home_section_button_height"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/home_learn_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_home_learn_white" />
+
+                <TextView
+                    android:id="@+id/home_learn_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Learn"
+                    android:textColor="#B4BBBF"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/home_learn"
+                android:background="#4f5459" />
+
+            <LinearLayout
+                android:id="@+id/home_practice"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/home_section_button_height"
+                android:layout_below="@+id/home_learn"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/home_practice_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_home_practice_white" />
+
+                <TextView
+                    android:id="@+id/home_practice_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Practice"
+                    android:textColor="#B4BBBF"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/home_practice"
+                android:background="#4f5459" />
+
+            <LinearLayout
+                android:id="@+id/home_progress"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/home_section_button_height"
+                android:layout_below="@+id/home_practice"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/home_progress_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_home_progress_white" />
+
+                <TextView
+                    android:id="@+id/home_progress_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Progress"
+                    android:textColor="#B4BBBF"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/home_progress"
+                android:background="#4f5459" />
+
+            <LinearLayout
+                android:id="@+id/home_apps"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/home_section_button_height"
+                android:layout_below="@+id/home_progress"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/home_progress_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_home_progress_white" />
+
+                <TextView
+                    android:id="@+id/home_apps_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Apps"
+                    android:textColor="#B4BBBF"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/home_apps"
+                android:background="#4f5459" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/home_right_container"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white" >
+
+            <LinearLayout
+                android:id="@+id/home_title"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/home_header_height"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_home_title"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/home_title_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+                <TextView
+                    android:id="@+id/home_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#464646"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/books"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/home_title"
+                android:columnWidth="190dp"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="auto_fit"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:stretchMode="spacingWidth"
+                android:verticalSpacing="10dp" >
+            </GridView>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/progressPager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/home_title"
+                android:visibility="gone" >
+
+                <android.support.v4.view.PagerTabStrip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top" />
+            </android.support.v4.view.ViewPager>
+
+            <fragment
+                android:id="@+id/apps"
+                android:name="co.in.divi.fragment.AppsFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/home_title" />
+
+            <TextView
+                android:id="@+id/progressPagerEmpty"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/home_title"
+                android:gravity="center"
+                android:text="Progress report not ready yet, please try after some time..."
+                android:textSize="25sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/debug_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/debug_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Custom Button (debugging)" />
+
+                <TextView
+                    android:id="@+id/version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="#d0d0d0" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,4 @@
+<div id="{{id}}" style="text-align:center;"> 
+	<img {{#allow_fullscreen}}onclick="javascript:openResource('{{id}}');"{{/allow_fullscreen}} src="{{image_path}}" style="max-height:450px;padding-left: 20px;padding-right: 20px;padding-top: 20px; padding-bottom: 15px;display: block; margin-left: auto; margin-right: auto;"></img>
+	<div style="display:inline-block; text-align:left;font-family:Helvetica; color:#666666;"><b>{{caption}}</b><br/><i>{{desc}}</i></div>
+</div>

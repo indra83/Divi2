@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- The main content view -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/slide_toc_button"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/header_height"
+                android:background="@drawable/bg_button_shadow"
+                android:clickable="true"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_drawer" />
+        </RelativeLayout>
+
+        <!-- The navigation drawer -->
+
+        <ExpandableListView
+            android:id="@+id/toc"
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#33393D"
+            android:cacheColorHint="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:groupIndicator="@null"
+            android:paddingTop="@dimen/header_height" />
+    </android.support.v4.widget.DrawerLayout>
+
+    <ImageButton
+        android:id="@+id/lessonplan_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_lessonplan" />
+
+    <fragment
+        android:id="@+id/frag_audio"
+        android:name="co.in.divi.fragment.AudioPlayerFragment"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp" />
+
+    <RelativeLayout
+        android:id="@+id/imageRoot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/header"
+        android:background="@android:color/black"
+        android:clickable="true"
+        android:visibility="invisible" >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/imagePager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/rightArrow"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:src="@drawable/ic_next" />
+
+        <ImageView
+            android:id="@+id/leftArrow"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:src="@drawable/ic_prev" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/videoRoot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#000000"
+        android:clickable="true"
+        android:visibility="gone" >
+
+        <co.in.divi.ui.TextureVideoView
+            android:id="@+id/videoView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/youtubeRoot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#000000"
+        android:clickable="true"
+        android:visibility="gone" >
+
+        <fragment
+            android:id="@+id/youtube_fragment"
+            android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:layout_marginTop="100dp" />
+    </RelativeLayout>
+
+    <fragment
+        android:id="@+id/header"
+        android:name="co.in.divi.fragment.HeaderFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_height" />
+
+    <View
+        android:id="@+id/header_shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="@dimen/header_height"
+        android:background="@drawable/bg_header_shadow" />
+
+</RelativeLayout>

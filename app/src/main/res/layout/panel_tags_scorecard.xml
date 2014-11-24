@@ -1,0 +1,148 @@
+<co.in.divi.ui.TagsScorecard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scorecard"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="horizontal"
+    android:padding="@dimen/activity_horizontal_margin" >
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="2" >
+
+        <LinearLayout
+            android:id="@+id/topContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Back" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_scorecard_summary_top"
+                    android:orientation="horizontal" >
+
+                    <com.android.volley.toolbox.FadeInNetworkImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:id="@+id/student_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/text_grey" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/summaryContainer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_scorecard_summary_bottom" >
+
+                    <TextView
+                        android:id="@+id/chapter_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:ellipsize="marquee"
+                        android:maxLines="2"
+                        android:textColor="@color/text_grey"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/assessment_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/chapter_name"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="marquee"
+                        android:maxLines="3"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/text_grey" />
+
+                    <TextView
+                        android:id="@+id/total_questions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/assessment_name"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:ellipsize="marquee"
+                        android:maxLines="1"
+                        android:textColor="@color/text_grey"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:id="@+id/score_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/score_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="SCORE"
+                            android:textColor="@color/text_grey"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/text_grey"
+                            android:textSize="45sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tagsContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ListView
+        android:id="@+id/questionsContainer"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="3" >
+    </ListView>
+
+</co.in.divi.ui.TagsScorecard>

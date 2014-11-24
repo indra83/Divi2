@@ -1,0 +1,19 @@
+<set>
+
+    <!--
+         <translate
+        android:duration="500"
+        android:fromXDelta="0"
+        android:fromYDelta="-200"
+        android:toYDelta="0" />
+    -->
+
+    <objectAnimator
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:duration="500"
+        android:propertyName="y"
+        android:valueFrom="-300"
+        android:valueTo="0"
+        android:valueType="floatType" />
+
+</set>

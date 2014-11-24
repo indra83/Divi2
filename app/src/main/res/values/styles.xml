@@ -1,0 +1,129 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <!-- Learn TOC -->
+    <style name="TOCChapterTitleText">
+        <item name="android:textColor">#b4bbbf</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="TOCChapterNameText">
+        <item name="android:textColor">#77828a</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="TOCTopicTitleText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="TOCTopicSectionText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- Assessment List screen -->
+    <style name="AssessmentSummaryBigText">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="AssessmentSummarySmallText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#A3A3A3</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- Assessment screen -->
+    <style name="QuestionText">
+        <item name="android:textColor">#b4bbbf</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- Dialog styles -->
+    <style name="DialogTitleText">
+        <item name="android:textColor">#b4bbbf</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- User data popup -->
+    <style name="UserDataDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@color/transparent_color</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Progress bar -->
+    <style name="Widget"></style>
+
+    <style name="Widget.ProgressBar">
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">3500</item>
+        <item name="android:minWidth">48dip</item>
+        <item name="android:maxWidth">48dip</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:maxHeight">48dip</item>
+    </style>
+
+    <style name="Widget.ProgressBar.MiniProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/miniprogressbar</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:minHeight">1dip</item>
+        <item name="android:maxHeight">10dip</item>
+    </style>
+
+    <!-- Lesson Plan -->
+    <style name="LP_Chapter">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LP_Module">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="LP_Instruction">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+</resources>

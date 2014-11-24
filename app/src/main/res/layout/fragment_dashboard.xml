@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="20dp"
+    android:background="#3737373e"
+    android:minHeight="1000dp"
+    android:minWidth="1000dp"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#606060"
+        android:padding="5dp" >
+
+        <Switch
+            android:id="@+id/student_question_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:textColor="#b4bbbf"
+            android:textOff="Students"
+            android:textOn="Questions"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:paddingBottom="15dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/ic_close" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/DialogTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="DASHBOARD" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <ListView
+            android:id="@+id/questions_grid"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/second_grey" >
+        </ListView>
+
+        <LinearLayout
+            android:id="@+id/students_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/online_bar_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <co.in.divi.ui.VerticalTextView
+                    android:id="@+id/online_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/bg_dialog_subhead"
+                    android:drawableLeft="@drawable/ic_header_connected"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="20dp"
+                    android:textColor="#444444"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/online_grid"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/second_grey"
+                android:numColumns="2" >
+            </ListView>
+
+            <LinearLayout
+                android:id="@+id/offline_bar_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <co.in.divi.ui.VerticalTextView
+                    android:id="@+id/offline_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/bg_dialog_subhead"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/ic_header_disconnected"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="20dp"
+                    android:textColor="#444444"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/offline_grid"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:numColumns="2" />
+        </LinearLayout>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/panel_tags_scorecard" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp" />
+    </FrameLayout>
+
+</LinearLayout>
