@@ -1,8 +1,5 @@
 package co.in.divi.activity;
 
-import java.io.File;
-import java.util.Random;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -17,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.Random;
+
 import co.in.divi.AdminPasswordManager;
 import co.in.divi.BaseActivity;
 import co.in.divi.ContentUpdateManager;
@@ -35,9 +36,9 @@ import co.in.divi.util.Util;
 public class AdminSettingsActivity extends BaseActivity {
 	private static final String	TAG					= AdminSettingsActivity.class.getSimpleName();
 
-	TextView					contentText, downloadText, cleanUserdataText, cleanContentText, deviceIdText, appText;
+	TextView					contentText, downloadText, cleanUserdataText, cleanContentText, deviceIdText, appText,classroomText;
 	Button						contentUpdateButton, downloadButton, cleanUserdataButton, cleanContentButton, syncButton, syncLogsButton,
-			tagButton;
+			tagButton,classroomButton;
 	ProgressDialog				pd;
 
 	ComputeSpaceTask			computeSpaceTask	= null;
@@ -61,6 +62,8 @@ public class AdminSettingsActivity extends BaseActivity {
 		syncLogsButton = (Button) findViewById(R.id.sync_logs_button);
 		deviceIdText = (TextView) findViewById(R.id.device_id);
 		tagButton = (Button) findViewById(R.id.tag_button);
+        classroomText = (TextView) findViewById(R.id.classroom_details);
+        classroomButton= (Button) findViewById(R.id.classroom_button);
 	}
 
 	@Override
@@ -259,6 +262,49 @@ public class AdminSettingsActivity extends BaseActivity {
 				cleanUserdataTask.execute(new Void[0]);
 			}
 		});
+
+        // Classroom management
+        if(!Config.IS_PLAYSTORE_APP){
+            if(Config.IS_TEACHER_ONLY){
+                classroomButton.setText("Manage Classrooms");
+                classroomText.setText("Create and view your classrooms");
+                classroomButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                        Intent launchClassroomManagement = new Intent(AdminSettingsActivity.this, ClassroomManagementActivity.class);
+                        startActivity(launchClassroomManagement);
+                    }
+                });
+            }else {
+                classroomButton.setText("Join Classroom");
+                classroomText.setText("Join a classroom created by your teacher");
+                classroomButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final EditText input = new EditText(AdminSettingsActivity.this);
+                        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        new AlertDialog.Builder(AdminSettingsActivity.this).setTitle("Enter Classroom Id")
+                                .setMessage("Enter the id of the classroom you wish to join: ").setView(input)
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        dialog.dismiss();
+                                        if (pd != null)
+                                            pd.cancel();
+                                        pd = ProgressDialog.show(AdminSettingsActivity.this, "Please wait", "Joining classroom...");
+                                    }
+                                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                });
+            }
+        }else {
+            classroomButton.setVisibility(View.GONE);
+            classroomText.setVisibility(View.GONE);
+        }
 	}
 
 	@Override
