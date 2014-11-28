@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -235,16 +233,6 @@ public class UserSessionProvider {
         loginStatus = LoginStatus.LOGGEDOUT;
         DiaryManager.getInstance(context).clearCurrentEntry();
         callSessionChangeOnListeners();
-        if (Config.IS_PLAYSTORE_APP) {
-            //disconnect from google.
-            try {
-                GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(context).addApi(Plus.API, Plus.PlusOptions.builder().build()).addScope(Plus.SCOPE_PLUS_PROFILE).build();
-                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
-            } catch (Exception e) {
-                Log.w(TAG, "Error signing out of google account.", e);
-            }
-        }
     }
 
     private void callSessionChangeOnListeners() {

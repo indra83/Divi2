@@ -32,7 +32,7 @@ public final class Config {
 
 	// Open app settings (remember to remove play services library link)
 	public static final boolean	IS_PLAYSTORE_APP					= true;
-	public static final boolean	IS_TEACHER_ONLY						= true;								// false for
+	public static final boolean	IS_TEACHER_ONLY						= false;								// false for
 																											// student
 
 	// // /////////////////////////////////////////////////////////////////////////////////////////////////////////////

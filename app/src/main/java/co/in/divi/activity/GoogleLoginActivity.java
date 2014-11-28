@@ -238,6 +238,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
 
                     Intent intent = new Intent(GoogleLoginActivity.this, HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }, new Response.ErrorListener() {
                 @Override

@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/class_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:textSize="24sp"
+        android:textColor="@android:color/primary_text_light"
+        android:text="blah" />
+
+    <TextView
+        android:id="@+id/class_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+
+        android:textSize="18sp"
+        android:textColor="@android:color/primary_text_light"
+        android:text="Class code : 129848 \nShare this code with students who need to join this classroom." />
+
+</LinearLayout>

@@ -1,69 +1,59 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff" >
+    android:background="#ffffff">
 
-    <LinearLayout
-        android:id="@+id/root"
+    <fragment
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        android:name="co.in.divi.fragment.HeaderFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_height"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        tools:layout="@layout/fragment_header" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/header"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="Classroom Management"
+        android:textColor="#707070"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_alignBaseline="@id/title"
+        android:id="@+id/add_class_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/bg_blue_button"
+        android:text="New Classroom"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:clickable="true" />
+
+    <ExpandableListView
+        android:id="@+id/students_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical" >
+        android:layout_below="@+id/title"
+        android:dividerHeight="0dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent" />
 
-        <fragment
-            android:id="@+id/header"
-            android:name="co.in.divi.fragment.HeaderFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/header_height"
-            tools:layout="@layout/fragment_header" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:text="Classroom Management"
-            android:textColor="#707070"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/device_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:textColor="#a0a0a0"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/tag_button"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:background="@drawable/bg_blue_button"
-                android:text="Set Tag"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/app_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textColor="#444444"
-                android:textSize="20sp" />
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="gone"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+</RelativeLayout>

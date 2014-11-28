@@ -1,5 +1,16 @@
 package co.in.divi.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,16 +29,6 @@ import java.util.GregorianCalendar;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.util.Log;
 import co.in.divi.activity.AssessmentActivity;
 import co.in.divi.activity.LearnActivity;
 import co.in.divi.activity.ListAssessmentsActivity;
@@ -68,6 +69,14 @@ public final class Util {
 		}
 		return true;
 	}
+
+    public static int getCodeFromClassId(int classId) {
+        return classId;
+    }
+
+    public static int getClassIdFromCode(int code) {
+        return code;
+    }
 
 	public static URL convertToURLEscapingIllegalCharacters(String string) {
 		try {

@@ -1,23 +1,24 @@
 package co.in.divi;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
-
-import org.acra.ACRA;
-import org.acra.annotation.ReportsCrashes;
-
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
-import co.in.divi.background.UniversalSyncCheckReceiver;
-import co.in.divi.util.Config;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.LruBitmapCache;
 import com.android.volley.toolbox.Volley;
+
+import org.acra.ACRA;
+import org.acra.annotation.ReportsCrashes;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import co.in.divi.background.UniversalSyncCheckReceiver;
+import co.in.divi.util.Config;
 
 @ReportsCrashes(formKey = "", // This is required for backward compatibility but not used
 formUri = "https://collector.tracepot.com/9e7647a9")
@@ -131,7 +132,10 @@ public class DiviApplication extends Application {
 			}
 			this.booksBase = bookBase;
 		}
-		return new File(this.booksBase, courseId);
+        if(courseId!=null)
+		    return new File(this.booksBase, courseId);
+        else
+            return this.booksBase;// If the user doesn't have any courses...
 	}
 
 	public File getTempDir() {

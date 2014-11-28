@@ -1,11 +1,5 @@
 package co.in.divi.fragment;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.BroadcastReceiver;
@@ -29,10 +23,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import co.in.divi.LectureSessionProvider;
+import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
-import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.content.AllowedAppsProvider.Apps;
 import co.in.divi.util.LogConfig;
 
@@ -181,12 +182,10 @@ public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, L
 						queryParams.toArray(new String[0]), null);
 				return loader;
 			}
-		} else {
-			// no apps
-			String mSelectionClause = Apps.COLUMN_COURSE_ID + " = ? ";
-			return new CursorLoader(getActivity(), Apps.CONTENT_URI, null, mSelectionClause, new String[] { "blah" }, null);
 		}
-		return null;
+        // no apps
+        String mSelectionClause = Apps.COLUMN_COURSE_ID + " = ? ";
+        return new CursorLoader(getActivity(), Apps.CONTENT_URI, null, mSelectionClause, new String[] { "blah" }, null);
 	}
 
 	@Override
