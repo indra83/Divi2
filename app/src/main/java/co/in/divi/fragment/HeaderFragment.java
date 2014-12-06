@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
-import co.in.divi.BaseActivity;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
 import co.in.divi.UserSessionProvider.UserSessionChangeListener;
@@ -91,6 +95,36 @@ public class HeaderFragment extends Fragment implements UserSessionChangeListene
 				Toast.makeText(getActivity(), "Search feature coming soon...", Toast.LENGTH_SHORT).show();
 			}
 		});
+
+        // Help screens
+        if(userSessionProvider.isLoggedIn() && getActivity() instanceof HomeActivity){
+            new ShowcaseView.Builder(getActivity())
+                    .setContentTitle("User Settings")
+                    .setContentText("Access to classroom management, course and general settings.")
+                    .setTarget(new ViewTarget(usernameText))
+                    .setStyle(R.style.CustomShowcaseTheme)
+//                    .singleShot(1)
+                    .setShowcaseEventListener(new OnShowcaseEventListener() {
+                        @Override
+                        public void onShowcaseViewHide(ShowcaseView showcaseView) {
+//                            showcaseView.hide();
+                            new ShowcaseView.Builder(getActivity())
+                                    .setContentTitle("Live Lectures")
+                                    .setContentText("Create and join Live Lectures.")
+                                    .setTarget(new ViewTarget(lectureDetail))
+                                    .build();
+                        }
+
+                        @Override
+                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                        }
+
+                        @Override
+                        public void onShowcaseViewShow(ShowcaseView showcaseView) {
+                        }
+                    })
+                    .build();
+        }
 		showing = false;
 		return rootView;
 	}

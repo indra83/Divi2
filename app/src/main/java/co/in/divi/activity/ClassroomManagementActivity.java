@@ -98,7 +98,7 @@ public class ClassroomManagementActivity extends BaseActivity {
                                                         finish();
                                                     } else {
                                                         Toast.makeText(ClassroomManagementActivity.this, "New classroom created! Please ask your students to join...", Toast.LENGTH_LONG).show();
-                                                        userSessionProvider.logout();
+//                                                        userSessionProvider.logout();
                                                         userSessionProvider.setUserSession(loginResponse);
                                                         startStudentFetch();
                                                     }

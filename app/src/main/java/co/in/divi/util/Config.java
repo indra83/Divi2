@@ -1,5 +1,7 @@
 package co.in.divi.util;
 
+import co.in.divi.BuildConfig;
+
 public final class Config {
 	//
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,18 +24,17 @@ public final class Config {
 	public static final long	DASHBOARD_SCORES_REFRESH_INTERVAL	= 10 * 1000;
 
 	// content update frequency
-	public static final long	INTERVAL_ALARM_SECONDS				= 5 * 60;
+	public static final long	INTERVAL_ALARM_SECONDS				= 15 * 60;
 	public static final long	INTERVAL_CONTENT_UPDATE				= 30 * 60 * 1000;
-	public static final long	INTERVAL_ATTEMPTS_UPDATE			= 10 * 60 * 1000;
-	public static final long	INTERVAL_COMMANDS_UPDATE			= 10 * 60 * 1000;
-	public static final long	INTERVAL_LOGS_UPDATE				= 4 * 60 * 1000;
-	public static final long	INTERVAL_REPORTS_UPDATE				= 10 * 60 * 1000;
-	public static final long	INTERVAL_HEARTBEAT_UPDATE			= 3 * 60 * 1000;
+	public static final long	INTERVAL_ATTEMPTS_UPDATE			= 30 * 60 * 1000;
+	public static final long	INTERVAL_COMMANDS_UPDATE			= 30 * 60 * 1000;
+	public static final long	INTERVAL_LOGS_UPDATE				= 30 * 60 * 1000;
+	public static final long	INTERVAL_REPORTS_UPDATE				= 30 * 60 * 1000;
+	public static final long	INTERVAL_HEARTBEAT_UPDATE			= 30 * 60 * 1000;
 
 	// Open app settings (remember to remove play services library link)
-	public static final boolean	IS_PLAYSTORE_APP					= true;
-	public static final boolean	IS_TEACHER_ONLY						= false;								// false for
-																											// student
+	public static final boolean	IS_PLAYSTORE_APP					= BuildConfig.IS_PLAYSTORE_APP;
+	public static final boolean	IS_TEACHER_ONLY						= BuildConfig.IS_TEACHER_ONLY;// false for student
 
 	// // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// // Production settings

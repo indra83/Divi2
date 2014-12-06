@@ -1,11 +1,5 @@
 package co.in.divi.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.DownloadManager;
@@ -37,6 +31,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import co.in.divi.BaseActivity;
 import co.in.divi.ContentUpdateManager;
 import co.in.divi.ContentUpdateManager.ContentUpdateListener;

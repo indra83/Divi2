@@ -320,7 +320,7 @@ public class AdminSettingsActivity extends BaseActivity {
                                                         finish();
                                                     } else {
                                                         Toast.makeText(AdminSettingsActivity.this, "Classroom joined!", Toast.LENGTH_LONG).show();
-                                                        userSessionProvider.logout();
+//                                                        userSessionProvider.logout();
                                                         userSessionProvider.setUserSession(loginResponse);
                                                     }
                                                 }
@@ -333,6 +333,7 @@ public class AdminSettingsActivity extends BaseActivity {
                                                 }
                                             }
                                             );
+                                            pd = ProgressDialog.show(AdminSettingsActivity.this, "Please wait", "Joining classroom...");
                                             request.setShouldCache(false);
                                             DiviApplication.get().getRequestQueue().add(request).setTag(AdminSettingsActivity.this);
                                         } catch (Exception e) {
@@ -341,7 +342,6 @@ public class AdminSettingsActivity extends BaseActivity {
                                             Log.w(TAG, "Error joining classroom...", e);
                                             Toast.makeText(AdminSettingsActivity.this, "Error joining classroom, please verify the code entered.", Toast.LENGTH_LONG).show();
                                         }
-                                        pd = ProgressDialog.show(AdminSettingsActivity.this, "Please wait", "Joining classroom...");
                                     }
                                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {

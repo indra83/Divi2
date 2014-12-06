@@ -16,10 +16,7 @@
 
 package co.in.divi.ui;
 
-import java.lang.ref.WeakReference;
-import java.util.Formatter;
-import java.util.Locale;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -37,6 +34,11 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
+import java.util.Formatter;
+import java.util.Locale;
+
 import co.in.divi.R;
 
 /**
@@ -157,7 +159,8 @@ public class VideoControllerView extends FrameLayout {
 		return mRoot;
 	}
 
-	private void initControllerView(View v) {
+	@SuppressLint("WrongViewCast")
+    private void initControllerView(View v) {
 		mPauseButton = (ImageButton) v.findViewById(R.id.pause);
 		if (mPauseButton != null) {
 			mPauseButton.requestFocus();

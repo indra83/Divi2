@@ -1,10 +1,5 @@
 package co.in.divi.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import com.google.android.youtube.player.YouTubePlayerFragment;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ComponentName;
@@ -38,6 +33,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+
+import java.io.File;
+import java.util.ArrayList;
+
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider.FollowMeListener;
@@ -171,6 +175,29 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 			@Override
 			public void onDrawerClosed(View arg0) {
 				hideHeader();
+                new ShowcaseView.Builder(LearnActivity.this)
+                        .setContentTitle("Table of Contents")
+                        .setContentText("Pull to access table of contents.")
+                        .setTarget(new ViewTarget(findViewById(R.id.slide_toc_button)))
+                        .setShowcaseEventListener(new OnShowcaseEventListener() {
+                            @Override
+                            public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                                ShowcaseView showcaseView2 = new ShowcaseView.Builder(LearnActivity.this)
+                                        .setStyle(R.style.CustomShowcaseTheme)//setStyle instead of setTarget!
+                                        .hideOnTouchOutside()
+                                        .build();
+
+//showcaseView.setBackground(getResources().getDrawable(R.drawable.swipe_back_en));//minAPI=16
+                                showcaseView2.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_gesture_swipe));
+                            }
+                            @Override
+                            public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                            }
+                            @Override
+                            public void onShowcaseViewShow(ShowcaseView showcaseView) {
+                            }
+                        })
+                        .build();
 			}
 		});
 		findViewById(R.id.slide_toc_button).setOnClickListener(new View.OnClickListener() {

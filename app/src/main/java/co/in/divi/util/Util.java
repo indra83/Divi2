@@ -71,11 +71,14 @@ public final class Util {
 	}
 
     public static int getCodeFromClassId(int classId) {
-        return classId;
+        return classId*1000 + ((classId*65537)%997);
     }
 
     public static int getClassIdFromCode(int code) {
-        return code;
+        int classId= code/1000;
+        if((classId*65537)%997 == code%1000)
+            return classId;
+        throw new RuntimeException("Invalid Class Id");
     }
 
 	public static URL convertToURLEscapingIllegalCharacters(String string) {

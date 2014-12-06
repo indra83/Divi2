@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import co.in.divi.DiviApplication;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
 import co.in.divi.model.UserData;
+import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 
@@ -77,6 +79,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
     private int mSignInError;
 
     private SignInButton mSignInButton;
+    private LinearLayout panel;
     private TextView mStatus;
     private boolean first = true;
 
@@ -89,9 +92,13 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
 
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
         mStatus = (TextView) findViewById(R.id.sign_in_status);
+        panel = (LinearLayout) findViewById(R.id.buttons_panel);
+        panel.setVisibility(View.GONE);
 
         mSignInButton.setOnClickListener(this);
         mSignInButton.setSize(SignInButton.SIZE_WIDE);
+        findViewById(R.id.button_divi_login).setOnClickListener(this);
+        findViewById(R.id.button_disconnect_google).setOnClickListener(this);
 
         if (savedInstanceState != null) {
             mSignInProgress = savedInstanceState.getInt(SAVED_PROGRESS, STATE_DEFAULT);
@@ -160,7 +167,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                     mGoogleApiClient.disconnect();
                     mGoogleApiClient.connect();
                     break;
-                case -101:
+                case R.id.button_disconnect_google:
                     // After we revoke permissions for the user with a GoogleApiClient
                     // instance, we must discard it and create a new one.
                     Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
@@ -171,6 +178,20 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                     Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
                     mGoogleApiClient = buildGoogleApiClient();
                     mGoogleApiClient.connect();
+                    break;
+                case R.id.button_divi_login:
+                    // Retrieve some profile information to personalize our app for the user.
+                    String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                    Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+
+                    String name = currentUser.getDisplayName();
+                    String id = currentUser.getId();
+                    String profilePic = currentUser.getImage().getUrl();
+                    String url = currentUser.getUrl();
+                    if (name == null || name.length() == 0)
+                        name = email;
+
+                    performDiviLogin(id, name, email, profilePic, url);
                     break;
             }
         }
@@ -188,19 +209,12 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
 
         // Update the user interface to reflect that the user is signed in.
         mSignInButton.setEnabled(false);
-
-        // Retrieve some profile information to personalize our app for the user.
-        String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+        panel.setVisibility(View.VISIBLE);
         Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
         String name = currentUser.getDisplayName();
-        String id = currentUser.getId();
-        String profilePic = currentUser.getImage().getUrl();
-        String url = currentUser.getUrl();
-
-        performDiviLogin(id, name, email, profilePic, url);
-
-        mStatus.setText(String.format("Signed in as %s", currentUser.getName()));
+        if (name == null || name.length() == 0)
+            name = Plus.AccountApi.getAccountName(mGoogleApiClient);
+        mStatus.setText(String.format("Authenticated as %s", name));
 
         // Indicate that the sign in process is complete.
         mSignInProgress = STATE_DEFAULT;
@@ -213,7 +227,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
             jsonRequest.put("googleID", id);
             jsonRequest.put("name", name);
             jsonRequest.put("profilePic", profilePic);
-            jsonRequest.put("role", "teacher");
+            jsonRequest.put("role", Config.IS_TEACHER_ONLY ? "teacher" : "student");
             jsonRequest.put("email", email);
             if (LogConfig.DEBUG_LOGIN)
                 Log.d(TAG, "request:\n" + jsonRequest.toString());
@@ -373,7 +387,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
     private void onSignedOut() {
         // Update the UI to reflect that the user is signed out.
         mSignInButton.setEnabled(true);
-
+        panel.setVisibility(View.GONE);
         mStatus.setText("Signed out");
     }
 
