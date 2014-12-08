@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#9e000000" >
+    android:background="#9e000000">
 
     <RelativeLayout
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/box_with_logo" >
+        android:background="@drawable/box_with_logo">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
@@ -19,9 +18,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="60dp"
-            android:enabled="false"/>
+            android:enabled="false" />
 
-        <LinearLayout android:id="@+id/buttons_panel"
+        <LinearLayout
+            android:id="@+id/buttons_panel"
             android:layout_below="@id/sign_in_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -55,14 +55,31 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/sign_in_status"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dip"
-            android:text="Sign in using your Google Account" />
+            android:layout_marginBottom="40dip"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:visibility="gone"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/sign_in_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/text_grey"
+                android:text="Sign in using your Google Account" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

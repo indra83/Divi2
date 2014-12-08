@@ -7,13 +7,19 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +37,9 @@ import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import co.in.divi.DiviApplication;
 import co.in.divi.R;
@@ -81,6 +90,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
     private SignInButton mSignInButton;
     private LinearLayout panel;
     private TextView mStatus;
+    private ProgressBar pb;
     private boolean first = true;
 
     @Override
@@ -90,9 +100,28 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_googlelogin);
 
+        // temp
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(),
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+        // end teemp
+
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
         mStatus = (TextView) findViewById(R.id.sign_in_status);
         panel = (LinearLayout) findViewById(R.id.buttons_panel);
+        pb = (ProgressBar)findViewById(R.id.progress);
+        pb.setVisibility(View.GONE);
         panel.setVisibility(View.GONE);
 
         mSignInButton.setOnClickListener(this);
@@ -156,6 +185,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
             // between connected and not connected.
             switch (v.getId()) {
                 case R.id.sign_in_button:
+                    pb.setVisibility(View.VISIBLE);
                     mStatus.setText("Signing in with Google+");
                     resolveSignInError();
                     break;
@@ -214,7 +244,8 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
         String name = currentUser.getDisplayName();
         if (name == null || name.length() == 0)
             name = Plus.AccountApi.getAccountName(mGoogleApiClient);
-        mStatus.setText(String.format("Authenticated as %s", name));
+        mStatus.setText(Html.fromHtml(String.format("Authenticated as <b>%s</b>", name)));
+        pb.setVisibility(View.GONE);
 
         // Indicate that the sign in process is complete.
         mSignInProgress = STATE_DEFAULT;
@@ -236,6 +267,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                 @Override
                 public void onResponse(JSONObject response) {
                     mStatus.setText("Processing login info...");
+                    pb.setVisibility(View.VISIBLE);
                     if (LogConfig.DEBUG_LOGIN)
                         Log.d(TAG, "got response:\n" + response.toString());
                     // validate response
@@ -245,6 +277,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                     if (loginResponse.error != null) {
                         Toast.makeText(GoogleLoginActivity.this, "Error : " + loginResponse.error.message, Toast.LENGTH_LONG).show();
                         mStatus.setText("Login failed!");
+                        pb.setVisibility(View.GONE);
                     } else {
                         UserSessionProvider.getInstance(GoogleLoginActivity.this).setUserSession(loginResponse);
                         finish();
@@ -262,6 +295,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                         Log.e(TAG, "nr:" + error.getMessage());
                     }
                     mStatus.setText("Login failed!");
+                    pb.setVisibility(View.GONE);
                     String message = "Error occured, please ensure your WiFi is connected.";
                     if (error.networkResponse != null) {
                         switch (error.networkResponse.statusCode) {
@@ -285,6 +319,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
             DiviApplication.get().getRequestQueue().add(loginRequest).setTag(this);
 
             mStatus.setText("Logging in to Divi...");
+            pb.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.e(TAG, "Error logging in", e);
             Toast.makeText(GoogleLoginActivity.this, "Error logging into Divi", Toast.LENGTH_LONG).show();
@@ -389,6 +424,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
         mSignInButton.setEnabled(true);
         panel.setVisibility(View.GONE);
         mStatus.setText("Signed out");
+        pb.setVisibility(View.GONE);
     }
 
     @Override
@@ -410,6 +446,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                             Log.e(TAG, "Google Play services resolution cancelled");
                             mSignInProgress = STATE_DEFAULT;
                             mStatus.setText("Signed out");
+                            pb.setVisibility(View.GONE);
                         }
                     });
                 } else {
@@ -420,6 +457,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
                                     Log.e(TAG, "Google Play services error could not be " + "resolved: " + mSignInError);
                                     mSignInProgress = STATE_DEFAULT;
                                     mStatus.setText("Signed out");
+                                    pb.setVisibility(View.GONE);
                                 }
                             }).create();
                 }

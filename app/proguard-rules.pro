@@ -83,6 +83,8 @@
 -keep class co.in.divi.content.** { *; }
 -keep class co.in.divi.fragment.questions.state.** { *; }
 -keep class co.in.divi.LocationManager { *; }
+-keep class co.in.divi.progress.WeeklyTimeReport { *; }
+-keep class co.in.divi.LectureSessionProvider$LocationHolder { *; }
 
 ##---------------End: proguard configuration for Gson  ----------
 

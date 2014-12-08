@@ -132,6 +132,8 @@ public class DiviApplication extends Application {
 			}
 			this.booksBase = bookBase;
 		}
+        Log.d(TAG,"cur path:"+booksBase.getAbsolutePath());
+        Log.d(TAG,"getExtFD:"+getExternalFilesDir(null));
         if(courseId!=null)
 		    return new File(this.booksBase, courseId);
         else
