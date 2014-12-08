@@ -52,8 +52,10 @@ public class DiviApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		// error logging
-		ACRA.init(this);
+
+		// error logging (if NOT playstore app)
+        if(!Config.IS_PLAYSTORE_APP)
+            ACRA.init(this);
 
 		instance = this;
 		requestQueue = Volley.newRequestQueue(this);

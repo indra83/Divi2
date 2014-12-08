@@ -1,10 +1,5 @@
 package co.in.divi.ui;
 
-import java.util.HashSet;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -23,6 +18,20 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashSet;
+
 import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.LocationManager;
@@ -35,17 +44,10 @@ import co.in.divi.model.Instruction;
 import co.in.divi.model.LectureDetails;
 import co.in.divi.model.UserData;
 import co.in.divi.model.UserData.ClassRoom;
+import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
-
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
 
 public class LecturesPopupHolder implements OnDismissListener {
 	private static final String	TAG	= LecturesPopupHolder.class.getSimpleName();
@@ -339,6 +341,8 @@ public class LecturesPopupHolder implements OnDismissListener {
 				for (final ClassRoom classRoom : userData.classRooms) {
 					if (lectureClassIds.contains(classRoom.classId))
 						continue;// cannot create lecture if another teacher already created one...
+                    if(Config.IS_PLAYSTORE_APP && classRoom.classId.equalsIgnoreCase(Config.IGNORE_CLASS_ID))
+                        continue;// Don't allow lecture creation for default classroom.
 					View lectureItem = layoutInflater.inflate(R.layout.item_lecture, null);
 					((TextView) lectureItem.findViewById(R.id.lecture_name)).setText(classRoom.toString());
 					// ((TextView) lectureItem.findViewById(R.id.lecture_teacher)).setText(userData.name);

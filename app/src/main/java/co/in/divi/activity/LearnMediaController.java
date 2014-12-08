@@ -1,8 +1,5 @@
 package co.in.divi.activity;
 
-import java.io.File;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -24,6 +21,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayer.ErrorReason;
+import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+
+import java.io.File;
+
 import co.in.divi.LocationManager.LOCATION_SUBTYPE;
 import co.in.divi.content.Topic.Audio;
 import co.in.divi.content.Topic.Image;
@@ -36,13 +42,7 @@ import co.in.divi.ui.VideoControllerView.MediaPlayerControl;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.image.ImageResizer;
-
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayer.ErrorReason;
-import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener;
-import com.google.android.youtube.player.YouTubePlayer.Provider;
-import com.google.android.youtube.player.YouTubePlayerFragment;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class LearnMediaController implements OnInitializedListener {
 	private static final String	TAG						= LearnMediaController.class.getSimpleName();
@@ -380,7 +380,11 @@ public class LearnMediaController implements OnInitializedListener {
 
 	void playYoutubeVideo(Video youtubeVideo, final String fragment) {
 		closeAll();
-		video = youtubeVideo;
+        if(!youtubePlayerReady) {
+            Toast.makeText(activity,"YouTube initialization failed, please update..",Toast.LENGTH_LONG).show();
+            return;
+        }
+        video = youtubeVideo;
 		activity.showHeader();
 		youtubeRoot.setVisibility(View.VISIBLE);
 		activity.getFragmentManager().beginTransaction().show(youtubeFragment).commit();
@@ -781,7 +785,7 @@ public class LearnMediaController implements OnInitializedListener {
 
 	@Override
 	public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult error) {
-		Toast.makeText(activity, "Error initializing YouTube player..", Toast.LENGTH_SHORT).show();
+		Toast.makeText(activity, "Error initializing YouTube player, please update YouTube app.", Toast.LENGTH_LONG).show();
 		Log.w(TAG, "YouTube init failed! - " + error.toString());
 	}
 

@@ -1,35 +1,29 @@
 package co.in.divi.content;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
-import org.json.JSONException;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
+import org.json.JSONException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
 import co.in.divi.content.importer.BookDefinition;
 import co.in.divi.content.importer.BookDefinition.ChapterDefinition;
 import co.in.divi.content.importer.BookDefinition.TopicNode;
 import co.in.divi.util.LogConfig;
-import co.in.divi.util.Util;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteAssetHelper {
 
 	private static final String		TAG						= DatabaseHelper.class.getSimpleName();
-
-	// The Android's default system path of your application database.
-	private static String			DB_PATH					= "/data/data/co.in.divi/databases/";
 
 	private static final String		DATABASE_NAME			= "content_metadata.db";
 	private static final int		DATABASE_VERSION		= 1;
@@ -62,74 +56,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			if (LogConfig.DEBUG_DBHELPER)
 				Log.d(TAG, "instantiating database helper");
 			instance = new DatabaseHelper(context);
-
-			boolean dbExist = checkDataBase();
-			// check if we need to load initial db.
-			if (!dbExist) {
-				Log.i(TAG, "DB not found, creating(copying) db");
-				instance.getReadableDatabase();
-				instance.close();
-				try {
-					Log.d(TAG, "flushing database and loading initdata...");
-					instance.loadInitData(context);
-				} catch (IOException e) {
-					Log.w(TAG, "loading initdata failed!");
-					e.printStackTrace();
-				}
-				// load db from new file.
-				instance = new DatabaseHelper(context);
-			}
 		}
 		return instance;
 	}
 
 	private DatabaseHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-	}
-
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		// runSQLScript(db, "database/create_db.sql");
-		// data can't contain ';' as we split by it!
-		// runSQLScript(db, "database/init_db.sql");
-		// called only once so we don't need context any more
-	}
-
-	/**
-	 * Copies your database from your local assets-folder to the just created empty database in the system folder, from
-	 * where it can be accessed and handled. This is done by transfering bytestream.
-	 * */
-	private void loadInitData(Context context) throws IOException {
-		// Open your local db as the input stream
-		InputStream myInput = context.getAssets().open("initdb/" + DATABASE_NAME);
-		// Path to the just created empty db
-		String outFileName = DB_PATH + DATABASE_NAME;
-		Util.copy(myInput, new File(outFileName));
-	}
-
-	/**
-	 * Check if the database already exist to avoid re-copying the file each time you open the application.
-	 * 
-	 * @return true if it exists, false if it doesn't
-	 */
-	private static boolean checkDataBase() {
-		// return false;
-		SQLiteDatabase checkDB = null;
-		try {
-			String myPath = DB_PATH + DATABASE_NAME;
-			checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-		} catch (SQLiteException e) {
-			// database does't exist yet.
-		}
-
-		if (checkDB != null) {
-			checkDB.close();
-		}
-		return checkDB != null ? true : false;
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	public ArrayList<Book> getBooks(String courseId) {

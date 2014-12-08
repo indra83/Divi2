@@ -22,4 +22,8 @@
     
     <!-- UserData popup -->
     <dimen name="userdatapopup_width">150dp</dimen>
+
+    <!-- Help screen OK size -->
+    <dimen name="help_ok_width">100dp</dimen>
+    <dimen name="help_ok_height">50dp</dimen>
 </resources>

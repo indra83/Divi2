@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.in.divi.BaseActivity;
@@ -37,6 +39,7 @@ import co.in.divi.DiviApplication;
 import co.in.divi.R;
 import co.in.divi.model.ClassMembers;
 import co.in.divi.model.UserData;
+import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
@@ -54,6 +57,7 @@ public class ClassroomManagementActivity extends BaseActivity {
 
     private FetchStudentsTask fetchStudentsTask;
     private HashMap<String, ClassMembers> allStudents = new HashMap<String, ClassMembers>();
+    private ArrayList<UserData.ClassRoom> classRooms = new ArrayList<UserData.ClassRoom>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,11 +161,15 @@ public class ClassroomManagementActivity extends BaseActivity {
         if (fetchStudentsTask != null)
             fetchStudentsTask.cancel(false);
         fetchStudentsTask = new FetchStudentsTask();
-        String classIds[] = new String[userSessionProvider.getUserData().classRooms.length];
+        classRooms.clear();
+        allStudents.clear();
+        ArrayList<UserData.ClassRoom> classRoomsToFetch = new ArrayList<UserData.ClassRoom>();
         for (int i = 0; i < userSessionProvider.getUserData().classRooms.length; i++) {
-            classIds[i] = userSessionProvider.getUserData().classRooms[i].classId;
+            if (!userSessionProvider.getUserData().classRooms[i].classId.equalsIgnoreCase(Config.IGNORE_CLASS_ID)) {
+                classRoomsToFetch.add(userSessionProvider.getUserData().classRooms[i]);
+            }
         }
-        fetchStudentsTask.execute(classIds);
+        fetchStudentsTask.execute(classRoomsToFetch.toArray(new UserData.ClassRoom[0]));
     }
 
     private class StudentsListAdapter extends BaseExpandableListAdapter {
@@ -173,22 +181,22 @@ public class ClassroomManagementActivity extends BaseActivity {
 
         @Override
         public int getGroupCount() {
-            return allStudents.keySet().size();
+            return classRooms.size();
         }
 
         @Override
         public int getChildrenCount(int i) {
-            return allStudents.get(userSessionProvider.getUserData().classRooms[i].classId).members.length;
+            return allStudents.get(classRooms.get(i).classId).members.length;
         }
 
         @Override
         public Object getGroup(int i) {
-            return userSessionProvider.getUserData().classRooms[i];
+            return classRooms.get(i);
         }
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return allStudents.get(userSessionProvider.getUserData().classRooms[groupPosition].classId).members[childPosition];
+            return allStudents.get(classRooms.get(groupPosition).classId).members[childPosition];
         }
 
         @Override
@@ -214,8 +222,8 @@ public class ClassroomManagementActivity extends BaseActivity {
             }
             TextView nameView = (TextView) convertView.findViewById(R.id.class_title);
             TextView classCodeView = (TextView) convertView.findViewById(R.id.class_code);
-            nameView.setText(classRoom.className + "  (" + getChildrenCount(groupPosition) + " members)");
-            classCodeView.setText("Code : " + Util.getCodeFromClassId(Integer.parseInt(classRoom.classId)));
+            nameView.setText(Html.fromHtml("<b>" + classRoom.className + "</b>  (" + getChildrenCount(groupPosition) + " members)"));
+            classCodeView.setText("Classroom Code : " + Util.getCodeFromClassId(Integer.parseInt(classRoom.classId)));
             return convertView;
         }
 
@@ -242,7 +250,7 @@ public class ClassroomManagementActivity extends BaseActivity {
             if (classMember.role.equalsIgnoreCase(ClassMembers.ClassMember.ROLE_TEACHER))
                 loc.setText("Teacher");
             else
-                loc.setVisibility(View.GONE);
+                loc.setVisibility(View.INVISIBLE);
             convertView.findViewById(R.id.progress_progressbar2).setVisibility(View.GONE);
             convertView.findViewById(R.id.accuracy).setVisibility(View.GONE);
             return convertView;
@@ -254,10 +262,11 @@ public class ClassroomManagementActivity extends BaseActivity {
         }
     }
 
-    private class FetchStudentsTask extends AsyncTask<String, Void, Integer> {
+    private class FetchStudentsTask extends AsyncTask<UserData.ClassRoom, Void, Integer> {
         private String url;
         private HashMap<String, ClassMembers> allClassMembers;
-        Gson gson;
+        ArrayList<UserData.ClassRoom> classRoomsFetched = new ArrayList<UserData.ClassRoom>();
+        private Gson gson;
 
         @Override
         protected void onPreExecute() {
@@ -269,13 +278,14 @@ public class ClassroomManagementActivity extends BaseActivity {
         }
 
         @Override
-        protected Integer doInBackground(String... ids) {
+        protected Integer doInBackground(UserData.ClassRoom... classroomsToFetch) {
+            Log.d(TAG,"ids:"+classroomsToFetch.length);
             try {
-                for (String classId : ids) {
+                for (UserData.ClassRoom classRoom : classroomsToFetch) {
                     JSONObject jsonRequest = new JSONObject();
                     jsonRequest.put("uid", userSessionProvider.getUserData().uid);
                     jsonRequest.put("token", userSessionProvider.getUserData().token);
-                    jsonRequest.put("classRoomId", classId);
+                    jsonRequest.put("classRoomId", classRoom.classId);
                     if (LogConfig.DEBUG_ACTIVITIES)
                         Log.d(TAG, "request:\n" + jsonRequest);
                     RequestFuture<JSONObject> future = RequestFuture.newFuture();
@@ -289,7 +299,8 @@ public class ClassroomManagementActivity extends BaseActivity {
 
                     ClassMembers classMembers = gson.fromJson(response.toString(), ClassMembers.class);
 
-                    allClassMembers.put(classId, classMembers);
+                    allClassMembers.put(classRoom.classId, classMembers);
+                    classRoomsFetched.add(classRoom);
                 }
                 return 0;
             } catch (Exception e) {
@@ -308,6 +319,7 @@ public class ClassroomManagementActivity extends BaseActivity {
             for (String classId : allClassMembers.keySet()) {
                 allStudents.put(classId, allClassMembers.get(classId));
             }
+            classRooms = classRoomsFetched;
             listAdapter.notifyDataSetChanged();
         }
     }

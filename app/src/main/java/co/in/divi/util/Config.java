@@ -35,6 +35,7 @@ public final class Config {
 	// Open app settings (remember to remove play services library link)
 	public static final boolean	IS_PLAYSTORE_APP					= BuildConfig.IS_PLAYSTORE_APP;
 	public static final boolean	IS_TEACHER_ONLY						= BuildConfig.IS_TEACHER_ONLY;// false for student
+    public static final String  IGNORE_CLASS_ID                      = "1";
 
 	// // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// // Production settings

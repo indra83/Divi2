@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,11 +49,19 @@ public class HeaderFragment extends Fragment implements UserSessionChangeListene
 
 	private boolean					showing;
 
+    private RelativeLayout.LayoutParams lps;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		lectureSessionProvider = LectureSessionProvider.getInstance(getActivity());
 		userSessionProvider = UserSessionProvider.getInstance(getActivity());
+
+        lps = new RelativeLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.help_ok_width), getResources().getDimensionPixelSize(R.dimen.help_ok_height));
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        int margin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        lps.setMargins(margin, margin, margin, margin);
 	}
 
 	@Override
@@ -96,35 +105,6 @@ public class HeaderFragment extends Fragment implements UserSessionChangeListene
 			}
 		});
 
-        // Help screens
-        if(userSessionProvider.isLoggedIn() && getActivity() instanceof HomeActivity){
-            new ShowcaseView.Builder(getActivity())
-                    .setContentTitle("User Settings")
-                    .setContentText("Access to classroom management, course and general settings.")
-                    .setTarget(new ViewTarget(usernameText))
-                    .setStyle(R.style.CustomShowcaseTheme)
-//                    .singleShot(1)
-                    .setShowcaseEventListener(new OnShowcaseEventListener() {
-                        @Override
-                        public void onShowcaseViewHide(ShowcaseView showcaseView) {
-//                            showcaseView.hide();
-                            new ShowcaseView.Builder(getActivity())
-                                    .setContentTitle("Live Lectures")
-                                    .setContentText("Create and join Live Lectures.")
-                                    .setTarget(new ViewTarget(lectureDetail))
-                                    .build();
-                        }
-
-                        @Override
-                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-                        }
-
-                        @Override
-                        public void onShowcaseViewShow(ShowcaseView showcaseView) {
-                        }
-                    })
-                    .build();
-        }
 		showing = false;
 		return rootView;
 	}
@@ -164,6 +144,40 @@ public class HeaderFragment extends Fragment implements UserSessionChangeListene
 		showing = true;
 		if (LogConfig.DEBUG_ACTIVITIES)
 			Log.d(TAG, "showing");
+
+        // Help screens
+        if(userSessionProvider.isLoggedIn() && getActivity() instanceof HomeActivity){
+            new ShowcaseView.Builder(getActivity())
+                    .setContentTitle("User Settings")
+                    .setContentText("Access to classroom management, course and general settings.")
+                    .setTarget(new ViewTarget(usernameText))
+                    .setStyle(R.style.CustomShowcaseTheme)
+                    .singleShot(1)
+                    .setShowcaseEventListener(new OnShowcaseEventListener() {
+                        @Override
+                        public void onShowcaseViewHide(ShowcaseView showcaseView) {
+//                            showcaseView.hide();
+                            new ShowcaseView.Builder(getActivity())
+                                    .setContentTitle("Live Lectures")
+                                    .setContentText("Create and join Live Lectures.")
+                                    .setTarget(new ViewTarget(lectureDetail))
+                                    .setStyle(R.style.CustomShowcaseTheme)
+                                    .singleShot(2)
+                                    .build()
+                                    .setButtonPosition(lps);
+                        }
+
+                        @Override
+                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                        }
+
+                        @Override
+                        public void onShowcaseViewShow(ShowcaseView showcaseView) {
+                        }
+                    })
+                    .build()
+                    .setButtonPosition(lps);
+        }
 	}
 
 	@Override
