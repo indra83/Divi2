@@ -1,9 +1,5 @@
 package co.in.divi.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -33,8 +29,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
 import co.in.divi.LocationManager.Breadcrumb;
@@ -104,6 +110,8 @@ public class AssessmentActivity extends BaseActivity implements LoaderCallbacks<
 
 	boolean								questionsLoaded, attemptsLoaded;
 
+    private RelativeLayout.LayoutParams lps;
+
 	// for attempts
 	public interface AttemptsChangedListener {
 		public void onAttemptsChanged();
@@ -157,6 +165,33 @@ public class AssessmentActivity extends BaseActivity implements LoaderCallbacks<
 			@Override
 			public void onDrawerClosed(View arg0) {
 				hideHeader();
+                new ShowcaseView.Builder(AssessmentActivity.this)
+                        .setContentTitle("Navigation")
+                        .setContentText("Pull to access navigation menu.")
+                        .setTarget(new ViewTarget(findViewById(R.id.slide_toc_button)))
+                        .setStyle(R.style.CustomShowcaseTheme)
+                        .singleShot(21)
+                        .setShowcaseEventListener(new OnShowcaseEventListener() {
+                            @Override
+                            public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                                ShowcaseView showcaseView2 = new ShowcaseView.Builder(AssessmentActivity.this)
+                                        .setContentTitle("Swipe for next/previous question.")
+                                        .setStyle(R.style.CustomShowcaseTheme)//setStyle instead of setTarget!
+                                        .hideOnTouchOutside()
+                                        .singleShot(22)
+                                        .build();
+                                showcaseView2.setButtonPosition(lps);
+                                showcaseView2.setBackgroundResource(R.drawable.ic_gesture_swipe);
+                            }
+                            @Override
+                            public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                            }
+                            @Override
+                            public void onShowcaseViewShow(ShowcaseView showcaseView) {
+                            }
+                        })
+                        .build()
+                        .setButtonPosition(lps);
 			}
 		});
 
@@ -194,6 +229,13 @@ public class AssessmentActivity extends BaseActivity implements LoaderCallbacks<
 		});
 		if (savedInstanceState != null)
 			displayedQuestionId = savedInstanceState.getString(BUNDLE_EXTRA_QUESTION_ID);
+
+        // Help
+        lps = new RelativeLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.help_ok_width), getResources().getDimensionPixelSize(R.dimen.help_ok_height));
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        int margin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        lps.setMargins(margin, margin, margin, margin);
 	}
 
 	@Override

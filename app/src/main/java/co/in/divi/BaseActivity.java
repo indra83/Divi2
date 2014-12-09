@@ -263,11 +263,11 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
 
 	private void checkHeader() {
 		if (showHeader) {
-			if (!header.getView().isShown()) {
+			if (header!=null && !header.getView().isShown()) {
 				showHeader();
 			}
 		} else {
-			if (header.getView().isShown()) {
+			if (header!=null && header.getView().isShown()) {
 				hideHeader();
 			}
 		}

@@ -31,6 +31,7 @@ import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,7 @@ import co.in.divi.fragment.HeaderFragment;
 import co.in.divi.fragment.LessonPlanFragment;
 import co.in.divi.fragment.TopicPageFragment;
 import co.in.divi.ui.RecyclingImageView;
+import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Util;
 import co.in.divi.util.image.ImageCache.ImageCacheParams;
@@ -97,6 +99,8 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 	public File						bookBaseDir;
 	private DiviReference			uriToLoad;													// could be null
 	private boolean					reloadData;
+
+    private RelativeLayout.LayoutParams lps;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -179,25 +183,31 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
                         .setContentTitle("Table of Contents")
                         .setContentText("Pull to access table of contents.")
                         .setTarget(new ViewTarget(findViewById(R.id.slide_toc_button)))
+                        .setStyle(R.style.CustomShowcaseTheme)
+                        .singleShot(11)
                         .setShowcaseEventListener(new OnShowcaseEventListener() {
                             @Override
                             public void onShowcaseViewHide(ShowcaseView showcaseView) {
                                 ShowcaseView showcaseView2 = new ShowcaseView.Builder(LearnActivity.this)
+                                        .setContentTitle("Swipe for next/previous topic.")
                                         .setStyle(R.style.CustomShowcaseTheme)//setStyle instead of setTarget!
                                         .hideOnTouchOutside()
+                                        .singleShot(12)
                                         .build();
-
-//showcaseView.setBackground(getResources().getDrawable(R.drawable.swipe_back_en));//minAPI=16
-                                showcaseView2.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_gesture_swipe));
+                                showcaseView2.setButtonPosition(lps);
+                                showcaseView2.setBackgroundResource(R.drawable.ic_gesture_swipe);
                             }
+
                             @Override
                             public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
                             }
+
                             @Override
                             public void onShowcaseViewShow(ShowcaseView showcaseView) {
                             }
                         })
-                        .build();
+                        .build()
+                        .setButtonPosition(lps);
 			}
 		});
 		findViewById(R.id.slide_toc_button).setOnClickListener(new View.OnClickListener() {
@@ -288,6 +298,13 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 		});
 
 		reloadData = true;
+
+        // Help
+        lps = new RelativeLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.help_ok_width), getResources().getDimensionPixelSize(R.dimen.help_ok_height));
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        int margin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        lps.setMargins(margin, margin, margin, margin);
 	}
 
 	@Override
@@ -546,10 +563,17 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 					} else {
 						// vm needs to be installed/updated
 						Toast.makeText(this, "VM needs to be installed/updated...", Toast.LENGTH_SHORT).show();
-						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.setDataAndType(Uri.fromFile(new File(baseDir, vm.src)), "application/vnd.android.package-archive");
-						startActivity(intent);
-					}
+                        if (Config.IS_PLAYSTORE_APP) {
+                            String appUrl = "market://details?id=" + vm.appPackage;
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(appUrl));
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(Uri.fromFile(new File(baseDir, vm.src)), "application/vnd.android.package-archive");
+                            startActivity(intent);
+                        }
+                    }
 					return;
 				}
 			}

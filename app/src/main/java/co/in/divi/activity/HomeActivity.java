@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,7 @@ import co.in.divi.fragment.HeaderFragment;
 import co.in.divi.fragment.ProgressFragment;
 import co.in.divi.progress.AnalyticsFetcherService;
 import co.in.divi.progress.AnalyticsManager;
+import co.in.divi.ui.PublishHelpPopup;
 import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Util;
@@ -59,6 +61,7 @@ import co.in.divi.util.Week;
 
 public class HomeActivity extends BaseActivity implements ContentUpdateListener {
 	static final String				TAG					= HomeActivity.class.getSimpleName();
+    private static final String PUBLISH_HELP_DIALOG_TAG = "PUBLISH_HELP_DIALOG_TAG";
 
 	private static final int		SECTION_LEARN		= 0;
 	private static final int		SECTION_PRACTICE	= 1;
@@ -70,7 +73,7 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 
 	private View					learnButton, practiceButton, progressButton, appsButton;
 	private ImageView				titleIcon, batteryIcon, syncIcon;
-	private TextView				titleText, updatesText, batteryText, timeText, progressPagerEmpty;
+	private TextView				titleText, updatesText, batteryText, timeText, progressPagerEmpty, publishContentButton;
 	private GridView				bookButtonsGrid;
 	private ViewPager				progressPager;
 	private AppsFragment			appsFragment;
@@ -136,6 +139,7 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 		batteryText = (TextView) findViewById(R.id.battery_text);
 		progressPagerEmpty = (TextView) findViewById(R.id.progressPagerEmpty);
 		timeText = (TextView) findViewById(R.id.time_text);
+        publishContentButton = (TextView) findViewById(R.id.publish_content);
 		bookButtonsGrid = (GridView) findViewById(R.id.books);
 		progressPager = (ViewPager) findViewById(R.id.progressPager);
 		appsFragment = (AppsFragment) getFragmentManager().findFragmentById(R.id.apps);
@@ -198,7 +202,21 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 				startService(launchSync);
 			}
 		});
-	}
+
+        // Publish button
+        if (Config.IS_PLAYSTORE_APP && Config.IS_TEACHER_ONLY && userSessionProvider.isLoggedIn()) {
+            publishContentButton.setVisibility(View.VISIBLE);
+            publishContentButton.setText(Html.fromHtml("<u>Publish Content</u>"));
+            publishContentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = getFragmentManager();
+                    PublishHelpPopup publishHelpPopup= new PublishHelpPopup();
+                    publishHelpPopup.show(fm, PUBLISH_HELP_DIALOG_TAG);
+                }
+            });
+        }
+    }
 
 	@Override
 	protected void onStart() {

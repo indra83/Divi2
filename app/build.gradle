@@ -19,7 +19,7 @@ android {
             storePassword 'android'
         }
         divi {
-            storeFile file("divi.keystore")
+            storeFile file("../divi.keystore")
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"

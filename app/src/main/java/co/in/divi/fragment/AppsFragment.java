@@ -35,6 +35,7 @@ import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
 import co.in.divi.content.AllowedAppsProvider.Apps;
+import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 
 public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, LectureStatusChangeListener {
@@ -85,10 +86,17 @@ public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, L
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				App appToOpen = (App) appsAdapter.getItem(position);
 				if (appToOpen.appVersionCode > appToOpen.versionCodeInTab) {
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setDataAndType(Uri.fromFile(new File(appToOpen.apkPath)), "application/vnd.android.package-archive");
-					startActivity(intent);
-				} else {
+                    if (Config.IS_PLAYSTORE_APP) {
+                        String appUrl = "market://details?id=" + appToOpen.appPackage;
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(appUrl));
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.fromFile(new File(appToOpen.apkPath)), "application/vnd.android.package-archive");
+                        startActivity(intent);
+                    }
+                } else {
 					Intent intent = getActivity().getPackageManager().getLaunchIntentForPackage(appToOpen.appPackage);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 					Log.d(TAG, "got intent:" + intent.toUri(0));

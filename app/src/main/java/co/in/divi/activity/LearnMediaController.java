@@ -68,7 +68,7 @@ public class LearnMediaController implements OnInitializedListener {
 	TextureVideoView			videoView;
 	View						videoRoot, imageRoot;
 	ImageView					imageView, rightArrow, leftArrow;
-	HeaderHidingMediaController	mediaController;
+	HeaderHidingMediaController	mediaController, mediaController_yt;
 	private PhotoViewAttacher	mAttacher;
 	private YouTubePlayer		youtubePlayer;
 
@@ -85,6 +85,7 @@ public class LearnMediaController implements OnInitializedListener {
 	public void init() {
 		// setup video & audio
 		mediaController = new HeaderHidingMediaController(activity);
+        mediaController_yt = new HeaderHidingMediaController(activity);
 		videoView.setOnCompletionListener(new OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
@@ -409,7 +410,7 @@ public class LearnMediaController implements OnInitializedListener {
 				youtubeFragment.getView().setOnTouchListener(new View.OnTouchListener() {
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {
-						mediaController.show();
+						mediaController_yt.show();
 						return true;
 					}
 				});
@@ -487,8 +488,8 @@ public class LearnMediaController implements OnInitializedListener {
 						return mode + VIDEO_MODE_SEPARATOR + getCurrentPosition();
 					}
 				};
-				mediaController.setMediaPlayer(mpc);
-				mediaController.setAnchorView(youtubeRoot);
+                mediaController_yt.setMediaPlayer(mpc);
+                mediaController_yt.setAnchorView(youtubeRoot);
 				youtubePlayer.play();
 				activity.setSubItemInLocation(video.id, video.title, LOCATION_SUBTYPE.TOPIC_VIDEO, null);
 				if (fragment != null) {
@@ -599,6 +600,7 @@ public class LearnMediaController implements OnInitializedListener {
 			Log.d(TAG, "pausing youtube");
 			youtubePlayer.pause();
 		}
+        mediaController_yt.hide();
 		activity.getFragmentManager().beginTransaction().hide(youtubeFragment).commit();
 		youtubeRoot.setVisibility(View.GONE);
 	}
