@@ -1,19 +1,10 @@
 package co.in.divi.lecture;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.KeyguardManager;
 import android.app.Service;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,15 +21,35 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.FrameLayout.LayoutParams;
+
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.pubnub.api.Callback;
+import com.pubnub.api.Pubnub;
+import com.pubnub.api.PubnubError;
+import com.pubnub.api.PubnubException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import co.in.divi.AlarmAlertWakeLock;
 import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider;
@@ -66,17 +77,6 @@ import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
 
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
-import com.pubnub.api.Callback;
-import com.pubnub.api.Pubnub;
-import com.pubnub.api.PubnubError;
-import com.pubnub.api.PubnubException;
-
 /*
  * This service performs the following functions:
  * 
@@ -89,6 +89,7 @@ import com.pubnub.api.PubnubException;
 public class LiveLectureService extends Service implements DiviLocationChangeListener {
 
 	static final String					TAG							= LiveLectureService.class.getSimpleName();
+    private static int                  FOREGROUND_ID               = 1338;
 
 	public static final String			INTENT_EXTRA_STOP_SERVICE	= "INTENT_EXTRA_STOP_SERVICE";
 	public static final String			INTENT_EXTRA_CHANNEL		= "INTENT_EXTRA_CHANNEL";
@@ -315,11 +316,12 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 			handler.post(startSyncRunnable);
 			handler.removeCallbacks(postLocationRunnable);
 			handler.post(postLocationRunnable);
-			// if (lectureSessionProvider.isCurrentUserTeacher()) {
-			// fetchStudents(false);
-			// locationSubscribeThread = new LocationSubscribeThread(teacherChannel);
-			// locationSubscribeThread.start();
-			// }
+
+            startForeground(FOREGROUND_ID, new NotificationCompat.Builder(this)
+                    .setOngoing(true)
+                    .setContentTitle("Divi ClassControl")
+                    .setContentText("Joined in lecture '" + lectureSessionProvider.getCurrentLecture().name+"'")
+                    .setSmallIcon(R.drawable.ic_header_connected).build());
 
 			// listen for changes to user data.
 			getContentResolver().registerContentObserver(Attempts.CONTENT_URI, true, attemptsObserver);

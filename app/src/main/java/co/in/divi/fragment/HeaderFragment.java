@@ -149,17 +149,17 @@ public class HeaderFragment extends Fragment implements UserSessionChangeListene
         if(userSessionProvider.isLoggedIn() && getActivity() instanceof HomeActivity){
             new ShowcaseView.Builder(getActivity())
                     .setContentTitle("User Settings")
-                    .setContentText("Access to classroom management, course and general settings.")
+                    .setContentText("Tap to create/join classrooms, change course and edit settings and more.")
                     .setTarget(new ViewTarget(usernameText))
                     .setStyle(R.style.CustomShowcaseTheme)
                     .singleShot(1)
                     .setShowcaseEventListener(new OnShowcaseEventListener() {
                         @Override
                         public void onShowcaseViewHide(ShowcaseView showcaseView) {
-//                            showcaseView.hide();
+                            showcaseView.setVisibility(View.GONE);
                             new ShowcaseView.Builder(getActivity())
                                     .setContentTitle("Live Lectures")
-                                    .setContentText("Create and join Live Lectures.")
+                                    .setContentText("Tap to create and join 'Live Lectures'.")
                                     .setTarget(new ViewTarget(lectureDetail))
                                     .setStyle(R.style.CustomShowcaseTheme)
                                     .singleShot(2)

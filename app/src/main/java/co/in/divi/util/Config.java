@@ -83,10 +83,10 @@ public final class Config {
 	public static final boolean	SHOW_DEBUG_BUTTON					= false;
 
 	// use with getExternalStorageDirectory(), workaround for bug where android flushes the dir on update.
-	public static final String	EXTERNAL_FILES_LOCATION				= "/app/co.in.divi/";
-	public static final String	BOOKS_LOCATION						= EXTERNAL_FILES_LOCATION + "books/";
-	public static final String	TEMP_LOCATION						= EXTERNAL_FILES_LOCATION + "temp/";
-	public static final String	PROGRESS_REPORTS_LOCATION			= EXTERNAL_FILES_LOCATION + "reports/";
+//	public static final String	EXTERNAL_FILES_LOCATION				= "/app/co.in.divi/";
+	public static final String	BOOKS_LOCATION						= "books/";
+	public static final String	TEMP_LOCATION						= "temp/";
+	public static final String	PROGRESS_REPORTS_LOCATION			= "reports/";
 
 	// Storage location
 	public static final boolean	USE_HARDCODED_LOCATION_MICROMAX		= false;

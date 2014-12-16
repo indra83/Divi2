@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +34,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
@@ -231,7 +234,7 @@ public class ClassroomManagementActivity extends BaseActivity {
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             ClassMembers.ClassMember classMember = (ClassMembers.ClassMember) getChild(groupPosition, childPosition);
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.item_dashboard, parent, false);
+                convertView = inflater.inflate(R.layout.item_student, parent, false);
             }
             TextView name = (TextView) convertView.findViewById(R.id.name);
             TextView loc = (TextView) convertView.findViewById(R.id.location);
@@ -251,8 +254,6 @@ public class ClassroomManagementActivity extends BaseActivity {
                 loc.setText("Teacher");
             else
                 loc.setVisibility(View.INVISIBLE);
-            convertView.findViewById(R.id.progress_progressbar2).setVisibility(View.GONE);
-            convertView.findViewById(R.id.accuracy).setVisibility(View.GONE);
             return convertView;
         }
 
@@ -262,24 +263,26 @@ public class ClassroomManagementActivity extends BaseActivity {
         }
     }
 
-    private class FetchStudentsTask extends AsyncTask<UserData.ClassRoom, Void, Integer> {
+    private class FetchStudentsTask extends AsyncTask<UserData.ClassRoom, ClassMemberHolder, Integer> {
         private String url;
-        private HashMap<String, ClassMembers> allClassMembers;
-        ArrayList<UserData.ClassRoom> classRoomsFetched = new ArrayList<UserData.ClassRoom>();
+        //        private HashMap<String, ClassMembers> allClassMembers;
+//        ArrayList<UserData.ClassRoom> classRoomsFetched = new ArrayList<UserData.ClassRoom>();
         private Gson gson;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             url = ServerConfig.SERVER_ENDPOINT + ServerConfig.METHOD_GETCLASSMEMBERS;
-            allClassMembers = new HashMap<String, ClassMembers>();
+//            allClassMembers = new HashMap<String, ClassMembers>();
+            allStudents.clear();
+            classRooms.clear();
             gson = new Gson();
             pb.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected Integer doInBackground(UserData.ClassRoom... classroomsToFetch) {
-            Log.d(TAG,"ids:"+classroomsToFetch.length);
+            Log.d(TAG, "ids:" + classroomsToFetch.length);
             try {
                 for (UserData.ClassRoom classRoom : classroomsToFetch) {
                     JSONObject jsonRequest = new JSONObject();
@@ -291,22 +294,37 @@ public class ClassroomManagementActivity extends BaseActivity {
                     RequestFuture<JSONObject> future = RequestFuture.newFuture();
                     JsonObjectRequest fetchUpdatesRequest = new JsonObjectRequest(Request.Method.POST, url, jsonRequest, future, future);
                     fetchUpdatesRequest.setShouldCache(false);
+                    fetchUpdatesRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     DiviApplication.get().getRequestQueue().add(fetchUpdatesRequest).setTag(ClassroomManagementActivity.this);
 
-                    JSONObject response = future.get();
+                    JSONObject response = future.get(11000, TimeUnit.MILLISECONDS);
                     if (LogConfig.DEBUG_ACTIVITIES)
                         Log.d(TAG, "got response:\n" + response.toString());
 
                     ClassMembers classMembers = gson.fromJson(response.toString(), ClassMembers.class);
 
-                    allClassMembers.put(classRoom.classId, classMembers);
-                    classRoomsFetched.add(classRoom);
+                    ClassMemberHolder cmh = new ClassMemberHolder();
+                    cmh.classMembers = classMembers;
+                    cmh.classRoom = classRoom;
+                    publishProgress(new ClassMemberHolder[]{cmh});
                 }
                 return 0;
+            } catch (TimeoutException te) {
+                Toast.makeText(ClassroomManagementActivity.this, "Timeout fetching details...", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 Log.w(TAG, "Error fetching classroom details", e);
+                Toast.makeText(ClassroomManagementActivity.this, "Error - " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
             return 1;
+        }
+
+        @Override
+        protected void onProgressUpdate(ClassMemberHolder... values) {
+            ClassMemberHolder cmh = values[0];
+            allStudents.put(cmh.classRoom.classId, cmh.classMembers);
+            classRooms.add(cmh.classRoom);
+            listAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -314,13 +332,16 @@ public class ClassroomManagementActivity extends BaseActivity {
             pb.setVisibility(View.GONE);
             if (ret != 0) {
                 Toast.makeText(ClassroomManagementActivity.this, "Error fetching classroom details, please check your internet connection.", Toast.LENGTH_LONG).show();
+                finish();
                 return;
             }
-            for (String classId : allClassMembers.keySet()) {
-                allStudents.put(classId, allClassMembers.get(classId));
-            }
-            classRooms = classRoomsFetched;
-            listAdapter.notifyDataSetChanged();
         }
+
+
+    }
+
+    static class ClassMemberHolder {
+        ClassMembers classMembers;
+        UserData.ClassRoom classRoom;
     }
 }

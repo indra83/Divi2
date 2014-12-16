@@ -124,6 +124,7 @@ public class DiviApplication extends Application {
 	public File getBooksBaseDir(String courseId) {
 		if (this.booksBase == null) {
 			File bookBase = new File(getBaseDir(), Config.BOOKS_LOCATION);
+//            File bookBase = getExternalFilesDir(null);
 			if (!bookBase.exists()) {
 				bookBase.mkdirs();
 				try {
@@ -134,8 +135,6 @@ public class DiviApplication extends Application {
 			}
 			this.booksBase = bookBase;
 		}
-        Log.d(TAG,"cur path:"+booksBase.getAbsolutePath());
-        Log.d(TAG,"getExtFD:"+getExternalFilesDir(null));
         if(courseId!=null)
 		    return new File(this.booksBase, courseId);
         else
@@ -194,7 +193,8 @@ public class DiviApplication extends Application {
 		if (Config.USE_HARDCODED_LOCATION_MICROMAX) {
 			return new File("/mnt/extsd");
 		} else {
-			return Environment.getExternalStorageDirectory();
+//			return Environment.getExternalStorageDirectory();
+            return getExternalFilesDir(null);
 		}
 	}
 }

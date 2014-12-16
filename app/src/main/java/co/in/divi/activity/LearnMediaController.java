@@ -95,6 +95,11 @@ public class LearnMediaController implements OnInitializedListener {
 		videoView.setOnErrorListener(new OnErrorListener() {
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
+                if(what==100){
+                    videoView.stopPlayback();
+                    videoView.resume();
+                    return true;
+                }
 				Log.w(TAG, "Error occured playing video:" + what + ",extra:" + extra);
 				return false;
 			}

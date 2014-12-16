@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.in.divi" >
 
+    <supports-screens android:smallScreens="false"
+        android:normalScreens="false"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:requiresSmallestWidthDp="600" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -30,7 +36,6 @@
 
         <activity
             android:name="co.in.divi.activity.HomeActivity"
-            android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -47,7 +52,6 @@
         </activity>
         <activity
             android:name="co.in.divi.activity.GoogleLoginActivity"
-            android:excludeFromRecents="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.Transparent" >
         </activity>
@@ -183,7 +187,7 @@
         <provider
             android:name="co.in.divi.db.UserDBProvider"
             android:authorities="co.in.divi.userdb"
-            android:exported="true"
+            android:exported="false"
             android:label="UserDB" />
         <provider
             android:name="co.in.divi.logs.LogsDBProvider"
@@ -193,7 +197,7 @@
         <provider
             android:name="co.in.divi.content.AllowedAppsProvider"
             android:authorities="co.in.divi.allowedapps"
-            android:exported="true"
+            android:exported="false"
             android:label="AllowedAppsDB" />
         <provider
             android:name="co.in.divi.util.JSAssetProvider"

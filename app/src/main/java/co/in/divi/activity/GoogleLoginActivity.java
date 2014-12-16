@@ -147,6 +147,7 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
     @Override
     protected void onStart() {
         super.onStart();
+        performWakeup();
         mGoogleApiClient.connect();
     }
 
@@ -249,7 +250,31 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
 
         // Indicate that the sign in process is complete.
         mSignInProgress = STATE_DEFAULT;
+    }
 
+    private void performWakeup() {
+        try {
+            String url = ServerConfig.SERVER_ENDPOINT + ServerConfig.METHOD_GOOGLELOGIN;
+            JsonObjectRequest loginRequest = new JsonObjectRequest(url, new JSONObject(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    if (LogConfig.DEBUG_LOGIN)
+                        Log.d(TAG, "wakeup got response:\n" + response.toString());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (LogConfig.DEBUG_LOGIN) {
+                        Log.e(TAG, "error:" + error.toString());
+                        Log.e(TAG, "nr:" + error.getMessage());
+                    }
+                }
+            });
+            loginRequest.setShouldCache(false);
+            DiviApplication.get().getRequestQueue().add(loginRequest).setTag(this);
+        }catch(Exception e) {
+            Log.w(TAG,"error in wakeup!");
+        }
     }
 
     private void performDiviLogin(String id, String name, String email, String profilePic, String profileUrl) {

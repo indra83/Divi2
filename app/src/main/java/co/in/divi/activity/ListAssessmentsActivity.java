@@ -1,10 +1,5 @@
 package co.in.divi.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.DialogFragment;
@@ -32,6 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
 import co.in.divi.LocationManager.Breadcrumb;
@@ -144,8 +145,10 @@ public class ListAssessmentsActivity extends BaseActivity implements LoaderCallb
 					Bundle b = null;
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 						b = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
-					}
-					startActivity(launchAssessment, b);
+                        startActivity(launchAssessment, b);
+                    }else {
+                        startActivity(launchAssessment);
+                    }
 				} else {
 					Toast.makeText(ListAssessmentsActivity.this, "Select assessment", Toast.LENGTH_LONG).show();
 				}

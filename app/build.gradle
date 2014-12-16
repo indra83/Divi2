@@ -20,9 +20,6 @@ android {
         }
         divi {
             storeFile file("../divi.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
         }
     }
 
@@ -33,7 +30,7 @@ android {
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.divi
-            buildConfigField STRING, "YOUTUBE_DEVELOPER_KEY", "\"AIzaSyDl8dNER4ln12hoCL53HSatQLtsUyKlW8c\""
+            buildConfigField STRING, "YOUTUBE_DEVELOPER_KEY", "\"AIzaSyCNeV-tKYVU10uSharpbu51UNlOgzMigiA\""
         }
 
         debug {
@@ -65,8 +62,8 @@ android {
         }
         ccStudent {
             applicationId "co.in.divi.cc.student"
-            versionName "v 2.5.0 (Student)"
-            versionCode 250
+            versionName "v 2.5.2 (Student)"
+            versionCode 252
 
             buildConfigField BOOLEAN, "IS_PLAYSTORE_APP", TRUE
             buildConfigField BOOLEAN, "IS_TEACHER_ONLY", FALSE
@@ -79,8 +76,8 @@ android {
         }
         ccTeacher {
             applicationId "co.in.divi.cc.teacher"
-            versionName "v 2.5.0 (Teacher)"
-            versionCode 250
+            versionName "v 2.5.2 (Teacher)"
+            versionCode 252
 
             buildConfigField BOOLEAN, "IS_PLAYSTORE_APP", TRUE
             buildConfigField BOOLEAN, "IS_TEACHER_ONLY", TRUE
@@ -102,3 +99,9 @@ dependencies {
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }
+
+def props = new Properties()
+props.load(new FileInputStream(rootProject.file("release.properties")))
+android.signingConfigs.divi.storePassword props.diviKeystorePass
+android.signingConfigs.divi.keyAlias props.diviKeystoreAlias
+android.signingConfigs.divi.keyPassword props.diviKeystoreKeyPass

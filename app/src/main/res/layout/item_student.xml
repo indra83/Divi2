@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.android.volley.toolbox.FadeInNetworkImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/bg_dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/name"
+            android:text="blah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@+id/profile_pic"
+            android:singleLine="true"
+            android:textColor="#444444"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/location"
+            android:text="location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/name"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/name"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</FrameLayout>

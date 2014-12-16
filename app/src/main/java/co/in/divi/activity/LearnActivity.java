@@ -195,7 +195,7 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
                                         .singleShot(12)
                                         .build();
                                 showcaseView2.setButtonPosition(lps);
-                                showcaseView2.setBackgroundResource(R.drawable.ic_gesture_swipe);
+                                showcaseView2.setBackgroundResource(R.drawable.swipe2);
                             }
 
                             @Override

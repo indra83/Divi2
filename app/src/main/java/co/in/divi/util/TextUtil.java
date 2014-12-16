@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
+
 import co.in.divi.LectureSessionProvider.LocationHolder;
 import co.in.divi.R;
 import co.in.divi.content.DiviReference;
@@ -136,16 +136,13 @@ public class TextUtil {
 			}
 			break;
 		case UNKNOWN:
-			Log.d("TEMP", "curInstruction::" + curInstruction.type);
+            ret = String.format(TEMPLATE_LOCATION_RED, studentLoc.externalAppName == null ? "Unknown" : studentLoc.externalAppName);
 			if (curInstruction != null && curInstruction.type == Instruction.INSTRUCTION_TYPE_NAVIGATE_EXTERNAL) {
 				if (curInstruction.location.equals(studentLoc.locationUri)) {
 					ret = String.format(TEMPLATE_LOCATION_GREEN, "Ok");
-				} else {
-					ret = String.format(TEMPLATE_LOCATION_RED, studentLoc.externalAppName == null ? "Unknown" : studentLoc.externalAppName);
 				}
-				Log.d("TEMP", "ret:" + ret);
-				break;
 			}
+            break;
 		default:
 			ret = String.format(TEMPLATE_LOCATION_RED, "n / a");
 			break;

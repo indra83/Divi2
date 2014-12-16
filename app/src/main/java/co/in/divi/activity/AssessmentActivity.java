@@ -167,7 +167,7 @@ public class AssessmentActivity extends BaseActivity implements LoaderCallbacks<
 				hideHeader();
                 new ShowcaseView.Builder(AssessmentActivity.this)
                         .setContentTitle("Navigation")
-                        .setContentText("Pull to access navigation menu.")
+                        .setContentText("Pull to access navigation panel.")
                         .setTarget(new ViewTarget(findViewById(R.id.slide_toc_button)))
                         .setStyle(R.style.CustomShowcaseTheme)
                         .singleShot(21)
@@ -181,7 +181,7 @@ public class AssessmentActivity extends BaseActivity implements LoaderCallbacks<
                                         .singleShot(22)
                                         .build();
                                 showcaseView2.setButtonPosition(lps);
-                                showcaseView2.setBackgroundResource(R.drawable.ic_gesture_swipe);
+                                showcaseView2.setBackgroundResource(R.drawable.swipe2);
                             }
                             @Override
                             public void onShowcaseViewDidHide(ShowcaseView showcaseView) {

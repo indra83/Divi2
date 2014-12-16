@@ -161,8 +161,10 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 				Bundle b = null;
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 					b = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
-				}
-				startActivity(launchBook, b);
+                    startActivity(launchBook, b);
+				}else {
+                    startActivity(launchBook);
+                }
 			}
 		});
 
@@ -204,18 +206,16 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 		});
 
         // Publish button
-        if (Config.IS_PLAYSTORE_APP && Config.IS_TEACHER_ONLY && userSessionProvider.isLoggedIn()) {
-            publishContentButton.setVisibility(View.VISIBLE);
-            publishContentButton.setText(Html.fromHtml("<u>Publish Content</u>"));
-            publishContentButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FragmentManager fm = getFragmentManager();
-                    PublishHelpPopup publishHelpPopup= new PublishHelpPopup();
-                    publishHelpPopup.show(fm, PUBLISH_HELP_DIALOG_TAG);
-                }
-            });
-        }
+        publishContentButton.setVisibility(View.GONE);
+        publishContentButton.setText(Html.fromHtml("<u>Publish Content</u>"));
+        publishContentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getFragmentManager();
+                PublishHelpPopup publishHelpPopup= new PublishHelpPopup();
+                publishHelpPopup.show(fm, PUBLISH_HELP_DIALOG_TAG);
+            }
+        });
     }
 
 	@Override
@@ -389,8 +389,13 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 			getFragmentManager().beginTransaction().show(appsFragment).commit();
 			break;
 		}
-
-		refreshContent();
+        if (Config.IS_PLAYSTORE_APP && Config.IS_TEACHER_ONLY && userSessionProvider.isLoggedIn()) {
+            if (section == SECTION_LEARN || section == SECTION_PRACTICE)
+                publishContentButton.setVisibility(View.VISIBLE);
+            else
+                publishContentButton.setVisibility(View.GONE);
+        }
+        refreshContent();
 	}
 
 	private void refreshContent() {
