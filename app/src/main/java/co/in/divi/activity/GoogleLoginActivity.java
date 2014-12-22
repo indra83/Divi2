@@ -7,13 +7,9 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -37,9 +33,6 @@ import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import co.in.divi.DiviApplication;
 import co.in.divi.R;
@@ -101,20 +94,20 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
         setContentView(R.layout.activity_googlelogin);
 
         // temp
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    getPackageName(),
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(
+//                    getPackageName(),
+//                    PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//
+//        } catch (NoSuchAlgorithmException e) {
+//
+//        }
         // end teemp
 
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);

@@ -27,14 +27,14 @@ android {
         def STRING = "String"
 
         release {
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.divi
             buildConfigField STRING, "YOUTUBE_DEVELOPER_KEY", "\"AIzaSyCNeV-tKYVU10uSharpbu51UNlOgzMigiA\""
         }
 
         debug {
-            runProguard false
+            minifyEnabled false
             signingConfig signingConfigs.debug
             buildConfigField STRING, "YOUTUBE_DEVELOPER_KEY", "\"AIzaSyDl8dNER4ln12hoCL53HSatQLtsUyKlW8c\""
         }
