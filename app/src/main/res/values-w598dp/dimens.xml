@@ -26,5 +26,4 @@
     <!-- Help screen OK size -->
     <dimen name="help_ok_width">100dp</dimen>
     <dimen name="help_ok_height">50dp</dimen>
-    <dimen name="drawer_width" >280dp</dimen>
 </resources>

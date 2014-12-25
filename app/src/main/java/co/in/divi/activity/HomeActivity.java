@@ -227,7 +227,8 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 			setSection(SECTION_LEARN);
 		loadBooks();
 		refreshUpdatesText();
-		((HeaderFragment) getFragmentManager().findFragmentById(R.id.header)).disableBack();
+        if(!Config.IS_PLAYSTORE_APP)
+            ((HeaderFragment) getFragmentManager().findFragmentById(R.id.header)).disableBack();
 		timeDisplayTimer.cancel();
 		timeDisplayTimer = new Timer();
 		timeDisplayTimer.scheduleAtFixedRate(new TimerTask() {

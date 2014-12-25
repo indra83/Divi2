@@ -235,6 +235,11 @@ public class GoogleLoginActivity extends Activity implements ConnectionCallbacks
         mSignInButton.setEnabled(false);
         panel.setVisibility(View.VISIBLE);
         Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+//        if(currentUser==null) {
+//            Toast.makeText(this,"Error signing in, check internet connectivity.",Toast.LENGTH_SHORT).show();
+//            mSignInProgress = STATE_DEFAULT;
+//            return;
+//        }
         String name = currentUser.getDisplayName();
         if (name == null || name.length() == 0)
             name = Plus.AccountApi.getAccountName(mGoogleApiClient);
