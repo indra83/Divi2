@@ -1,4 +1,5 @@
 <resources>
     <item name="activity_home" type="layout">@layout/activity_home_drawer</item>
     <item name="fragment_header" type="layout">@layout/fragment_header_small</item>
+    <item name="item_progress_top" type="layout">@layout/item_progress_top_narrow</item>
 </resources>

@@ -13,6 +13,10 @@ public class Book implements Parcelable {
 	public String	bookTags;	// !! name in db table is different!!
 	public int		version;
 
+    public boolean showReferences = true;
+    public String password = null;
+    public String streamBaseUrl =null;// "http://s3-ap-southeast-1.amazonaws.com/divi-content-textlas/courses/";
+
 	private Book() {
 	}
 

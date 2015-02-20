@@ -1,0 +1,4 @@
+<resources>
+    <item name="activity_home" type="layout">@layout/activity_home</item>
+    <item name="fragment_header" type="layout">@layout/fragment_header</item>
+</resources>

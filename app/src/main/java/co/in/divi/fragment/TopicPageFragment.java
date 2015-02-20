@@ -168,16 +168,16 @@ public class TopicPageFragment extends Fragment implements TopicWebViewListener 
 			try {
 				topicData = htmlGenerator.getTopicHTML(new File(URI.create(pagePath)), chapterTitle, publisher, topicTitle);
 				// debug begin
-				try {
-					File file = new File(Environment.getExternalStorageDirectory() + File.separator + "test_" + topicNo + ".html");
-					if (LogConfig.DEBUG_ACTIVITIES)
-						Log.d(TAG, "file is " + file.getAbsolutePath());
-					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
-					outputStreamWriter.write(topicData);
-					outputStreamWriter.close();
-				} catch (IOException e) {
-					Log.e("Exception", "File write failed: " + e.toString());
-				}
+//				try {
+//					File file = new File(Environment.getExternalStorageDirectory() + File.separator + "test_" + topicNo + ".html");
+//					if (LogConfig.DEBUG_ACTIVITIES)
+//						Log.d(TAG, "file is " + file.getAbsolutePath());
+//					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
+//					outputStreamWriter.write(topicData);
+//					outputStreamWriter.close();
+//				} catch (IOException e) {
+//					Log.e("Exception", "File write failed: " + e.toString());
+//				}
 				// debug end
 				return 0;
 			} catch (Exception e) {
