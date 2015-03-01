@@ -1,19 +1,20 @@
 package co.in.divi.util;
 
 import co.in.divi.BuildConfig;
+import co.in.divi.CustomSettings;
 
 public final class ServerConfig {
 
     public static final String SERVER_ENDPOINT = BuildConfig.SERVER_ENDPOINT;
 
-    public static final String KEEN_PROJECT_ID = BuildConfig.KEEN_PROJECT_ID;
-    public static final String KEEN_API_KEY = BuildConfig.KEEN_API_KEY;
-    public static final String KEEN_WRITE_KEY = BuildConfig.KEEN_WRITE_KEY;
-    public static final String KEEN_READ_KEY = BuildConfig.KEEN_READ_KEY;
+    public static final String KEEN_PROJECT_ID = CustomSettings.KEEN_PROJECT_ID;
+    public static final String KEEN_API_KEY = CustomSettings.KEEN_API_KEY;
+    public static final String KEEN_WRITE_KEY = CustomSettings.KEEN_WRITE_KEY;
+    public static final String KEEN_READ_KEY = CustomSettings.KEEN_READ_KEY;
 
     public static final String KEEN_EVENT_COLLECTION = "logs";
     public static final String KEEN_API_ENDPOINT = "https://api.keen.io/3.0/projects/" + KEEN_PROJECT_ID
-            + "/events?api_key="+KEEN_API_KEY;
+            + "/events?api_key=" + KEEN_API_KEY;
 
     public static final String PUBNUB_PUBLISH_KEY = "pub-c-92cb1e82-71a1-4fd0-81ed-8cce0f25e4a3";
     public static final String PUBNUB_SUBSCRIBE_KEY = "sub-c-56e5356a-5071-11e3-98c1-02ee2ddab7fe";

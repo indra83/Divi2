@@ -45,7 +45,7 @@ public class Topic {
 		public boolean	hideInToc;
 	}
 
-	public static class VM {
+	public static class App {
 		public String	id;
 		public String	src;
 		public String	appPackage;

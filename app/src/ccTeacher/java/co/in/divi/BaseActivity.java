@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
+
 import co.in.divi.DiaryManager.DiaryChangeListener;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.LocationManager.LOCATION_TYPE;
@@ -177,7 +178,7 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
 			// fragment view
 			ObjectAnimator oa2 = ObjectAnimator.ofFloat(header.getView(), "translationY", 0, -300f);
 			oa2.setDuration(500);
-			oa2.addListener(new Animator.AnimatorListener() {
+			oa2.addListener(new AnimatorListener() {
 				@Override
 				public void onAnimationStart(Animator animation) {
 					headerIsAnimating = true;

@@ -46,19 +46,21 @@ android {
         def FALSE = "false"
         def STRING = "String"
 
+        prod {
+            applicationId "co.in.divi"
+            versionName "v2.6 (prod)"
+            versionCode 260
+
+            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
+        }
+
         demo {
             applicationId "co.in.divi"
-            versionName "v2.5 (demo)"
-            versionCode 250
+            versionName "v2.6 (demo)"
+            versionCode 260
 
-            buildConfigField BOOLEAN, "IS_PLAYSTORE_APP", FALSE
-            buildConfigField BOOLEAN, "IS_TEACHER_ONLY", FALSE
-            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
-
-            buildConfigField STRING, "KEEN_PROJECT_ID", "\"53756d2c00111c1eb700000e\""
-            buildConfigField STRING, "KEEN_API_KEY", "\"A74108790CE9CDCF894BFFC4CC8861F4\""
-            buildConfigField STRING, "KEEN_READ_KEY", "\"2f66acfc3274d6fbaa685fb39906ad7bc9bfd88842089523208548d7092eb95e4f627a236e859e570c232c21798082d5798e32715e87ce847cb7d947a94295db58e45c2486568a4090438d82e98e53d7d6d815a2976ad66ebff3c006c02a51a4e74339c9665f9fc9dbf909225b87f25c\""
-            buildConfigField STRING, "KEEN_WRITE_KEY", "\"3306e3ce7e04bbfca8ab2e6cea1afaba5ad463a475858b17f4874ea6bc573083fd9cfa7f90332c030644b30d10fb45db0c72779a4dc7d151d5dd88c96c423f203902a8e40f34e899e0baf038c74bd4bb44cb509f6b05d1c3738ed5b7f45128e8bf3eefe89e52e3ea57854e326c34b94f\""
+//            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
+            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-dev.herokuapp.com/v2\""
         }
         ccStudent {
             applicationId "co.in.divi.cc.student"
@@ -94,7 +96,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':PhotoView-1.2.2')
-    compile 'com.google.android.gms:play-services:6.1.+'
+    ccStudentCompile 'com.google.android.gms:play-services:6.1.+'
+    ccTeacherCompile 'com.google.android.gms:play-services:6.1.+'
     compile 'com.android.support:support-v13:21.0.2'
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
