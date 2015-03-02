@@ -178,14 +178,14 @@ public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, L
 			String[] courseIds = UserSessionProvider.getInstance(getActivity()).getAllCourseIds();
 			ArrayList<String> queryParams = new ArrayList<String>();
 			queryParams.addAll(Arrays.asList(courseIds));
-			queryParams.add("0");
+//			queryParams.add("0");
 			if (courseIds.length > 0) {
 				StringBuilder sb = new StringBuilder(courseIds.length * 2 - 1);
 				sb.append("?");
 				for (int i = 1; i < courseIds.length; i++) {
 					sb.append(",?");
 				}
-				String mSelectionClause = Apps.COLUMN_COURSE_ID + " IN (" + sb.toString() + ") AND " + Apps.COLUMN_SHOW_IN_APPS + " > ? ";
+				String mSelectionClause = Apps.COLUMN_COURSE_ID + " IN (" + sb.toString() +")";// ") AND " + Apps.COLUMN_SHOW_IN_APPS + " > ? ";
 				CursorLoader loader = new CursorLoader(getActivity(), Apps.CONTENT_URI, null, mSelectionClause,
 						queryParams.toArray(new String[0]), null);
 				return loader;
@@ -226,9 +226,9 @@ public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, L
 					continue;
 				uniqueIdentifier.add(app.appPackage);
 				allowedApps.add(app);
-				if (LogConfig.DEBUG_ACTIVITIES)
-					Log.d(TAG, "got app: " + app.appName + ", show? " + cursor.getInt(cursor.getColumnIndex(Apps.COLUMN_SHOW_IN_APPS))
-							+ " apk:" + app.apkPath);
+//				if (LogConfig.DEBUG_ACTIVITIES)
+//					Log.d(TAG, "got app: " + app.appName + ", show? " + cursor.getInt(cursor.getColumnIndex(Apps.COLUMN_SHOW_IN_APPS))
+//							+ " apk:" + app.apkPath);
 			}
 		}
 		appsAdapter.notifyDataSetChanged();

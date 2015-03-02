@@ -58,7 +58,7 @@ public final class Util {
 			return false;
 	}
 
-	public static boolean isVMExists(PackageManager pm, String appPackage, int appVersionCode) {
+	public static boolean isAppExists(PackageManager pm, String appPackage, int appVersionCode) {
 		try {
 			PackageInfo info = pm.getPackageInfo(appPackage, PackageManager.GET_META_DATA);
 			if (info.versionCode < appVersionCode) {

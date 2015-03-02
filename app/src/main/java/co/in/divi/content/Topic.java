@@ -11,7 +11,7 @@ public class Topic {
 	public Video[]				videos;
 	public Audio[]				audios;
 	public ImageSet[]			imageSets;
-	public VM[]					vms;
+	public App[]				apps;
 
 	public static class Section {
 		public String	id;
@@ -51,11 +51,10 @@ public class Topic {
 		public String	appPackage;
 		public int		appVersionCode;
 		public String	appActivityName;
-		public String	thumb;
 		public String	title;
 		public String	desc;
 		public boolean	hideInToc;
-		public boolean	showInApps;
+		public boolean	isPlaystoreApp;
 	}
 
 	public static class ImageSet {
@@ -68,4 +67,9 @@ public class Topic {
 			public String	desc;
 		}
 	}
+    /*
+    public static class VM {
+        public String id;
+        public String title;
+    }*/
 }

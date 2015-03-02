@@ -59,7 +59,6 @@ import co.in.divi.content.Topic.Audio;
 import co.in.divi.content.Topic.Image;
 import co.in.divi.content.Topic.ImageSet;
 import co.in.divi.content.Topic.Section;
-import co.in.divi.content.Topic.VM;
 import co.in.divi.content.Topic.Video;
 import co.in.divi.db.UserDBContract;
 import co.in.divi.db.UserDBContract.Commands;
@@ -532,46 +531,50 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 				return;
 			}
 		}
-		if (topic.vms != null) {
-			for (VM vm : topic.vms) {
-				if (vm.id.equals(resourceId)) {
+		if (topic.apps != null) {
+			for (Topic.App app : topic.apps) {
+				if (app.id.equals(resourceId)) {
 					if (LogConfig.DEBUG_ACTIVITIES)
-						Log.d(TAG, "Opening vm:" + vm.src);
-					if (Util.isVMExists(getPackageManager(), vm.appPackage, vm.appVersionCode)) {
-						// vm exists, open vm
+						Log.d(TAG, "Opening vm:" + app.src);
+					if (Util.isAppExists(getPackageManager(), app.appPackage, app.appVersionCode)) {
+						// app exists, open app
 						Intent intent;
-						if (vm.appActivityName != null && vm.appActivityName.length() > 0) {
+						if (app.appActivityName != null && app.appActivityName.length() > 0) {
 							intent = new Intent(Intent.ACTION_MAIN);
-							intent.setComponent(new ComponentName(vm.appPackage, vm.appActivityName));
+							intent.setComponent(new ComponentName(app.appPackage, app.appActivityName));
 						} else {
-							intent = getPackageManager().getLaunchIntentForPackage(vm.appPackage);
+							intent = getPackageManager().getLaunchIntentForPackage(app.appPackage);
 						}
-						intent.putExtra("UID", userSessionProvider.getUserData().uid);
-						intent.putExtra("COURSE_ID", getDisplayedTopic().courseId);
-						intent.putExtra("BOOK_ID", getDisplayedTopic().bookId);
-						intent.putExtra("TOPIC_ID", getDisplayedTopic().id);
-						intent.putExtra("VM_ID", vm.id);
-						intent.putExtra("VM_ACTIVITY", vm.appActivityName);
-						intent.putExtra(
-								"BREADCRUMB",
-								Breadcrumb.get(userSessionProvider.getCourseName(), currentBook.name, getDisplayedTopic().parentName,
-										getDisplayedTopic().name, vm.title).getBreadcrumbArray());
+//						intent.putExtra("UID", userSessionProvider.getUserData().uid);
+//						intent.putExtra("COURSE_ID", getDisplayedTopic().courseId);
+//						intent.putExtra("BOOK_ID", getDisplayedTopic().bookId);
+//						intent.putExtra("TOPIC_ID", getDisplayedTopic().id);
+//						intent.putExtra("VM_ID", app.id);
+//						intent.putExtra("VM_ACTIVITY", app.appActivityName);
+//						intent.putExtra(
+//								"BREADCRUMB",
+//								Breadcrumb.get(userSessionProvider.getCourseName(), currentBook.name, getDisplayedTopic().parentName,
+//										getDisplayedTopic().name, vm.title).getBreadcrumbArray());
 						// intent.putExtra("FRAGMENT", fragment);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK
 								| Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 						startActivity(intent);
 					} else {
-						// vm needs to be installed/updated
-						Toast.makeText(this, "VM needs to be installed/updated...", Toast.LENGTH_SHORT).show();
+						// app needs to be installed/updated
+						Toast.makeText(this, "App needs to be installed/updated...", Toast.LENGTH_SHORT).show();
                         if (Config.IS_PLAYSTORE_APP) {
-                            String appUrl = "market://details?id=" + vm.appPackage;
+                            String appUrl = "market://details?id=" + app.appPackage;
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(appUrl));
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.fromFile(new File(baseDir, vm.src)), "application/vnd.android.package-archive");
-                            startActivity(intent);
+                            if(app.isPlaystoreApp) {
+                               // app needs to be provisioned!
+                            }else {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(new File(baseDir, app.src)), "application/vnd.android.package-archive");
+                                startActivity(intent);
+                            }
                         }
                     }
 					return;

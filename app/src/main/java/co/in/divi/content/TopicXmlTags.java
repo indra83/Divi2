@@ -26,6 +26,7 @@ public final class TopicXmlTags {
 	public static final String	AUDIO_TITLE_TAG					= "title";
 	public static final String	AUDIO_DESCRIPTION_TAG			= "description";
 
+    /*
 	public static final String	VM_TAG							= "vm";
 	public static final String	VM_THUMB_ATTRIBUTE				= "thumb";
 	public static final String	VM_SHOW_IN_APPS_ATTRIBUTE		= "showInApps";
@@ -34,6 +35,16 @@ public final class TopicXmlTags {
 	public static final String	VM_APP_VERSIONCODE_ATTRIBUTE	= "appVersionCode";
 	public static final String	VM_TITLE_TAG					= "title";
 	public static final String	VM_DESCRIPTION_TAG				= "description";
+	*/
+
+	public static final String	APP_TAG							= "application";
+//	public static final String	APP_SHOW_IN_APPS_ATTRIBUTE		= "showInApps";
+	public static final String	APP_PACKAGE_ATTRIBUTE	    	= "appPackage";
+	public static final String	APP_ACTIVITY_NAME_ATTRIBUTE	    = "activityName";
+	public static final String	APP_VERSIONCODE_ATTRIBUTE	    = "appVersionCode";
+	public static final String	APP_TITLE_TAG					= "title";
+	public static final String	APP_DESCRIPTION_TAG				= "description";
+
 
 	public static final String	HTML_TAG						= "html";
 	public static final String	HTML_DATA_TAG					= "data";

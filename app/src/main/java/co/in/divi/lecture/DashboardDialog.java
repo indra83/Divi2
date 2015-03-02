@@ -97,8 +97,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 	private ArrayList<ClassMember>			onlineMembers, offlineMembers;
 	private HashMap<String, LocationHolder>	locations;
 	private HashMap<String, Integer>		studentPoints, studentAccuracies, questionPoints, questionAccuracies;
-	private VMChallenges					sharedVMChallenges;
-	private Topic.VM						sharedVMDef;
+//	private VMChallenges					sharedVMChallenges;
+//	private Topic.VM						sharedVMDef;
 	private AssessmentFileModel				assessmentModel;
 	private Book							assessmentBook;
 	private DiviReference					assessmentRef;
@@ -110,7 +110,7 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 	private Handler							handler;
 	private boolean							refreshPending;
 	private LoadAssessmentDataTask			loadAssessmentDataTask;
-	private LoadVMDataTask					loadVMDataTask;
+//	private LoadVMDataTask					loadVMDataTask;
 	private TagsScorecardModel				tagsScorecardModel;
 	private Runnable						refreshUIRunnable					= new Runnable() {
 																					@Override
@@ -230,8 +230,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 					tagsScorecardModel.book = assessmentBook;
 					// fill attempts async.
 					fetchStudentScores(student.uid, assessmentRef.courseId, assessmentRef.bookId, assessmentModel.assessmentId);
-				} else if (sharedVMChallenges != null && assessmentRef != null) {
-					Toast.makeText(context, "ToDo", Toast.LENGTH_SHORT).show();
+//				} else if (sharedVMChallenges != null && assessmentRef != null) {
+//					Toast.makeText(context, "ToDo", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -252,8 +252,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 					tagsScorecardModel.book = assessmentBook;
 					// fill attempts async.
 					fetchStudentScores(student.uid, assessmentRef.courseId, assessmentRef.bookId, assessmentModel.assessmentId);
-				} else if (sharedVMChallenges != null && assessmentRef != null) {
-					Toast.makeText(context, "ToDo", Toast.LENGTH_SHORT).show();
+//				} else if (sharedVMChallenges != null && assessmentRef != null) {
+//					Toast.makeText(context, "ToDo", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -269,8 +269,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 								DiviReference.REFERENCE_TYPE_ASSESSMENT, assessmentRef.itemId, qId);
 						dismiss();
 						Util.openInstruction(context, ref.getUri());
-					} else if (sharedVMChallenges != null && assessmentRef != null) {
-						Toast.makeText(context, "ToDo", Toast.LENGTH_SHORT).show();
+//					} else if (sharedVMChallenges != null && assessmentRef != null) {
+//						Toast.makeText(context, "ToDo", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -288,8 +288,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 					public void run() {
 						Log.d(TAG, "fetch dashboard data");
 						lastAssessmentInstruction = null;
-						sharedVMDef = null;
-						sharedVMChallenges = null;
+//						sharedVMDef = null;
+//						sharedVMChallenges = null;
 						// get the latest quiz from instructions
 						if (lectureSessionProvider.getInstructions() == null) {
 							Log.d(TAG, "no instructions yet!");
@@ -308,20 +308,20 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 										DiviReference ref = new DiviReference(Uri.parse(i.location));
 										if (i.isVM) {
 											lastAssessmentInstruction = i;
-											sharedVMChallenges = null;
-											sharedVMDef = null;
+//											sharedVMChallenges = null;
+//											sharedVMDef = null;
 											assessmentModel = null;
 											// fetch VM model
-											if (loadVMDataTask != null)
-												loadVMDataTask.cancel(false);
-											loadVMDataTask = new LoadVMDataTask();
-											loadVMDataTask.execute(new String[] { ref.courseId, ref.bookId, ref.itemId, ref.subItemId });
+//											if (loadVMDataTask != null)
+//												loadVMDataTask.cancel(false);
+//											loadVMDataTask = new LoadVMDataTask();
+//											loadVMDataTask.execute(new String[] { ref.courseId, ref.bookId, ref.itemId, ref.subItemId });
 											fetchDashboardData(ref.courseId, ref.bookId, ref.itemId + "_" + ref.subItemId);
 											return;
 										} else {
 											if (ref.type == DiviReference.REFERENCE_TYPE_ASSESSMENT) {
 												lastAssessmentInstruction = i;
-												sharedVMChallenges = null;
+//												sharedVMChallenges = null;
 												// fetch questions if we havent
 												if (assessmentModel == null || !assessmentModel.assessmentId.equals(ref.itemId)) {
 													assessmentModel = null;
@@ -354,8 +354,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 	private void stop() {
 		if (loadAssessmentDataTask != null)
 			loadAssessmentDataTask.cancel(false);
-		if (loadVMDataTask != null)
-			loadVMDataTask.cancel(false);
+//		if (loadVMDataTask != null)
+//			loadVMDataTask.cancel(false);
 		timer.cancel();
 		lectureSessionProvider.removeDashboardListener(this);
 		lectureSessionProvider.removeListener(this);
@@ -411,8 +411,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 		String assessmentText = "";
 		if (assessmentModel != null)
 			assessmentText = assessmentTitle;
-		else if (sharedVMDef != null)
-			assessmentText = sharedVMDef.title;
+//		else if (sharedVMDef != null)
+//			assessmentText = sharedVMDef.title;
 		onlineBar.setText("  Online - " + onlineMembers.size());
 		offlineBar.setText("  Offline - " + offlineMembers.size());
 		if (showingOnline) {
@@ -490,6 +490,7 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 				lp2.weight = 1.0f - lp1.weight;
 				blueBar.setLayoutParams(lp1);
 				blackBar.setLayoutParams(lp2);
+                /*
 			} else if (sharedVMDef != null && studentPoints.containsKey(member.uid)) {
 				progressbar2.setVisibility(View.VISIBLE);
 				accuracy.setVisibility(View.VISIBLE);
@@ -504,6 +505,7 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 				lp2.weight = 1.0f - lp1.weight;
 				blueBar.setLayoutParams(lp1);
 				blackBar.setLayoutParams(lp2);
+				*/
 			} else {
 				progressbar2.setVisibility(View.INVISIBLE);
 				accuracy.setVisibility(View.INVISIBLE);
@@ -540,8 +542,8 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 
 			if (assessmentModel != null)
 				return assessmentModel.questions.length;
-			if (sharedVMDef != null && sharedVMChallenges != null)
-				return sharedVMChallenges.challenges.length;
+//			if (sharedVMDef != null && sharedVMChallenges != null)
+//				return sharedVMChallenges.challenges.length;
 			return 0;
 		}
 
@@ -593,10 +595,12 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 					progressbar2.setVisibility(View.INVISIBLE);
 					accuracy.setVisibility(View.INVISIBLE);
 				}
+                /*
 			} else if (sharedVMChallenges != null) {
 				String challengeId = sharedVMChallenges.challenges[position].id;
 				name.setText(sharedVMChallenges.challenges[position].title);
 				loc.setText(sharedVMChallenges.challenges[position].description);
+				*/
 			}
 			convertView.findViewById(R.id.profile_pic).setVisibility(View.GONE);
 
@@ -726,7 +730,7 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 			}
 		}
 	}
-
+/*
 	class LoadVMDataTask extends AsyncTask<String, Void, Integer> {
 
 		VMChallenges	vmc;
@@ -783,7 +787,7 @@ public class DashboardDialog extends Dialog implements DashboardChangeListener, 
 			}
 		}
 	}
-
+*/
 	private void fetchStudentScores(String studentId, String courseId, String bookId, String assessmentId) {
 		try {
 			JSONObject jsonRequest = new JSONObject();

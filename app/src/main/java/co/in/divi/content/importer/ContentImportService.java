@@ -23,7 +23,6 @@ import co.in.divi.content.AssessmentFileModel;
 import co.in.divi.content.DatabaseHelper;
 import co.in.divi.content.TagModel;
 import co.in.divi.content.Topic;
-import co.in.divi.content.Topic.VM;
 import co.in.divi.content.TopicXmlParser;
 import co.in.divi.content.importer.BookDefinition.AssessmentDefinition;
 import co.in.divi.content.importer.BookDefinition.ChapterDefinition;
@@ -227,20 +226,20 @@ public class ContentImportService extends IntentService {
 					for (int topIndex = 0; topIndex < chapterNode.topicNodes.size(); topIndex++) {
 						TopicNode topicNode = chapterNode.topicNodes.get(topIndex);
 						Topic t = new Gson().fromJson(topicNode.content, Topic.class);
-						if (t.vms != null && t.vms.length > 0) {
-							for (VM vm : t.vms) {
+						if (t.apps != null && t.apps.length > 0) {
+							for (Topic.App app : t.apps) {
 								if (LogConfig.DEBUG_CONTENT_IMPORT)
-									Log.d(TAG, "inserting vm - " + vm.title + ", src: " + vm.src);
+									Log.d(TAG, "inserting app - " + app.title + ", src: " + app.src);
 								File apkFile = null;
-								if (vm.src != null)
-									apkFile = new File(new File(new File(toDir, chapterNode.id), topicNode.id), vm.src);
+								if (app.src != null)
+									apkFile = new File(new File(new File(toDir, chapterNode.id), topicNode.id), app.src);
 								ContentValues appCV = new ContentValues();
 								appCV.put(AllowedAppsProvider.Apps.COLUMN_COURSE_ID, bookDef.courseId);
 								appCV.put(AllowedAppsProvider.Apps.COLUMN_BOOK_ID, bookDef.bookId);
-								appCV.put(AllowedAppsProvider.Apps.COLUMN_NAME, vm.title);
-								appCV.put(AllowedAppsProvider.Apps.COLUMN_PACKAGE, vm.appPackage);
-								appCV.put(AllowedAppsProvider.Apps.COLUMN_VERSION_CODE, vm.appVersionCode);
-								appCV.put(AllowedAppsProvider.Apps.COLUMN_SHOW_IN_APPS, vm.showInApps ? 1 : 0);
+								appCV.put(AllowedAppsProvider.Apps.COLUMN_NAME, app.title);
+								appCV.put(AllowedAppsProvider.Apps.COLUMN_PACKAGE, app.appPackage);
+								appCV.put(AllowedAppsProvider.Apps.COLUMN_VERSION_CODE, app.appVersionCode);
+//								appCV.put(AllowedAppsProvider.Apps.COLUMN_SHOW_IN_APPS, vm.showInApps ? 1 : 0);
 								appCV.put(AllowedAppsProvider.Apps.COLUMN_APK_PATH, apkFile == null ? "" : apkFile.getAbsolutePath());
 								ops.add(ContentProviderOperation.newInsert(AllowedAppsProvider.Apps.CONTENT_URI).withValues(appCV).build());
 							}

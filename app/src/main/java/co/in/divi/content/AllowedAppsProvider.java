@@ -50,7 +50,6 @@ public class AllowedAppsProvider extends ContentProvider {
 		public static final String	COLUMN_BOOK_ID		= "bookId";
 		public static final String	COLUMN_VERSION_CODE	= "versionCode";
 		public static final String	COLUMN_APK_PATH		= "apkPath";
-		public static final String	COLUMN_SHOW_IN_APPS	= "showInApps";
 	}
 
 	static final int		APPS_LIST	= 1;
@@ -69,11 +68,11 @@ public class AllowedAppsProvider extends ContentProvider {
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 		static final String	DATABASE_NAME		= "Apps";
 		static final String	APPS_TABLE_NAME		= "AllowedApps";
-		static final int	DATABASE_VERSION	= 1;
+		static final int	DATABASE_VERSION	= 3;
 		static final String	CREATE_DB_TABLE		= " CREATE TABLE " + APPS_TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 														+ " package TEXT NOT NULL, " + " name TEXT NOT NULL, "
 														+ " courseId TEXT NOT NULL, " + " bookId TEXT NOT NULL, "
-														+ " versionCode INTEGER, " + " showInApps INTEGER, " + " apkPath TEXT NOT NULL);";
+														+ " versionCode INTEGER, " + " apkPath TEXT);";
 
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -307,9 +306,9 @@ public class AllowedAppsProvider extends ContentProvider {
 	private String fetchVMPackage(DiviReference ref) {
 		try {
 			Node vmTopicNode = co.in.divi.content.DatabaseHelper.getInstance(getContext()).getNode(ref.itemId, ref.bookId, ref.courseId);
-			for (Topic.VM vmDef : ((Topic) vmTopicNode.tag).vms) {
-				if (vmDef.id.equals(ref.subItemId)) {
-					return vmDef.appPackage;
+			for (Topic.App appDef : ((Topic) vmTopicNode.tag).apps) {
+				if (appDef.id.equals(ref.subItemId)) {
+					return appDef.appPackage;
 				}
 			}
 		} catch (Exception e) {

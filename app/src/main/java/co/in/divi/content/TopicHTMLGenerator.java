@@ -109,8 +109,8 @@ public class TopicHTMLGenerator {
 					processVideo(parser, contentBuilder);
 				} else if (name.equals(TopicXmlTags.AUDIO_TAG)) {
 					processAudio(parser, contentBuilder);
-				} else if (name.equals(TopicXmlTags.VM_TAG)) {
-					processVM(parser, contentBuilder);
+				} else if (name.equals(TopicXmlTags.APP_TAG)) {
+					processApp(parser, contentBuilder);
 				} else if (name.equals(TopicXmlTags.HTML_TAG)) {
 					processHtml(parser, contentBuilder);
 				} else {
@@ -289,10 +289,10 @@ public class TopicHTMLGenerator {
 		}));
 	}
 
-	private void processVM(XmlPullParser parser, StringBuilder sb) throws IOException, XmlPullParserException {
-		parser.require(XmlPullParser.START_TAG, ns, TopicXmlTags.VM_TAG);
+	private void processApp(XmlPullParser parser, StringBuilder sb) throws IOException, XmlPullParserException {
+		parser.require(XmlPullParser.START_TAG, ns, TopicXmlTags.APP_TAG);
 		final String _id = parser.getAttributeValue(ns, TopicXmlTags.ID_ATTRIBUTE);
-		final String vmThumb = parser.getAttributeValue(ns, TopicXmlTags.VM_THUMB_ATTRIBUTE);
+//		final String vmThumb = parser.getAttributeValue(ns, TopicXmlTags.VM_THUMB_ATTRIBUTE);
 		String tempVmDesc = null;
 		String tempVmTitle = null;
 		while (parser.next() != XmlPullParser.END_TAG) {// topic end tag
@@ -301,9 +301,9 @@ public class TopicHTMLGenerator {
 			}
 			String name = parser.getName();
 			// Starts by looking for the entry tag
-			if (name.equals(TopicXmlTags.VM_DESCRIPTION_TAG)) {
+			if (name.equals(TopicXmlTags.APP_DESCRIPTION_TAG)) {
 				tempVmDesc = readText(parser);
-			} else if (name.equals(TopicXmlTags.VM_TITLE_TAG)) {
+			} else if (name.equals(TopicXmlTags.APP_TITLE_TAG)) {
 				tempVmTitle = readText(parser);
 			} else {
 				skip(parser);
@@ -311,10 +311,10 @@ public class TopicHTMLGenerator {
 		}
 		final String vmDesc = tempVmDesc;
 		final String vmTitle = tempVmTitle;
-		parser.require(XmlPullParser.END_TAG, ns, TopicXmlTags.VM_TAG);
+		parser.require(XmlPullParser.END_TAG, ns, TopicXmlTags.APP_TAG);
 		sb.append(videoTemplate.execute(new Object() {
 			String	id				= _id;
-			String	thumbnail_path	= vmThumb;
+			String	thumbnail_path	= "blah blah";
 			String	caption			= vmTitle;
 			String	desc			= vmDesc;
 		}));
