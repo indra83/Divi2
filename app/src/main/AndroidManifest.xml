@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.in.divi" >
+    package="co.in.divi">
 
-    <supports-screens android:smallScreens="false"
-        android:normalScreens="false"
+    <supports-screens
         android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:requiresSmallestWidthDp="600" />
+        android:normalScreens="false"
+        android:requiresSmallestWidthDp="600"
+        android:smallScreens="false"
+        android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -29,12 +30,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <activity
             android:name="co.in.divi.activity.HomeActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,97 +46,80 @@
             android:name="co.in.divi.activity.LoginActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.Transparent" >
-        </activity>
+            android:theme="@style/Theme.Transparent"></activity>
         <activity
             android:name="co.in.divi.activity.LearnActivity"
             android:excludeFromRecents="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="co.in.divi.activity.ListAssessmentsActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="co.in.divi.activity.AssessmentActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="co.in.divi.activity.BlackoutActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="co.in.divi.activity.InstructionNotificationActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:noHistory="true"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
-        </activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity
             android:name="co.in.divi.activity.AdminSettingsActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
-        </activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity
             android:name="co.in.divi.activity.SyncDownActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape"></activity>
 
         <service
             android:name="co.in.divi.content.importer.ContentImportService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.lecture.LiveLectureService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.content.importer.FetchUpdatesService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.db.sync.SyncUpService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.db.sync.SyncDownService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.logs.LogsRecorderService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.logs.LogsSyncService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.progress.AnalyticsFetcherService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <service
             android:name="co.in.divi.background.HeartbeatService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
-        <receiver android:name="co.in.divi.background.TimeChangeReceiver" >
+        <receiver android:name="co.in.divi.background.TimeChangeReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
-        <receiver android:name="co.in.divi.background.BootCompleteReceiver" >
+        <receiver android:name="co.in.divi.background.BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -144,7 +128,7 @@
             android:name="co.in.divi.background.SDCardMountReceiver"
             android:enabled="true"
             android:exported="true"
-            android:label="SDCardMountReceiver" >
+            android:label="SDCardMountReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_MOUNTED" />
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
@@ -157,24 +141,31 @@
             android:name="co.in.divi.content.importer.DownloadCompleteReceiver"
             android:enabled="true"
             android:exported="true"
-            android:label="DownloadCompleteReceiver" >
+            android:label="DownloadCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="co.in.divi.background.UniversalSyncCheckReceiver" >
+        <receiver android:name="co.in.divi.background.UniversalSyncCheckReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
         <receiver
             android:name="co.in.divi.DiviLocationBroadcastReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
-                <action android:name="co.in.divi.intent.LOCATION_BROADCAST" >
-                </action>
+                <action android:name="co.in.divi.intent.LOCATION_BROADCAST"></action>
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="co.in.divi.DiviAppUsageReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="co.in.divi.intent.APP_USAGE_BROADCAST"></action>
+            </intent-filter>
+        </receiver>
+
 
         <provider
             android:name="co.in.divi.db.UserDBProvider"
@@ -189,7 +180,7 @@
         <provider
             android:name="co.in.divi.content.AllowedAppsProvider"
             android:authorities="co.in.divi.allowedapps"
-            android:exported="false"
+            android:exported="true"
             android:label="AllowedAppsDB" />
         <provider
             android:name="co.in.divi.util.JSAssetProvider"
@@ -197,10 +188,10 @@
             android:exported="false" />
 
         <activity
-            android:name="co.in.divi.activity.ClassroomManagementActivity" android:excludeFromRecents="true"
+            android:name="co.in.divi.activity.ClassroomManagementActivity"
+            android:excludeFromRecents="true"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-        </activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
     </application>
 
 </manifest>

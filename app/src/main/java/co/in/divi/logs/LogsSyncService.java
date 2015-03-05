@@ -29,6 +29,7 @@ import android.os.IBinder;
 import android.util.Log;
 import co.in.divi.DiviApplication;
 import co.in.divi.DiviService;
+import co.in.divi.LocationManager;
 import co.in.divi.background.UniversalSyncCheckReceiver;
 import co.in.divi.content.DiviReference;
 import co.in.divi.logs.LogsDBContract.Logs;
@@ -38,9 +39,9 @@ import co.in.divi.util.Util;
 
 /**
  * Sync for logs
- * 
+ *
  * @author indraneel
- * 
+ *
  */
 public class LogsSyncService extends DiviService {
 	private static final String	TAG							= LogsSyncService.class.getSimpleName();
@@ -257,13 +258,18 @@ public class LogsSyncService extends DiviService {
 			keenProp.put("timestamp", df.format(cal.getTime()));
 			// keenProp.put("id", deviceId + "__" + log.id);
 
-			DiviReference diviRef = new DiviReference(Uri.parse(log.uri));
-			resourceDetails.put("courseId", diviRef.courseId);
-			resourceDetails.put("bookId", diviRef.bookId);
-			resourceDetails.put("itemId", diviRef.itemId);
-			resourceDetails.put("subItemId", diviRef.subItemId);
-			resourceDetails.put("fragment", diviRef.fragment);
-			resourceDetails.put("type", log.resourceType.toString());
+            try {
+                DiviReference diviRef = new DiviReference(Uri.parse(log.uri));
+                resourceDetails.put("courseId", diviRef.courseId);
+                resourceDetails.put("bookId", diviRef.bookId);
+                resourceDetails.put("itemId", diviRef.itemId);
+                resourceDetails.put("subItemId", diviRef.subItemId);
+                resourceDetails.put("fragment", diviRef.fragment);
+                resourceDetails.put("type", log.resourceType.toString());
+            }catch(IllegalArgumentException iae) {
+                // app usage logging, ignore.
+                resourceDetails.put("type", LocationManager.LOCATION_SUBTYPE.APP);
+            }
 
 			logObject.put("user", userDetails);
 			logObject.put("resource", resourceDetails);

@@ -59,8 +59,8 @@ android {
             versionName "v2.6 (demo)"
             versionCode 260
 
-//            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
-            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-dev.herokuapp.com/v2\""
+            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
+//            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-dev.herokuapp.com/v2\""
         }
         ccStudent {
             applicationId "co.in.divi.cc.student"
