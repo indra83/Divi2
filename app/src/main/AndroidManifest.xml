@@ -186,6 +186,15 @@
             android:name="co.in.divi.util.JSAssetProvider"
             android:authorities="co.in.divi.util.JSAssetProvider"
             android:exported="false" />
+        <provider
+            android:name="co.in.divi.util.AppIconProvider"
+            android:authorities="co.in.divi.util.AppIconProvider"
+            android:exported="false" />
+        <provider
+            android:name="co.in.divi.util.ApkIconProvider"
+            android:authorities="co.in.divi.util.ApkIconProvider"
+            android:exported="false" />
+
 
         <activity
             android:name="co.in.divi.activity.ClassroomManagementActivity"

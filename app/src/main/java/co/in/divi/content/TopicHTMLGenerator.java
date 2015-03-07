@@ -12,6 +12,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
+
+import co.in.divi.util.AppUtil;
 import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Util;
@@ -52,7 +54,10 @@ public class TopicHTMLGenerator {
 			textTemplate, imageTemplate, imageNoBorderTemplate, imageTextTemplate, imageSetTemplate, videoTemplate, audioTemplate,
 			box1Template, vmTemplate;
 
+    private Context context;
+
 	public TopicHTMLGenerator(Context context) {
+        this.context = context;
 		if (topicContentTemplate == null) {// lazy initialize once.
 			topicContentTemplate = Mustache.compiler().compile(getTemplateText(context, "topic_content.txt"));
 			chapterTemplate = Mustache.compiler().compile(getTemplateText(context, "chapter.txt"));
@@ -110,7 +115,7 @@ public class TopicHTMLGenerator {
 				} else if (name.equals(TopicXmlTags.AUDIO_TAG)) {
 					processAudio(parser, contentBuilder);
 				} else if (name.equals(TopicXmlTags.APP_TAG)) {
-					processApp(parser, contentBuilder);
+					processApp(parser, contentBuilder, topicXmlFile.getParentFile());
 				} else if (name.equals(TopicXmlTags.HTML_TAG)) {
 					processHtml(parser, contentBuilder);
 				} else {
@@ -289,10 +294,16 @@ public class TopicHTMLGenerator {
 		}));
 	}
 
-	private void processApp(XmlPullParser parser, StringBuilder sb) throws IOException, XmlPullParserException {
+	private void processApp(XmlPullParser parser, StringBuilder sb, File topicDir) throws IOException, XmlPullParserException {
 		parser.require(XmlPullParser.START_TAG, ns, TopicXmlTags.APP_TAG);
 		final String _id = parser.getAttributeValue(ns, TopicXmlTags.ID_ATTRIBUTE);
-//		final String vmThumb = parser.getAttributeValue(ns, TopicXmlTags.VM_THUMB_ATTRIBUTE);
+        final String pkgName = parser.getAttributeValue(ns, TopicXmlTags.APP_PACKAGE_ATTRIBUTE);
+        final String src = parser.getAttributeValue(ns, TopicXmlTags.SRC_ATTRIBUTE);
+		final String appThumb;
+        if(AppUtil.isPackageInstalled(pkgName, context))
+            appThumb = AppUtil.getAppIconUrl(pkgName);
+        else
+            appThumb = AppUtil.getApkIconUrl(new File(topicDir, src).getAbsolutePath());
 		String tempVmDesc = null;
 		String tempVmTitle = null;
 		while (parser.next() != XmlPullParser.END_TAG) {// topic end tag
@@ -314,7 +325,7 @@ public class TopicHTMLGenerator {
 		parser.require(XmlPullParser.END_TAG, ns, TopicXmlTags.APP_TAG);
 		sb.append(videoTemplate.execute(new Object() {
 			String	id				= _id;
-			String	thumbnail_path	= "blah blah";
+			String	thumbnail_path	= appThumb;
 			String	caption			= vmTitle;
 			String	desc			= vmDesc;
 		}));

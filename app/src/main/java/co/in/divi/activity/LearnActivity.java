@@ -535,7 +535,7 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 			for (Topic.App app : topic.apps) {
 				if (app.id.equals(resourceId)) {
 					if (LogConfig.DEBUG_ACTIVITIES)
-						Log.d(TAG, "Opening vm:" + app.src);
+                        Log.d(TAG, "Opening app:" + app.src);
 					if (Util.isAppExists(getPackageManager(), app.appPackage, app.appVersionCode)) {
 						// app exists, open app
 						Intent intent;
