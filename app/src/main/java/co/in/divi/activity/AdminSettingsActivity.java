@@ -30,6 +30,7 @@ import co.in.divi.AdminPasswordManager;
 import co.in.divi.BaseActivity;
 import co.in.divi.ContentUpdateManager;
 import co.in.divi.DiviApplication;
+import co.in.divi.LocationManager;
 import co.in.divi.R;
 import co.in.divi.SyncManager;
 import co.in.divi.content.Book;
@@ -355,6 +356,12 @@ public class AdminSettingsActivity extends BaseActivity {
             classroomButton.setVisibility(View.GONE);
             classroomText.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocationManager.getInstance(this).setNewLocation(LocationManager.LOCATION_TYPE.HOME, null, null, null, null);
     }
 
     @Override

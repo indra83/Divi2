@@ -36,7 +36,6 @@ public class WiFiFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		handler = new Handler();
-		wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
 	}
 
 	@Override
@@ -47,6 +46,7 @@ public class WiFiFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+        wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
 		signalView = (ImageView) getView().findViewById(R.id.wifi_level);
 		networkName = (TextView) getView().findViewById(R.id.wifi_name);
 		IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -71,6 +71,8 @@ public class WiFiFragment extends Fragment {
 	}
 
 	private void updateWiFiUI() {
+        if(!isAdded())
+            return;
 		if (!Util.isNetworkOn(getActivity())) {
 			networkName.setText("Configure WiFi");
 			signalView.setImageResource(R.drawable.ic_signal_off);

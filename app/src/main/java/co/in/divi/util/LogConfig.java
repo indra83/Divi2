@@ -2,7 +2,7 @@ package co.in.divi.util;
 
 public final class LogConfig {
 
-	public static final boolean	DEBUG_ACTIVITIES		= true;
+	public static final boolean	DEBUG_ACTIVITIES		= false;
 	public static final boolean	DEBUG_LIVE_LECTURE		= false;
 	public static final boolean	DEBUG_XML				= false;
 
@@ -15,7 +15,7 @@ public final class LogConfig {
 	public static final boolean	DEBUG_USERDB			= false;
 	public static final boolean	DEBUG_SYNC				= true;
 
-	public static final boolean	DEBUG_LOGS				= true;
+	public static final boolean	DEBUG_LOGS				= false;
 	public static final boolean	DEBUG_ANALYTICS			= false;
 
 	public static final boolean	DEBUG_WIFI				= false;

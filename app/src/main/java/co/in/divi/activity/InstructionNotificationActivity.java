@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import co.in.divi.AlarmAlertWakeLock;
+import co.in.divi.LocationManager;
 import co.in.divi.R;
 import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
@@ -138,6 +139,9 @@ public class InstructionNotificationActivity extends Activity {
 				});
 			}
 		}, Config.DELAY_INSTRUCTION_AUTO_OPEN);
+
+        // set location to home
+        LocationManager.getInstance(this).setNewLocation(LocationManager.LOCATION_TYPE.HOME, null, null, null, null);
 	}
 
 	@Override
