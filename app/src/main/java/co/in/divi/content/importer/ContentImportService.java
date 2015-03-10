@@ -9,8 +9,10 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import co.in.divi.ContentUpdateManager;
@@ -53,9 +55,13 @@ import com.google.gson.Gson;
  */
 public class ContentImportService extends IntentService {
 	private static final String	TAG	= ContentImportService.class.getSimpleName();
+    private static final String	WAKE_LOCK_TAG		= "IMPORTER_WAKE_LOCK_TAG";
+    private static final long	WAKELOCK_TIMEOUT	= 15 * 60 * 1000;		// ms
 
 	ContentUpdateManager		contentUpdateManager;
 	private Handler				mHandler;
+
+    private PowerManager.WakeLock wakelock			= null;
 
 	public ContentImportService() {
 		super("ContentImportService");
@@ -68,6 +74,10 @@ public class ContentImportService extends IntentService {
 		super.onCreate();
 		contentUpdateManager = ContentUpdateManager.getInstance(this);
 		mHandler = new Handler();
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKE_LOCK_TAG);
+        wakelock.setReferenceCounted(false);
+		wakelock.acquire(WAKELOCK_TIMEOUT);
 	}
 
 	@Override
@@ -82,6 +92,8 @@ public class ContentImportService extends IntentService {
 		Notification note = new NotificationCompat.Builder(this).setContentTitle("Importing book").setContentText("blah blah")
 				.setSmallIcon(R.drawable.divi_logo_w).setContentIntent(pi).setOngoing(true).build();
 		startForeground(1337, note);
+
+
 
 		File updateFolder;
 		updateFolder = ((DiviApplication) getApplication()).getTempDir();
@@ -334,5 +346,7 @@ public class ContentImportService extends IntentService {
 		if (LogConfig.DEBUG_CONTENT_IMPORT)
 			Log.d(TAG, "killing");
 		stopForeground(true);
+   		if (wakelock != null && wakelock.isHeld())
+			wakelock.release();
 	}
 }
