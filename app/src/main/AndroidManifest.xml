@@ -85,6 +85,11 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"></activity>
+        <activity
+            android:name="co.in.divi.activity.ProvisioningActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"></activity>
 
         <service
             android:name="co.in.divi.content.importer.ContentImportService"

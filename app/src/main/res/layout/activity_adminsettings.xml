@@ -65,7 +65,36 @@
                 android:textColor="#444444"
                 android:textSize="20sp" />
         </LinearLayout>
-        
+
+        <LinearLayout
+            android:id="@+id/lab_id_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/labId_button"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:background="@drawable/bg_blue_button"
+                android:text="Set Lab Id"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lab_id_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:textColor="#444444"
+                android:textSize="20sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

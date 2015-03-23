@@ -29,6 +29,7 @@ public class DiviApplication extends Application {
 	private static final String		PREFS_TIME_DIFF		= "time_diff";
 	private static final String		PREFS_DEVICE_ID		= "device_id";
 	private static final String		PREFS_DEVICE_TAG	= "PREFS_DEVICE_TAG";
+    private static final String		PREFS_DEVICE_LAB_ID	= "PREFS_DEVICE_LAB_ID";
 
 	private static DiviApplication	instance;
 
@@ -36,6 +37,7 @@ public class DiviApplication extends Application {
 	private Long					timeDiff			= null;
 	private UUID					uuid				= null;
 	private String					tag;
+    private Integer                 labId;
 	private File					booksBase			= null;
 	private File					tempBase			= null;
 	private File					downloadsBase		= null;
@@ -119,6 +121,20 @@ public class DiviApplication extends Application {
 		this.tag = tag;
 		final SharedPreferences prefs = getSharedPreferences(PREFS_FILE, 0);
 		prefs.edit().putString(PREFS_DEVICE_TAG, tag).commit();
+	}
+
+	public int getLabId() {
+		if (labId == null) {
+			final SharedPreferences prefs = getSharedPreferences(PREFS_FILE, 0);
+			labId = prefs.getInt(PREFS_DEVICE_LAB_ID, -1);
+		}
+		return labId;
+	}
+
+	public void setLabId(Integer labId) {
+		this.labId = labId;
+		final SharedPreferences prefs = getSharedPreferences(PREFS_FILE, 0);
+		prefs.edit().putInt(PREFS_DEVICE_LAB_ID, labId).commit();
 	}
 
 	public File getBooksBaseDir(String courseId) {

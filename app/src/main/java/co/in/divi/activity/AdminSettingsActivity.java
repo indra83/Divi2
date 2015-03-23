@@ -105,6 +105,36 @@ public class AdminSettingsActivity extends BaseActivity {
         }
         contentText.setText(contentDesc);
 
+        if (Config.ENABLE_PROVISIONING) {
+            findViewById(R.id.lab_id_container).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.lab_id_details)).setText("Current id : " + ((DiviApplication) getApplication()).getLabId());
+        } else {
+            findViewById(R.id.lab_id_container).setVisibility(View.GONE);
+        }
+        findViewById(R.id.labId_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText input = new EditText(AdminSettingsActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                AlertDialog ad = new AlertDialog.Builder(AdminSettingsActivity.this).setTitle("Set Lab Id").setMessage("Enter the new lab id")
+                        .setView(input).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                                try {
+                                    ((DiviApplication) getApplication()).setLabId(Integer.parseInt(input.getText().toString()));
+                                } catch (Exception e) {
+                                    Log.w(TAG, "error setting new lab id", e);
+                                }
+                                finish();
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
+
         tagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

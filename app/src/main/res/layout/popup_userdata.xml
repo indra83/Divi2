@@ -115,6 +115,20 @@
             android:orientation="horizontal" >
 
             <Button
+                android:id="@+id/provisionTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@drawable/bg_blue_button"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Provision"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/syncNow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

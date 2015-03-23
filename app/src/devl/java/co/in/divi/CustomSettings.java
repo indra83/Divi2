@@ -7,6 +7,7 @@ public final class CustomSettings {
     public static final boolean USE_CDN = true;
     public static final boolean ENABLE_OTP = false;
     public static final boolean ENABLE_EXTERNAL_APP_SHARING = true;
+    public static final boolean ENABLE_PROVISIONING = true;
     // live lectures
     public static final long LECTURE_SYNC_THROTTLE_TIME = 12 * 1000;                            // seconds
     public static final long LECTURE_LOCATION_POST_THROTTLE_TIME = 12 * 1000;                            // ms

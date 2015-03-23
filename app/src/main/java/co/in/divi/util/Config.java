@@ -17,6 +17,9 @@ public final class Config {
     // External app sharing
     public static final boolean ENABLE_EXTERNAL_APP_SHARING = CustomSettings.ENABLE_EXTERNAL_APP_SHARING;
 
+    // lab deployment
+    public static final boolean ENABLE_PROVISIONING = CustomSettings.ENABLE_PROVISIONING;
+
     // live lectures
     public static final long LECTURE_SYNC_THROTTLE_TIME = CustomSettings.LECTURE_SYNC_THROTTLE_TIME;                            // seconds
     public static final long LECTURE_LOCATION_POST_THROTTLE_TIME = CustomSettings.LECTURE_LOCATION_POST_THROTTLE_TIME;                            // ms

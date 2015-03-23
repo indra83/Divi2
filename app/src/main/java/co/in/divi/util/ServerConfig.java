@@ -40,6 +40,7 @@ public final class ServerConfig {
     public static final String METHOD_SYNCUP = "/syncUp";
     public static final String METHOD_SYNCDOWN = "/syncDown";
     public static final String METHOD_HEARTBEAT = "/tabCheckIn";
+    public static final String METHOD_PROVISIONING = "/checkLabProvisioning";
 
     public static final String METHOD_GOOGLELOGIN = "/loginGoogleUser";
     public static final String METHOD_CREATECLASSROOM = "/createClassRoom";

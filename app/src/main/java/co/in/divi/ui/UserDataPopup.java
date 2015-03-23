@@ -42,6 +42,7 @@ import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
 import co.in.divi.activity.AdminSettingsActivity;
 import co.in.divi.activity.ClassroomManagementActivity;
+import co.in.divi.activity.ProvisioningActivity;
 import co.in.divi.background.UniversalSyncCheckReceiver;
 import co.in.divi.fragment.BaseDialogFragment;
 import co.in.divi.model.UserData;
@@ -233,6 +234,19 @@ public class UserDataPopup extends BaseDialogFragment {
 
         );
 
+        Button provisionButton = (Button) popupRoot.findViewById(R.id.provisionTab);
+        if (Config.ENABLE_PROVISIONING) {
+            provisionButton.setVisibility(View.VISIBLE);
+            provisionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent launchSettings = new Intent(getActivity(), ProvisioningActivity.class);
+                    getActivity().startActivity(launchSettings);
+                }
+            });
+        } else {
+            provisionButton.setVisibility(View.GONE);
+        }
         return popupRoot;
     }
 
