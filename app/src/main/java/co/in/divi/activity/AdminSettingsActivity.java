@@ -114,6 +114,36 @@ public class AdminSettingsActivity extends BaseActivity {
         findViewById(R.id.labId_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Config.ENABLE_OTP) {
+                    doit();
+                } else {
+                    final int challenge = new Random(System.currentTimeMillis()).nextInt(10000);
+                    final EditText input = new EditText(AdminSettingsActivity.this);
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    AlertDialog ad = new AlertDialog.Builder(AdminSettingsActivity.this).setTitle("Enter password")
+                            .setMessage("Enter the key for challenge: " + challenge).setView(input)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.dismiss();
+                                    boolean isAuthorized = AdminPasswordManager.getInstance().isAuthorized(challenge,
+                                            input.getText().toString());
+                                    if (isAuthorized) {
+                                        doit();
+                                    } else {
+                                        Toast.makeText(AdminSettingsActivity.this, "Authorization failed", Toast.LENGTH_SHORT).show();
+                                        // resetTimer();
+                                    }
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    // resetTimer();
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            }
+
+            private void doit() {
                 final EditText input = new EditText(AdminSettingsActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 AlertDialog ad = new AlertDialog.Builder(AdminSettingsActivity.this).setTitle("Set Lab Id").setMessage("Enter the new lab id")

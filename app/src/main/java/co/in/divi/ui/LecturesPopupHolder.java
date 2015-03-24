@@ -239,6 +239,11 @@ public class LecturesPopupHolder implements OnDismissListener {
 			joinLeaveButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View button) {
+                    if(lectureSessionProvider.isBlackout()) {
+                        Toast.makeText(activity,"Not allowed in Blackout..",Toast.LENGTH_SHORT).show();
+                        popup.dismiss();
+                        return;
+                    }
 					lectureSessionProvider.leaveLecture();
 					popup.dismiss();
 				}

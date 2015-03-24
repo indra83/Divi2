@@ -118,6 +118,9 @@
         <service
             android:name="co.in.divi.background.HeartbeatService"
             android:exported="false"></service>
+        <service
+            android:name="co.in.divi.util.InstallAppService"
+            android:exported="false"/>
 
         <receiver android:name="co.in.divi.background.TimeChangeReceiver">
             <intent-filter>

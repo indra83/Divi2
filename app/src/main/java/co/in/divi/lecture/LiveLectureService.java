@@ -73,6 +73,7 @@ import co.in.divi.model.Instruction;
 import co.in.divi.model.LectureInstruction;
 import co.in.divi.ui.TeacherPanel;
 import co.in.divi.util.Config;
+import co.in.divi.util.InstallAppService;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
@@ -890,16 +891,22 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 				else {
 					try {
 						Intent intent = getPackageManager().getLaunchIntentForPackage(externalAppPackageName);
-						if (intent != null) {
-							intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK
-									| Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-							startActivity(intent);
-						} else {
-							Toast.makeText(LiveLectureService.this, "Shared app could not be opened...", Toast.LENGTH_SHORT).show();
-						}
-					} catch (Exception e) {
-						Toast.makeText(LiveLectureService.this, "Shared app not found on your tablet!", Toast.LENGTH_LONG).show();
-					}
+                        if (intent != null) {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK
+                                    | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LiveLectureService.this, "Shared app could not be opened...", Toast.LENGTH_SHORT).show();
+                            Intent installerIntent = new Intent(LiveLectureService.this, InstallAppService.class);
+                            installerIntent.putExtra(InstallAppService.INTENT_EXTRA_PACKAGE, externalAppPackageName);
+                            startService(installerIntent);
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(LiveLectureService.this, "Shared app not found on your tablet!", Toast.LENGTH_LONG).show();
+                        Intent installerIntent = new Intent(LiveLectureService.this, InstallAppService.class);
+                        installerIntent.putExtra(InstallAppService.INTENT_EXTRA_PACKAGE, externalAppPackageName);
+                        startService(installerIntent);
+                    }
 				}
 			}
 		});

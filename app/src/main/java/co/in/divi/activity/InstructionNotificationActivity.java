@@ -21,6 +21,7 @@ import co.in.divi.AlarmAlertWakeLock;
 import co.in.divi.LocationManager;
 import co.in.divi.R;
 import co.in.divi.util.Config;
+import co.in.divi.util.InstallAppService;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Util;
 
@@ -170,6 +171,9 @@ public class InstructionNotificationActivity extends Activity {
 						startActivity(intent);
 					} else {
 						Toast.makeText(this, "Shared app could not be opened...", Toast.LENGTH_SHORT).show();
+                        Intent installerIntent = new Intent(InstructionNotificationActivity.this, InstallAppService.class);
+                        installerIntent.putExtra(InstallAppService.INTENT_EXTRA_PACKAGE, getIntent().getStringExtra(INTENT_EXTRA_EXTERNAL_APP));
+                        startService(installerIntent);
 					}
 				} catch (Exception e) {
 					Toast.makeText(this, "Shared app not found on your tablet!", Toast.LENGTH_LONG).show();
