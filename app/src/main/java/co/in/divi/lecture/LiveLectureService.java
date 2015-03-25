@@ -36,6 +36,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 import com.pubnub.api.PubnubError;
@@ -97,9 +98,7 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 
 	private Pubnub						pubnub;
 	private InstructionSubscribeThread	instructionSubscribeThread	= null;
-	// LocationSubscribeThread locationSubscribeThread = null;
 	private String						channel;
-	private String						teacherChannel;
 	private Handler						handler;
 	private LectureSessionProvider		lectureSessionProvider;
 	private UserSessionProvider			userSessionProvider;
@@ -167,15 +166,15 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 																			if (LogConfig.DEBUG_LIVE_LECTURE)
 																				Log.d(TAG, "posting location:" + locationObject);
 
-																			// Publish It!
-																			pubnub.publish(teacherChannel, locationObject, new Callback() {
+                                                                            // trying state
+                                                                            pubnub.setState(channel,userSessionProvider.getUserData().uid,locationObject,new Callback() {
 																				public void successCallback(String channel, Object message) {
 																					if (LogConfig.DEBUG_LIVE_LECTURE)
 																						Log.d(TAG, "location posting success");
 																				}
 
 																				public void errorCallback(String channel, Object message) {
-																					// TODO: retry;
+																					// TODO: retry?
 																					Log.w(TAG, "error posting location! - " + message);
 																				}
 																			});
@@ -228,16 +227,18 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 		attemptsObserver = new MyContentObserver(handler);
 		pubnub = new Pubnub(ServerConfig.PUBNUB_PUBLISH_KEY, ServerConfig.PUBNUB_SUBSCRIBE_KEY, false);
 		pubnub.setUUID(userSessionProvider.getUserData().uid);
-		pubnub.setMaxRetries(2);
-		pubnub.setRetryInterval(2);
-		// pubnub.setSubscribeTimeout(31 * 1000);// default is 310 secs, do we need to reduce?
+		pubnub.setMaxRetries(8);
+		pubnub.setRetryInterval(3*1000);
+//		pubnub.setSubscribeTimeout(55 * 1000);// default is 310 secs, do we need to reduce?
 		pubnub.setNonSubscribeTimeout(10000);// timeout for publish/herenow etc.
-		pubnub.setResumeOnReconnect(true);// TODO: handle reconnect appropriately!
+		pubnub.setResumeOnReconnect(false);
 
 		// heartbeat
-		pubnub.setHeartbeat(30, new Callback() {
+		pubnub.setHeartbeat(22, new Callback() {
+            int errorCount=0;
 			@Override
 			public void successCallback(String channel, Object arg1) {
+                errorCount = 0;
 				if (LogConfig.DEBUG_LIVE_LECTURE)
 					Log.d(TAG, "heartbeat success!! - " + channel);
 			}
@@ -245,6 +246,10 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 			@Override
 			public void errorCallback(String channel, PubnubError error) {
 				Log.w(TAG, "heartbeat error! - " + error);
+                errorCount++;
+                if(errorCount>1) {
+                    disconnect();
+                }
 			}
 		});
 
@@ -297,11 +302,10 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 					Log.d(TAG, "got wake lock:" + wakelock.isHeld());
 			}
 			channel = intent.getStringExtra(INTENT_EXTRA_CHANNEL);
-			teacherChannel = channel + ServerConfig.PUBNUB_TEACHER_CHANNEL_POSTFIX;
 
 			String[] channels;
 			if (lectureSessionProvider.isCurrentUserTeacher()) {
-				channels = new String[] { channel, teacherChannel };
+				channels = new String[] { channel};
 				fetchStudents(false);
 			} else {
 				channels = new String[] { channel };
@@ -445,6 +449,7 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 							@Override
 							public void run() {
 								lectureSessionProvider.setStatus(ConnectionStatus.CONNECTED);
+                                fetchInstructions(true);
 							}
 						});
 					}
@@ -452,8 +457,8 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 					@Override
 					public void disconnectCallback(String channel, Object arg1) {
 						if (LogConfig.DEBUG_LIVE_LECTURE)
-							Log.d(TAG, "disconnectCallback - " + channel);
-						disconnect();
+							Log.d(TAG, "disconnectCallback - " + channel+", "+arg1);
+                        disconnect();
 					}
 
 					@Override
@@ -499,21 +504,6 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 									fetchInstructions(false);
 								}
 							});
-						} else if (channel.equals(teacherChannel)) {
-							if (LogConfig.DEBUG_LIVE_LECTURE)
-								Log.d(TAG, "msg: " + message);
-							final LocationHolder loc = new Gson().fromJson(message.toString(), LocationHolder.class);
-							handler.post(new Runnable() {
-								@Override
-								public void run() {
-									try {
-										loc.timestampInMillis = Util.getTimestampMillis();
-										lectureSessionProvider.setLocation(loc.uid, loc);
-									} catch (Exception e) {
-										Log.w(TAG, "", e);
-									}// never fail!
-								}
-							});
 						}
 					}
 
@@ -526,6 +516,7 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 							@Override
 							public void run() {
 								lectureSessionProvider.onConnectionError(errorString);
+                                lectureSessionProvider.setStatus(ConnectionStatus.CONNECTING);
 							}
 						});
 					}
@@ -538,7 +529,6 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 	}
 
 	private void subscribeForPresence() {
-		// TODO: error handling!
 		if (LogConfig.DEBUG_LIVE_LECTURE)
 			Log.d(TAG, "starting presence request");
 		try {
@@ -567,23 +557,38 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 					try {
 						final String uid = presenceObject.getString("uuid");
 						final String action = presenceObject.getString("action");
-						final int occupancy = presenceObject.getInt("occupancy");
-						final long timestamp = presenceObject.getLong("timestamp");
-						handler.post(new Runnable() {
-							@Override
-							public void run() {
-								if ("join".equalsIgnoreCase(action)) {
-									lectureSessionProvider.joinHereNow(uid, timestamp);
-								} else if ("leave".equalsIgnoreCase(action) || "timeout".equalsIgnoreCase(action)) {
-									lectureSessionProvider.leaveHereNow(uid, timestamp);
-								}
-								if (lectureSessionProvider.hereNow().size() != occupancy) {
-									// re sync occupancy
-									updateHereNow();
-								}
-							}
-						});
-					} catch (JSONException e) {
+                        if (action.equals("state-change")) {
+                            final LocationHolder loc = new Gson().fromJson(presenceObject.getJSONObject("data").toString(),LocationHolder.class);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        loc.timestampInMillis = Util.getTimestampMillis();
+                                        lectureSessionProvider.setLocation(loc.uid, loc);
+                                    } catch (Exception e) {
+                                        Log.w(TAG, "", e);
+                                    }// never fail!
+                                }
+                            });
+                        } else {
+                            final int occupancy = presenceObject.getInt("occupancy");
+                            final long timestamp = presenceObject.getLong("timestamp");
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if ("join".equalsIgnoreCase(action)) {
+                                        lectureSessionProvider.joinHereNow(uid, timestamp);
+                                    } else if ("leave".equalsIgnoreCase(action) || "timeout".equalsIgnoreCase(action)) {
+                                        lectureSessionProvider.leaveHereNow(uid, timestamp);
+                                    }
+                                    if (lectureSessionProvider.hereNow().size() != occupancy) {
+                                        // re sync occupancy
+                                        updateHereNow();
+                                    }
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
 						Log.e(TAG, "error parsing here now response", e);
 						// disconnect();
 					}
@@ -784,6 +789,12 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 		if (instructions.instructions.length > 0) {
 			if (LogConfig.DEBUG_LIVE_LECTURE)
 				Log.d(TAG, "instruction - " + instructions.instructions[0].id);
+            if(instructions.instructions[0].id.equals(lectureSessionProvider.getLastExecutedInstructionId())) {
+                Log.d(TAG,"ignoring instruction, already applied");
+                return;
+            }else {
+                lectureSessionProvider.setLastExecutedInstructionId(instructions.instructions[0].id);
+            }
 			try {
 				// play a notification sound
 				AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);

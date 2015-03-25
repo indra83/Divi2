@@ -2,8 +2,8 @@ package co.in.divi.util;
 
 public final class LogConfig {
 
-	public static final boolean	DEBUG_ACTIVITIES		= false;
-	public static final boolean	DEBUG_LIVE_LECTURE		= false;
+	public static final boolean	DEBUG_ACTIVITIES		= true;
+	public static final boolean	DEBUG_LIVE_LECTURE		= true;
 	public static final boolean	DEBUG_XML				= false;
 
 	public static final boolean	DEBUG_REFERENCE			= false;

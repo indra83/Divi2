@@ -68,6 +68,8 @@ public class LectureSessionProvider implements UserSessionChangeListener {
 	private LectureInstruction						instructions;
 	private boolean									isFollowMe;
 
+    private String                                  lastExecutedInstructionId;
+
 	// Dashboard
 	private ArrayList<DashboardChangeListener>		dashboardListeners;
 	private FollowMeListener						followMeListener;
@@ -231,7 +233,15 @@ public class LectureSessionProvider implements UserSessionChangeListener {
 		}
 	}
 
-	/* presence */
+    public String getLastExecutedInstructionId() {
+        return lastExecutedInstructionId;
+    }
+
+    public void setLastExecutedInstructionId(String lastExecutedInstructionId) {
+        this.lastExecutedInstructionId = lastExecutedInstructionId;
+    }
+
+    /* presence */
 	public void joinLecture(LectureDetails lecture) {
 		this.currentLecture = lecture;
 		this.instructions = null;
