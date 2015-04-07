@@ -8,7 +8,7 @@ public final class LogConfig {
 
 	public static final boolean	DEBUG_REFERENCE			= false;
 	public static final boolean	DEBUG_LOCATION			= false;
-	public static final boolean	DEBUG_LOGIN				= false;
+	public static final boolean	DEBUG_LOGIN				= true;
 
 	public static final boolean	DEBUG_CONTENT_IMPORT	= false;
 	public static final boolean	DEBUG_DBHELPER			= false;

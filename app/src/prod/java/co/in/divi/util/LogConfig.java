@@ -13,7 +13,7 @@ public final class LogConfig {
 	public static final boolean	DEBUG_CONTENT_IMPORT	= false;
 	public static final boolean	DEBUG_DBHELPER			= false;
 	public static final boolean	DEBUG_USERDB			= false;
-	public static final boolean	DEBUG_SYNC				= true;
+	public static final boolean	DEBUG_SYNC				= false;
 
 	public static final boolean	DEBUG_LOGS				= false;
 	public static final boolean	DEBUG_ANALYTICS			= false;

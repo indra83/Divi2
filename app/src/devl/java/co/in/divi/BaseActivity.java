@@ -16,17 +16,17 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
-import co.in.divi.DiaryManager.DiaryChangeListener;
+import co.in.divi.diary.DiaryManager;
+import co.in.divi.diary.DiaryManager.DiaryChangeListener;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.LocationManager.LOCATION_TYPE;
 import co.in.divi.UserSessionProvider.UserSessionChangeListener;
 import co.in.divi.activity.BlackoutActivity;
 import co.in.divi.activity.LoginActivity;
 import co.in.divi.activity.SyncDownActivity;
-import co.in.divi.fragment.DiaryContainerFragment;
+import co.in.divi.fragment.DiaryFragment;
 import co.in.divi.fragment.HeaderFragment;
 import co.in.divi.ui.HomeworkPickerPanel;
-import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 
 public abstract class BaseActivity extends Activity implements UserSessionChangeListener, LectureStatusChangeListener, DiaryChangeListener {
@@ -246,7 +246,7 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
     public void showDiary() {
         if (getFragmentManager().findFragmentByTag(DIARY_FRAGMENT_TAG) == null) {
             FrameLayout rootLayout = (FrameLayout) findViewById(android.R.id.content);
-            DiaryContainerFragment diaryFragment = new DiaryContainerFragment();
+            DiaryFragment diaryFragment = new DiaryFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(rootLayout.getId(), diaryFragment, DIARY_FRAGMENT_TAG);
             fragmentTransaction.commit();

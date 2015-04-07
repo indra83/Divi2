@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import co.in.divi.BaseActivity;
-import co.in.divi.DiaryManager;
+import co.in.divi.diary.DiaryManager;
 import co.in.divi.LocationManager;
 import co.in.divi.LocationManager.Breadcrumb;
 import co.in.divi.LocationManager.DiviLocationChangeListener;

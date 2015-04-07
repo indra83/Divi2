@@ -14,17 +14,16 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
 import co.in.divi.BaseActivity;
-import co.in.divi.DiaryManager;
+import co.in.divi.diary.DiaryManager;
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
-import co.in.divi.ui.UserDataPopup;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Week;
 
-public class DiaryContainerFragment extends Fragment {
+public class DiaryFragment extends Fragment {
 
-	private static final String		TAG						= DiaryContainerFragment.class.getName();
+	private static final String		TAG						= DiaryFragment.class.getName();
 	private static final String		DIARY_COMPOSE_FRAGMENT	= "DIARY_COMPOSE_FRAGMENT";
 
 	private UserSessionProvider		userSessionProvider;

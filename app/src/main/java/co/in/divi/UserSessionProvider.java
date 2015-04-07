@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import co.in.divi.diary.DiaryManager;
 import co.in.divi.model.UserData;
 import co.in.divi.model.UserData.ClassRoom;
 import co.in.divi.model.UserData.Course;
