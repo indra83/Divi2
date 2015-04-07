@@ -16,14 +16,13 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
-import co.in.divi.diary.DiaryManager;
-import co.in.divi.diary.DiaryManager.DiaryChangeListener;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
-import co.in.divi.LocationManager.LOCATION_TYPE;
 import co.in.divi.UserSessionProvider.UserSessionChangeListener;
 import co.in.divi.activity.BlackoutActivity;
 import co.in.divi.activity.LoginActivity;
 import co.in.divi.activity.SyncDownActivity;
+import co.in.divi.diary.DiaryManager;
+import co.in.divi.diary.DiaryManager.DiaryChangeListener;
 import co.in.divi.fragment.DiaryFragment;
 import co.in.divi.fragment.HeaderFragment;
 import co.in.divi.ui.HomeworkPickerPanel;
@@ -101,7 +100,7 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
     protected void onPause() {
         super.onPause();
         // Clear location
-        locationManager.setNewLocation(LOCATION_TYPE.UNKNOWN, null, null, null, null);
+        locationManager.setNewLocation(Location.LOCATION_TYPE.UNKNOWN, null, null, null, null);
         closeDiary();
     }
 

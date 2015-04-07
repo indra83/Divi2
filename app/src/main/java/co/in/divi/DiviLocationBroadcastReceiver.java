@@ -1,13 +1,11 @@
 package co.in.divi;
 
-import co.in.divi.LocationManager.Breadcrumb;
-import co.in.divi.LocationManager.LOCATION_SUBTYPE;
-import co.in.divi.LocationManager.LOCATION_TYPE;
-import co.in.divi.content.DiviReference;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import co.in.divi.content.DiviReference;
 
 public class DiviLocationBroadcastReceiver extends BroadcastReceiver {
 	private static final String	TAG							= DiviLocationBroadcastReceiver.class.getSimpleName();
@@ -24,11 +22,11 @@ public class DiviLocationBroadcastReceiver extends BroadcastReceiver {
 			String vmId = intent.getStringExtra("VM_ID");
 			String[] breadcrumb = intent.getStringArrayExtra("BREADCRUMB");
 			if (courseId == null || bookId == null || topicId == null || vmId == null) {
-				LocationManager.getInstance(context).setNewLocation(LOCATION_TYPE.UNKNOWN, null, null, null, null);
+				LocationManager.getInstance(context).setNewLocation(Location.LOCATION_TYPE.UNKNOWN, null, null, null, null);
 			} else {
-				LocationManager.getInstance(context).setNewLocation(LOCATION_TYPE.TOPIC, LOCATION_SUBTYPE.TOPIC_VM,
+				LocationManager.getInstance(context).setNewLocation(Location.LOCATION_TYPE.TOPIC, Location.LOCATION_SUBTYPE.TOPIC_VM,
 						new DiviReference(courseId, bookId, DiviReference.REFERENCE_TYPE_TOPIC, topicId, vmId),
-						Breadcrumb.get(breadcrumb[0], breadcrumb[1], breadcrumb[2], breadcrumb[3], breadcrumb[4]), null);
+						Location.Breadcrumb.get(breadcrumb[0], breadcrumb[1], breadcrumb[2], breadcrumb[3], breadcrumb[4]), null);
 			}
 		} catch (Exception e) {
 			Log.w(TAG, "error setting location from vm:", e);

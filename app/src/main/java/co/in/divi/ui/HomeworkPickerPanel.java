@@ -7,14 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import co.in.divi.BaseActivity;
-import co.in.divi.diary.DiaryManager;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
-import co.in.divi.LocationManager.Breadcrumb;
 import co.in.divi.LocationManager.DiviLocationChangeListener;
-import co.in.divi.LocationManager.LOCATION_TYPE;
 import co.in.divi.R;
-import co.in.divi.content.DiviReference;
+import co.in.divi.diary.DiaryManager;
 import co.in.divi.fragment.DiaryEntryComposeFragment;
 
 public class HomeworkPickerPanel extends LinearLayout implements DiviLocationChangeListener {
@@ -62,13 +61,13 @@ public class HomeworkPickerPanel extends LinearLayout implements DiviLocationCha
 	}
 
 	@Override
-	public void onLocationChange(DiviReference newRef, Breadcrumb breadcrumb) {
+	public void onLocationChange(Location loc) {
 		addButton.setVisibility(View.GONE);
-		if (breadcrumb == null)
+		if (loc.getBreadcrumb() == null)
 			locationNameTextView.setText("--");
 		else {
-			if (locationManager.getLocationType() == LOCATION_TYPE.ASSESSMENT || locationManager.getLocationType() == LOCATION_TYPE.TOPIC) {
-				locationNameTextView.setText(breadcrumb.toString());
+			if (loc.getLocationType() == Location.LOCATION_TYPE.ASSESSMENT || loc.getLocationType() == Location.LOCATION_TYPE.TOPIC) {
+				locationNameTextView.setText(loc.getBreadcrumb().toString());
 				addButton.setVisibility(View.VISIBLE);
 			}
 		}

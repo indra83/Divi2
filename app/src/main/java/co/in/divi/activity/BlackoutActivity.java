@@ -1,10 +1,11 @@
 package co.in.divi.activity;
 
 import android.os.Bundle;
+
 import co.in.divi.BaseActivity;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
-import co.in.divi.LocationManager.LOCATION_TYPE;
 import co.in.divi.R;
 import co.in.divi.fragment.HeaderFragment;
 
@@ -30,7 +31,7 @@ public class BlackoutActivity extends BaseActivity implements LectureStatusChang
 			finish();
 			return;
 		}
-		LocationManager.getInstance(this).setNewLocation(LOCATION_TYPE.BLACKOUT, null, null, null, null);
+		LocationManager.getInstance(this).setNewLocation(Location.LOCATION_TYPE.BLACKOUT, null, null, null, null);
 	}
 
 	@Override

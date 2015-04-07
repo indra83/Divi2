@@ -67,13 +67,13 @@ public class DiaryFragment extends Fragment {
 		((MarginLayoutParams) getView().getLayoutParams()).setMargins(0, (int) getResources().getDimensionPixelSize(R.dimen.header_height),
 				0, 0);
 		getView().requestLayout();
-		DiaryPagerAdapter adapter = new DiaryPagerAdapter(getFragmentManager(), diaryManager.getAllWeeks());
+		DiaryPagerAdapter adapter = null;//new DiaryPagerAdapter(getFragmentManager(), diaryManager.getAllWeeks());
 		viewPager.setAdapter(adapter);
 		viewPager.setCurrentItem(adapter.getCount() - 1);
 		newEntryButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				diaryManager.startNewEntry();
+//				diaryManager.startNewEntry();
 				FragmentManager fm = getFragmentManager();
 				DiaryEntryComposeFragment diaryComposeFragment = new DiaryEntryComposeFragment();
 				diaryComposeFragment.show(fm, DIARY_COMPOSE_FRAGMENT);

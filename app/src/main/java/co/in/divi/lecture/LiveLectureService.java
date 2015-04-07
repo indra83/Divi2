@@ -1,13 +1,10 @@
 package co.in.divi.lecture;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.app.KeyguardManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
@@ -36,7 +33,6 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 import com.pubnub.api.PubnubError;
@@ -47,7 +43,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,10 +51,9 @@ import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.LectureSessionProvider.ConnectionStatus;
 import co.in.divi.LectureSessionProvider.LocationHolder;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
-import co.in.divi.LocationManager.Breadcrumb;
 import co.in.divi.LocationManager.DiviLocationChangeListener;
-import co.in.divi.LocationManager.LOCATION_TYPE;
 import co.in.divi.R;
 import co.in.divi.SyncManager;
 import co.in.divi.SyncManager.SyncStatus;
@@ -130,31 +124,19 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 																		@Override
 																		public void run() {
 																			LocationHolder loc = new LocationHolder();
+                                                                            Location location = locationManager.getLocation();
 																			loc.uid = userSessionProvider.getUserData().uid;
-																			loc.locationType = locationManager.getLocationType();
-																			loc.locationSubType = locationManager.getLocationSubType();
-																			loc.breadcrumb = locationManager.getBreadcrumb();
-																			if (locationManager.getLocationType() != LOCATION_TYPE.UNKNOWN
-																					&& locationManager.getLocationRef() != null)
-																				loc.locationUri = locationManager.getLocationRef().getUri()
+																			loc.locationType = location.getLocationType();
+																			loc.locationSubType = location.getLocationSubType();
+																			loc.breadcrumb = location.getBreadcrumb();
+																			if (location.getLocationType() != Location.LOCATION_TYPE.UNKNOWN
+																					&& location.getLocationRef() != null)
+																				loc.locationUri = location.getLocationRef().getUri()
 																						.toString();
 																			else {
 																				loc.locationUri = null;
-																				try {
-																					ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-																					PackageManager pm = getPackageManager();
-																					List<RunningTaskInfo> tasks = am.getRunningTasks(10);
-																					if (tasks.size() > 0) {
-																						loc.locationUri = tasks.get(0).topActivity
-																								.getPackageName();
-																						loc.externalAppName = pm.getApplicationLabel(
-																								pm.getApplicationInfo(loc.locationUri,
-																										PackageManager.GET_META_DATA))
-																								.toString();
-																					}
-																				} catch (Exception e) {
-																					Log.w(TAG, "error fetching open activity");
-																				}
+																				loc.locationUri = location.getAppPackageName();
+																				loc.externalAppName = location.getAppName();
 																			}
 
 																			JSONObject locationObject = null;
@@ -960,7 +942,7 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 	 * If stream is on, keep publishing new locations.
 	 */
 	@Override
-	public void onLocationChange(DiviReference newRef, Breadcrumb breadcrumb) {
+	public void onLocationChange(Location location) {
 		try {
 			if (lectureSessionProvider.isFollowMe()) {
 				if (lectureSessionProvider.getInstructions() != null && lectureSessionProvider.getInstructions().instructions.length > 0) {
@@ -968,11 +950,12 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 							Instruction.class);
 					if (instruction.followMe) {
 						DiviReference instructionLoc = new DiviReference(Uri.parse(instruction.location));
+                        DiviReference newRef = location.getLocationRef();
 						if (instructionLoc.isSameResourceAs(newRef) && newRef.fragment != null) {
 							Instruction streamInstruction = new Instruction();
 							streamInstruction.type = Instruction.INSTRUCTION_TYPE_FOLLOW_ME;
 							streamInstruction.location = newRef.getUri().toString();
-							streamInstruction.breadcrumb = breadcrumb.getBreadcrumbArray();
+							streamInstruction.breadcrumb = location.getBreadcrumb().getBreadcrumbArray();
 							JSONObject instructionObject = new JSONObject(new Gson().toJson(streamInstruction));
 							pubnub.publish(channel, instructionObject, new Callback() {
 								@Override

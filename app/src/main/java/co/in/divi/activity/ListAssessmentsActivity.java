@@ -35,10 +35,10 @@ import java.util.Map.Entry;
 
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
-import co.in.divi.LocationManager.Breadcrumb;
-import co.in.divi.LocationManager.LOCATION_SUBTYPE;
-import co.in.divi.LocationManager.LOCATION_TYPE;
-import co.in.divi.LocationManager.ProtectedResourceMetadata;
+import co.in.divi.Location.Breadcrumb;
+import co.in.divi.Location.LOCATION_SUBTYPE;
+import co.in.divi.Location.LOCATION_TYPE;
+import co.in.divi.Location.ProtectedResourceMetadata;
 import co.in.divi.R;
 import co.in.divi.content.AssessmentFileModel;
 import co.in.divi.content.Book;
@@ -336,7 +336,7 @@ public class ListAssessmentsActivity extends BaseActivity implements LoaderCallb
 			lockImage.setVisibility(View.GONE);
 			startAssessment.setVisibility(View.VISIBLE);
 			if (commands.containsKey(assessmentNode.id)) {
-				final DiviReference assRef = locationManager.getLocationRef();
+				final DiviReference assRef = locationManager.getLocation().getLocationRef();
 				final String chapterName = displayedAssessment.parentName;
 				for (Command c : commands.get(assessmentNode.id)) {
 					Button reportLink = new Button(this);

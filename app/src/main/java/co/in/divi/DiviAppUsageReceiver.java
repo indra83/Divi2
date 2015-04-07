@@ -26,7 +26,7 @@ public class DiviAppUsageReceiver extends BroadcastReceiver {
         UserSessionProvider userSessionProvider = UserSessionProvider.getInstance(context);
         if (userSessionProvider.isLoggedIn()) {
             DiviLog diviLog = new DiviLog(userSessionProvider.getUserData().uid, userSessionProvider.getUserData().token,
-                    intent.getStringExtra(INTENT_EXTRA_APP_PACKAGE), DiviLog.LOG_TYPE_TIMESPENT, LocationManager.LOCATION_SUBTYPE.APP);
+                    intent.getStringExtra(INTENT_EXTRA_APP_PACKAGE), DiviLog.LOG_TYPE_TIMESPENT, Location.LOCATION_SUBTYPE.APP);
             diviLog.duration = intent.getLongExtra(INTENT_EXTRA_DURATION, 0L);
             diviLog.openedAt = intent.getLongExtra(INTENT_EXTRA_OPENED_AT, 0L);
             ArrayList<DiviLog> logs = new ArrayList<DiviLog>();

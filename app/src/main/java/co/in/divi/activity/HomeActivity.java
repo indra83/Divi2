@@ -43,8 +43,8 @@ import co.in.divi.BaseActivity;
 import co.in.divi.ContentUpdateManager;
 import co.in.divi.ContentUpdateManager.ContentUpdateListener;
 import co.in.divi.ContentUpdateManager.UpdateStatus;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
-import co.in.divi.LocationManager.LOCATION_TYPE;
 import co.in.divi.R;
 import co.in.divi.content.Book;
 import co.in.divi.content.DatabaseHelper;
@@ -259,7 +259,7 @@ public class HomeActivity extends BaseActivity implements ContentUpdateListener 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LocationManager.getInstance(this).setNewLocation(LOCATION_TYPE.HOME, null, null, null, null);
+		LocationManager.getInstance(this).setNewLocation(Location.LOCATION_TYPE.HOME, null, null, null, null);
 	}
 
 	@Override

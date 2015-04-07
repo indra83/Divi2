@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.LectureSessionProvider.DashboardChangeListener;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
@@ -59,7 +60,7 @@ public class TeacherPanel extends LinearLayout implements DashboardChangeListene
 				if (postInstructionDialog != null && postInstructionDialog.isShowing())
 					postInstructionDialog.dismiss();
 
-				if (!Config.ENABLE_EXTERNAL_APP_SHARING && locationManager.getLocationRef() == null) {
+				if (!Config.ENABLE_EXTERNAL_APP_SHARING && locationManager.getLocation().getLocationRef() == null) {
 					Toast.makeText(getContext(), "Open the resource you want to share", Toast.LENGTH_LONG).show();
 					return;
 				}

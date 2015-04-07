@@ -19,7 +19,7 @@ import android.widget.FrameLayout.LayoutParams;
 import co.in.divi.diary.DiaryManager;
 import co.in.divi.diary.DiaryManager.DiaryChangeListener;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
-import co.in.divi.LocationManager.LOCATION_TYPE;
+import co.in.divi.Location.LOCATION_TYPE;
 import co.in.divi.UserSessionProvider.UserSessionChangeListener;
 import co.in.divi.activity.BlackoutActivity;
 import co.in.divi.activity.LoginActivity;

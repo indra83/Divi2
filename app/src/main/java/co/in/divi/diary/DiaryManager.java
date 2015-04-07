@@ -1,19 +1,13 @@
 package co.in.divi.diary;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
-import android.content.Context;
-import android.util.Log;
-
-import co.in.divi.diary.DiaryManager.DiaryEntry.ENTRY_TYPE;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
-import co.in.divi.LocationManager.LOCATION_TYPE;
-import co.in.divi.UserSessionProvider;
 import co.in.divi.db.model.Command;
-import co.in.divi.logs.LogsManager;
-import co.in.divi.util.DiviCalendar;
-import co.in.divi.util.Util;
-import co.in.divi.util.Week;
+import co.in.divi.diary.DiaryManager.DiaryEntry.ENTRY_TYPE;
 
 public class DiaryManager {
 
@@ -79,16 +73,16 @@ public class DiaryManager {
 
     public void addResourceToHomework() {
         // TODO Auto-generated method stub
-        Log.d(TAG, "will add: " + locationManager.getBreadcrumb());
-        if (locationManager.getLocationType() == LOCATION_TYPE.ASSESSMENT || locationManager.getLocationType() == LOCATION_TYPE.TOPIC) {
-            DiaryEntry.Resource r = new DiaryEntry.Resource();
-            r.locationType = locationManager.getLocationType();
-            r.locationSubType = locationManager.getLocationSubType();
-            r.uri = locationManager.getLocationRef().getUri().toString();
-            r.breadcrumb = locationManager.getBreadcrumb();
-
-            currentEntry.resources.add(r);
-        }
+//        Log.d(TAG, "will add: " + locationManager.getBreadcrumb());
+//        if (locationManager.getLocationType() == LOCATION_TYPE.ASSESSMENT || locationManager.getLocationType() == LOCATION_TYPE.TOPIC) {
+//            DiaryEntry.Resource r = new DiaryEntry.Resource();
+//            r.locationType = locationManager.getLocationType();
+//            r.locationSubType = locationManager.getLocationSubType();
+//            r.uri = locationManager.getLocationRef().getUri().toString();
+//            r.breadcrumb = locationManager.getBreadcrumb();
+//
+//            currentEntry.resources.add(r);
+//        }
     }
 
     public static class DiaryEntry {
@@ -103,10 +97,10 @@ public class DiaryManager {
         }
 
         public static class Resource {
-            public LocationManager.LOCATION_TYPE locationType;
-            public LocationManager.LOCATION_SUBTYPE locationSubType;
+            public Location.LOCATION_TYPE locationType;
+            public Location.LOCATION_SUBTYPE locationSubType;
             public String uri;
-            public LocationManager.Breadcrumb breadcrumb;
+            public Location.Breadcrumb breadcrumb;
 
             public Command unlockCommand;
         }

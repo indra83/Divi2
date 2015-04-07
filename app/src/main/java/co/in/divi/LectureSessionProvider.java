@@ -49,10 +49,10 @@ public class LectureSessionProvider implements UserSessionChangeListener {
 
 	public static class LocationHolder {
 		public String							uid;
-		public LocationManager.LOCATION_TYPE	locationType;
-		public LocationManager.LOCATION_SUBTYPE	locationSubType;
+		public Location.LOCATION_TYPE	        locationType;
+		public Location.LOCATION_SUBTYPE	    locationSubType;
 		public String							locationUri;
-		public LocationManager.Breadcrumb		breadcrumb;
+		public Location.Breadcrumb		        breadcrumb;
 		public String							externalAppName;
 
 		public long								timestampInMillis;	// for tracking freshness

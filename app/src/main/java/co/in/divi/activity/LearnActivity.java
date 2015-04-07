@@ -46,9 +46,7 @@ import java.util.ArrayList;
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider.FollowMeListener;
-import co.in.divi.LocationManager.Breadcrumb;
-import co.in.divi.LocationManager.LOCATION_SUBTYPE;
-import co.in.divi.LocationManager.LOCATION_TYPE;
+import co.in.divi.Location;
 import co.in.divi.R;
 import co.in.divi.content.Book;
 import co.in.divi.content.DatabaseHelper;
@@ -488,8 +486,8 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 		if (displayedTopic != null && newTopic.id.equals(displayedTopic.id))
 			return;// could be called twice!
 		// update location
-		locationManager.setNewLocation(LOCATION_TYPE.TOPIC, LOCATION_SUBTYPE.TOPIC_TOPIC, new DiviReference(currentBook.courseId,
-				currentBook.id, DiviReference.REFERENCE_TYPE_TOPIC, newTopic.id, null), Breadcrumb.get(userSessionProvider.getCourseName(),
+		locationManager.setNewLocation(Location.LOCATION_TYPE.TOPIC, Location.LOCATION_SUBTYPE.TOPIC_TOPIC, new DiviReference(currentBook.courseId,
+				currentBook.id, DiviReference.REFERENCE_TYPE_TOPIC, newTopic.id, null), Location.Breadcrumb.get(userSessionProvider.getCourseName(),
 				currentBook.name, newTopic.parentName, newTopic.name, null), null);
 		displayedTopic = newTopic;
 	}
@@ -614,12 +612,12 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 		}
 	}
 
-	void setSubItemInLocation(String subItemId, String subItemName, LOCATION_SUBTYPE type, String fragment) {
+	void setSubItemInLocation(String subItemId, String subItemName, Location.LOCATION_SUBTYPE type, String fragment) {
 		if (displayedTopic != null) {
 			DiviReference diviRef = new DiviReference(currentBook.courseId, currentBook.id, DiviReference.REFERENCE_TYPE_TOPIC,
 					displayedTopic.id, subItemId);
 			diviRef.setFragment(fragment);
-			locationManager.setNewLocation(LOCATION_TYPE.TOPIC, type, diviRef, Breadcrumb.get(userSessionProvider.getCourseName(),
+			locationManager.setNewLocation(Location.LOCATION_TYPE.TOPIC, type, diviRef, Location.Breadcrumb.get(userSessionProvider.getCourseName(),
 					currentBook.name, displayedTopic.parentName, displayedTopic.name, subItemName), null);
 		} else {
 			Log.w(TAG, "should not reach here!!");
@@ -628,8 +626,8 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 
 	void setTopicLocation() {
 		if (displayedTopic != null && userSessionProvider.isLoggedIn()) {
-			locationManager.setNewLocation(LOCATION_TYPE.TOPIC, LOCATION_SUBTYPE.TOPIC_TOPIC, new DiviReference(currentBook.courseId,
-					currentBook.id, DiviReference.REFERENCE_TYPE_TOPIC, displayedTopic.id, null), Breadcrumb.get(
+			locationManager.setNewLocation(Location.LOCATION_TYPE.TOPIC, Location.LOCATION_SUBTYPE.TOPIC_TOPIC, new DiviReference(currentBook.courseId,
+					currentBook.id, DiviReference.REFERENCE_TYPE_TOPIC, displayedTopic.id, null), Location.Breadcrumb.get(
 					userSessionProvider.getCourseName(), currentBook.name, displayedTopic.parentName, displayedTopic.name, null), null);
 		}
 	}
@@ -910,7 +908,8 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 	public boolean tryFollowMe(Uri followUri) {
 		try {
 			DiviReference newRef = new DiviReference(followUri);
-			if (newRef.isSameResourceAs(locationManager.getLocationRef())) {
+            Location loc = locationManager.getLocation();
+			if (newRef.isSameResourceAs(loc.getLocationRef())) {
 				// follow stream
 				if (LogConfig.DEBUG_ACTIVITIES)
 					Log.d(TAG, "following stream, " + newRef.fragment);

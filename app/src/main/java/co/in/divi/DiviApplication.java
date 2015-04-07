@@ -20,8 +20,8 @@ import java.util.UUID;
 import co.in.divi.background.UniversalSyncCheckReceiver;
 import co.in.divi.util.Config;
 
-@ReportsCrashes(formKey = "", // This is required for backward compatibility but not used
-formUri = "https://collector.tracepot.com/9e7647a9")
+//@ReportsCrashes(formKey = "", // This is required for backward compatibility but not used
+//formUri = "https://collector.tracepot.com/9e7647a9")
 public class DiviApplication extends Application {
 	private static final String		TAG					= DiviApplication.class.getSimpleName();
 
@@ -56,8 +56,8 @@ public class DiviApplication extends Application {
 		super.onCreate();
 
 		// error logging (if NOT playstore app)
-        if(!Config.IS_PLAYSTORE_APP)
-            ACRA.init(this);
+//        if(!Config.IS_PLAYSTORE_APP)
+//            ACRA.init(this);
 
 		instance = this;
 		requestQueue = Volley.newRequestQueue(this);

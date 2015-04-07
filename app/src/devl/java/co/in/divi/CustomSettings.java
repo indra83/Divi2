@@ -4,7 +4,7 @@ package co.in.divi;
  * Created by Indra on 2/25/2015.
  */
 public final class CustomSettings {
-    public static final boolean USE_CDN = true;
+    public static final boolean USE_CDN = false;
     public static final boolean ENABLE_OTP = false;
     public static final boolean ENABLE_EXTERNAL_APP_SHARING = true;
     public static final boolean ENABLE_PROVISIONING = true;

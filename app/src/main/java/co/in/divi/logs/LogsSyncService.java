@@ -29,6 +29,7 @@ import android.os.IBinder;
 import android.util.Log;
 import co.in.divi.DiviApplication;
 import co.in.divi.DiviService;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
 import co.in.divi.background.UniversalSyncCheckReceiver;
 import co.in.divi.content.DiviReference;
@@ -268,7 +269,7 @@ public class LogsSyncService extends DiviService {
                 resourceDetails.put("type", log.resourceType.toString());
             }catch(IllegalArgumentException iae) {
                 // app usage logging, ignore.
-                resourceDetails.put("type", LocationManager.LOCATION_SUBTYPE.APP);
+                resourceDetails.put("type", Location.LOCATION_SUBTYPE.APP);
             }
 
 			logObject.put("user", userDetails);

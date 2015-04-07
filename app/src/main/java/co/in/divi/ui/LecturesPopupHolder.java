@@ -34,6 +34,7 @@ import java.util.HashSet;
 
 import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider;
+import co.in.divi.Location;
 import co.in.divi.LocationManager;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
@@ -98,7 +99,8 @@ public class LecturesPopupHolder implements OnDismissListener {
 		popupRoot.findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (locationManager.getLocationRef() == null) {
+                Location loc = locationManager.getLocation();
+				if (loc.getLocationRef() == null) {
 					Toast.makeText(activity, "Open the resource you want to share", Toast.LENGTH_LONG).show();
 					return;
 				}

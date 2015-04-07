@@ -30,7 +30,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import java.io.File;
 
-import co.in.divi.LocationManager.LOCATION_SUBTYPE;
+import co.in.divi.Location.LOCATION_SUBTYPE;
 import co.in.divi.content.Topic.Audio;
 import co.in.divi.content.Topic.Image;
 import co.in.divi.content.Topic.ImageSet;

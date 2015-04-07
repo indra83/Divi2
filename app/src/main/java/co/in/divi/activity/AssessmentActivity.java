@@ -43,10 +43,8 @@ import java.util.HashMap;
 
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
-import co.in.divi.LocationManager.Breadcrumb;
-import co.in.divi.LocationManager.LOCATION_SUBTYPE;
-import co.in.divi.LocationManager.LOCATION_TYPE;
-import co.in.divi.LocationManager.ProtectedResourceMetadata;
+import co.in.divi.Location;
+import co.in.divi.Location.ProtectedResourceMetadata;
 import co.in.divi.R;
 import co.in.divi.content.AssessmentFileModel;
 import co.in.divi.content.AssessmentFileModel.Question;
@@ -292,9 +290,9 @@ public class AssessmentActivity extends BaseActivity implements LoaderCallbacks<
 
 	private void updateLocation() {
 		if (currentQuestionIndex >= 0 && currentAssessmentNode != null && currentAssessment != null) {
-			locationManager.setNewLocation(LOCATION_TYPE.ASSESSMENT, LOCATION_SUBTYPE.ASSESSMENT_QUIZ, new DiviReference(
+			locationManager.setNewLocation(Location.LOCATION_TYPE.ASSESSMENT, Location.LOCATION_SUBTYPE.ASSESSMENT_QUIZ, new DiviReference(
 					currentBook.courseId, currentBook.id, DiviReference.REFERENCE_TYPE_ASSESSMENT, currentAssessmentNode.id,
-					currentAssessment.questions[currentQuestionIndex].id), Breadcrumb.get(userSessionProvider.getCourseName(),
+					currentAssessment.questions[currentQuestionIndex].id), Location.Breadcrumb.get(userSessionProvider.getCourseName(),
 					currentBook.name, currentAssessmentNode.parentName, currentAssessmentNode.name,
 					currentAssessment.questions[currentQuestionIndex].name), protectedResourceMetadata);
 		}
