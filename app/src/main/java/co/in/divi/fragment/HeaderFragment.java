@@ -20,6 +20,7 @@ import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
+import co.in.divi.BaseActivity;
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.R;
@@ -94,8 +95,8 @@ public class HeaderFragment extends Fragment implements UserSessionChangeListene
 		diaryButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getActivity(), "'Diary' feature coming soon...", Toast.LENGTH_SHORT).show();
-				// ((BaseActivity) getActivity()).showDiary();
+//				Toast.makeText(getActivity(), "'Diary' feature coming soon...", Toast.LENGTH_SHORT).show();
+				((BaseActivity) getActivity()).showDiary();
 			}
 		});
 		searchButton.setOnClickListener(new View.OnClickListener() {

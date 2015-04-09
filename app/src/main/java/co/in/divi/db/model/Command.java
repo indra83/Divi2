@@ -6,9 +6,13 @@ import co.in.divi.db.UserDBContract.Commands;
 
 public class Command {
 	public static final int	COMMAND_CATEGORY_UNLOCK		= 1;
+    public static final int	COMMAND_CATEGORY_DIARY		= 2;
 
 	public static final int	COMMAND_UNLOCK_ITEM_CATEGORY_QUIZ	= 1;
 	public static final int	COMMAND_UNLOCK_ITEM_CATEGORY_TEST	= 2;
+
+    public static final int	COMMAND_DIARY_ITEM_CATEGORY_HOMEWORK	= 101;
+    public static final int	COMMAND_DIARY_ITEM_CATEGORY_ANNOUNCEMENT= 102;
 
 	public static final int	COMMAND_STATUS_ACTIVE		= 1;
 	public static final int	COMMAND_STATUS_DELETE		= 2;

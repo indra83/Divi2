@@ -33,6 +33,7 @@ public final class ServerConfig {
     public static final String METHOD_GETINSTRUCTIONS = "/getInstructions";
     public static final String METHOD_GETLECTUREMEMBERS = "/getLectureMembers";
     public static final String METHOD_GETCLASSMEMBERS = "/getClassRoomMembers";
+    public static final String METHOD_CREATECOMMANDS = "/createCommands";
 
     public static final String METHOD_GETDASHBOARDDATA = "/dashboardScores.json";
     public static final String METHOD_GETSCORES = "/getScores";

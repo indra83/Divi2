@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import co.in.divi.diary.DiaryEntry;
 import co.in.divi.diary.DiaryManager;
-import co.in.divi.diary.DiaryManager.DiaryEntry;
-import co.in.divi.diary.DiaryManager.DiaryEntry.ENTRY_TYPE;
 import co.in.divi.Location.LOCATION_SUBTYPE;
 import co.in.divi.Location.LOCATION_TYPE;
 import co.in.divi.R;
@@ -134,11 +134,11 @@ public class DiaryEntryComposeFragment extends BaseDialogFragment {
 				if (position == 0) {
 					addResource.setVisibility(View.VISIBLE);
 					resourcesContainer.setVisibility(View.VISIBLE);
-					diaryManager.getCurrentEntry().entryType = ENTRY_TYPE.HOMEWORK;
+					diaryManager.getCurrentEntry().entryType = DiaryEntry.ENTRY_TYPE.HOMEWORK;
 				} else if (position == 1) {
 					addResource.setVisibility(View.GONE);
 					resourcesContainer.setVisibility(View.GONE);
-					diaryManager.getCurrentEntry().entryType = ENTRY_TYPE.HOMEWORK;
+					diaryManager.getCurrentEntry().entryType = DiaryEntry.ENTRY_TYPE.HOMEWORK;
 				}
 			}
 

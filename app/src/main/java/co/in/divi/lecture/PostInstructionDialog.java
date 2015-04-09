@@ -229,8 +229,6 @@ public class PostInstructionDialog extends Dialog implements DiviLocationChangeL
         super.dismiss();
     }
 
-    ;
-
     private class CheckProtectedResourceTask extends AsyncTask<Void, Void, Integer> {
         private DiviReference diviRef;
         private Location.ProtectedResourceMetadata prm;

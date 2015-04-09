@@ -17,7 +17,7 @@ import co.in.divi.ui.HomeworkPickerPanel;
 /**
  * Created by Indra on 4/2/2015.
  */
-public class HomeworkPickerUIService extends Service {
+public class HomeworkPickerUIService extends Service implements DiaryManager.DiaryListener {
     private static final String TAG = HomeworkPickerUIService.class.getSimpleName();
 
     private static int FOREGROUND_ID = 1348;
@@ -42,13 +42,18 @@ public class HomeworkPickerUIService extends Service {
         if (!DiaryManager.getInstance(this).isPickingHomework()) {
             stopSelf();
             removeHomeworkPickerPanel();
+            return START_NOT_STICKY;
         }
+        DiaryManager.getInstance(this).addListener(this);
+        addHomeworkPickerPanel();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         Log.d(TAG, "stopping HomeworkPicker");
+        DiaryManager.getInstance(this).removeListener(this);
+        removeHomeworkPickerPanel();
     }
 
     // Teacher Panel stuff
@@ -56,13 +61,13 @@ public class HomeworkPickerUIService extends Service {
 
     private void addHomeworkPickerPanel() {
         removeHomeworkPickerPanel();
-        homeworkPickerPanel = (HomeworkPickerPanel) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.panel_teacher,
+        homeworkPickerPanel = (HomeworkPickerPanel) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.panel_homeworkpicker,
                 null, false);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+        params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).addView(homeworkPickerPanel, params);
         homeworkPickerPanel.init();
     }
@@ -70,7 +75,16 @@ public class HomeworkPickerUIService extends Service {
     private void removeHomeworkPickerPanel() {
         if (homeworkPickerPanel != null) {
             homeworkPickerPanel.stop();
+            ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).removeView(homeworkPickerPanel);
             homeworkPickerPanel = null;
+        }
+    }
+
+    @Override
+    public void onDiaryStateChange() {
+        if (!DiaryManager.getInstance(this).isPickingHomework()) {
+            stopSelf();
+            removeHomeworkPickerPanel();
         }
     }
 }
