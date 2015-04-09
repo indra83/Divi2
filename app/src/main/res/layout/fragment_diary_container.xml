@@ -112,8 +112,10 @@
                     android:layout_height="wrap_content"
                     android:text="Due Date" />
 
-                <EditText
+                <TextView
                     android:id="@+id/dueET"
+                    android:clickable="true"
+                    style="@android:style/Widget.EditText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 

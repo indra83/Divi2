@@ -1,5 +1,8 @@
 package co.in.divi.fragment;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,7 +33,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
@@ -54,7 +58,7 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
     private DiaryManager diaryManager;
 
     private Button newHomeworkButton, newAnnounceButton, sendButton, cancelButton, syncButton;
-    private TextView syncText, titleTV;
+    private TextView syncText, titleTV, dueET;
     private EditText titleET, messageET;
     private ListView diaryEntriesList;
     private View composeContainer, pickHomework;
@@ -90,6 +94,7 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
         syncText = (TextView) rootView.findViewById(R.id.syncText);
         titleTV = (TextView) rootView.findViewById(R.id.title);
         titleET = (EditText) rootView.findViewById(R.id.titleET);
+        dueET = (TextView) rootView.findViewById(R.id.dueET);
         messageET = (EditText) rootView.findViewById(R.id.messageET);
         pickHomework = rootView.findViewById(R.id.pickHomework);
         resourcesContainer = (LinearLayout) rootView.findViewById(R.id.resources);
@@ -146,28 +151,38 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
                 }
             }
         });
+        dueET.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
         diaryManager.addListener(this);
         // fill listview
         Cursor cursor;
-        UserData.ClassRoom[] classRooms = userSessionProvider.getUserData().classRooms;
+        classRooms = userSessionProvider.getUserData().classRooms;
         if (userSessionProvider.getUserData().isTeacher()) {
-            String mSelectionClause = Commands.STATUS + " = ? AND " + Commands.CLASS_ID + " IN (" + makePlaceholders(classRooms.length) + ") AND " + Commands.TYPE + " = ? ";
-            ArrayList<String> selectionArgs = new ArrayList<>();
-            selectionArgs.add("" + Command.COMMAND_STATUS_ACTIVE);
-            for (UserData.ClassRoom cr : classRooms)
-                selectionArgs.add(cr.classId);
-            selectionArgs.add("" + Command.COMMAND_CATEGORY_DIARY);
-            cursor = getActivity().getContentResolver().query(UserDBContract.Commands.CONTENT_URI, UserDBContract.Commands.PROJECTION_ALL,
-                    mSelectionClause, selectionArgs.toArray(new String[selectionArgs.size()]), Commands.SORT_ORDER_LATEST_FIRST);
-        } else {
             String mSelectionClause = Commands.STATUS + " = ? AND " + Commands.TEACHER_ID + " = ? AND " + Commands.TYPE + " = ? ";
             String[] selectionArgs = new String[]{"" + Command.COMMAND_STATUS_ACTIVE, userSessionProvider.getUserData().uid, "" + Command.COMMAND_CATEGORY_DIARY};
             cursor = getActivity().getContentResolver().query(UserDBContract.Commands.CONTENT_URI, UserDBContract.Commands.PROJECTION_ALL,
                     mSelectionClause, selectionArgs, Commands.SORT_ORDER_LATEST_FIRST);
+
+        } else {
+            String mSelectionClause = Commands.STATUS + " = ? AND " + Commands.UID + " =? AND " + Commands.TYPE + " = ? ";
+//            ArrayList<String> selectionArgs = new ArrayList<>();
+//            selectionArgs.add("" + Command.COMMAND_STATUS_ACTIVE);
+//            for (UserData.ClassRoom cr : classRooms)
+//                selectionArgs.add(cr.classId);
+//            selectionArgs.add("" + Command.COMMAND_CATEGORY_DIARY);
+            String[] selectionArgs = new String[]{"" + Command.COMMAND_STATUS_ACTIVE, userSessionProvider.getUserData().uid, "" + Command.COMMAND_CATEGORY_DIARY};
+            cursor = getActivity().getContentResolver().query(UserDBContract.Commands.CONTENT_URI, UserDBContract.Commands.PROJECTION_ALL,
+                    mSelectionClause, selectionArgs, Commands.SORT_ORDER_LATEST_FIRST);
+//            mSelectionClause, selectionArgs.toArray(new String[selectionArgs.size()]), Commands.SORT_ORDER_LATEST_FIRST);
         }
+        Log.d(TAG, "got entries:" + cursor.getCount());
         DiaryEntryAdapter adapter = new DiaryEntryAdapter(getActivity(), cursor);
         diaryEntriesList.setAdapter(adapter);
-        classRooms = userSessionProvider.getUserData().classRooms;
         classRoomNames = new String[classRooms.length];
         for (int i = 0; i < classRooms.length; i++)
             classRoomNames[i] = classRooms[i].className + "-" + classRooms[i].section;
@@ -183,19 +198,23 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
     public void onStop() {
         super.onStop();
         diaryManager.removeListener(this);
-        if (diaryManager.isComposing()) {
-            Log.d(TAG, "saving draft");
-            DiaryEntry de = diaryManager.getCurrentEntry();
-            de.title = titleET.getText().toString();
-            de.message = messageET.getText().toString();
-            de.classId = classRooms[classSpinner.getSelectedItemPosition()].classId;
-        }
+        saveDiaryEntry();
         DiviApplication.get().getRequestQueue().cancelAll(this);
     }
 
     @Override
     public void onDiaryStateChange() {
         refreshUI();
+    }
+
+    private void saveDiaryEntry() {
+        if (diaryManager.isComposing()) {
+            Log.d(TAG, "saving draft - " + classSpinner.getSelectedItemPosition());
+            DiaryEntry de = diaryManager.getCurrentEntry();
+            de.title = titleET.getText().toString();
+            de.message = messageET.getText().toString();
+            de.classId = classRooms[classSpinner.getSelectedItemPosition()].classId;
+        }
     }
 
     private void refreshUI() {
@@ -277,6 +296,7 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
     }
 
     private void sendHomework() {
+        saveDiaryEntry();
         sendButton.setEnabled(false);
         sendButton.setText("Posting...");
         try {
@@ -330,17 +350,24 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
 
     }
 
-    private String makePlaceholders(int len) {
-        if (len < 1) {
-            // It will lead to an invalid query anyway ..
-            throw new RuntimeException("No placeholders");
-        } else {
-            StringBuilder sb = new StringBuilder(len * 2 - 1);
-            sb.append("?");
-            for (int i = 1; i < len; i++) {
-                sb.append(",?");
-            }
-            return sb.toString();
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, day);
+            Log.d(TAG, "date selected - " + cal);
         }
     }
 }
