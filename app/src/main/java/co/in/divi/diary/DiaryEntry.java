@@ -2,6 +2,7 @@ package co.in.divi.diary;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import co.in.divi.Location;
@@ -15,16 +16,23 @@ public class DiaryEntry {
     public String title;
     public String classId;
     public String message;
+    public String teacherId;
+    public String teacherName;
     public ArrayList<Resource> resources;
-    public String dueDate;
 
-    private transient Date dueDateDate;
+    // mapped to the endsAt in Command.
+    public transient Date dueDate;
 
-    public DiaryEntry(ENTRY_TYPE type) {
+    public DiaryEntry(ENTRY_TYPE type, String teacherId, String teacherName) {
         entryType = type;
+        this.teacherId = teacherId;
+        this.teacherName = teacherName;
         resources = new ArrayList<DiaryEntry.Resource>();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR,24);
+        dueDate = cal.getTime();
     }
-
+/*
     public Date getDueDate() {
         if (dueDateDate == null) {
             try {
@@ -36,9 +44,9 @@ public class DiaryEntry {
         return dueDateDate;
     }
 
+*/
     public void setDueDate(Date date) {
-        dueDateDate = date;
-        dueDate = format.format(date);
+        dueDate = date;
     }
 
     public static class Resource {
@@ -54,5 +62,5 @@ public class DiaryEntry {
         HOMEWORK, ANNOUNCEMENT
     }
 
-    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+//    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 }

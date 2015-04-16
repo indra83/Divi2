@@ -39,7 +39,6 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
 
     protected HeaderFragment header;
     protected View headerShadow;
-    private HomeworkPickerPanel homeworkPickerPanel;
 
     private boolean showHeader;
     private boolean headerIsAnimating;
@@ -89,11 +88,11 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
                 startActivity(intent);
             }
         }
-        if (userSessionProvider.hasUserData() && userSessionProvider.getUserData().isTeacher()) {
-            if (diaryManager.isPickingHomework()) {
-                addHomeworkPickerPanel();
-            }
-        }
+//        if (userSessionProvider.hasUserData() && userSessionProvider.getUserData().isTeacher()) {
+//            if (diaryManager.isPickingHomework()) {
+//                addHomeworkPickerPanel();
+//            }
+//        }
     }
 
     @Override
@@ -295,7 +294,7 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
     @Override
     public void onDiaryStateChange() {
     }
-
+/*
     // homework picker
     private void addHomeworkPickerPanel() {
         removeHomeworkPickerPanel();
@@ -316,4 +315,5 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
             homeworkPickerPanel = null;
         }
     }
+    */
 }

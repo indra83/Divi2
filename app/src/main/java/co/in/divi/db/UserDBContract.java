@@ -95,6 +95,7 @@ public final class UserDBContract {
 
 		public static final String		SORT_ORDER_DEFAULT		= _ID + " ASC";
 		public static final String		SORT_ORDER_LATEST_FIRST	= LAST_UPDATED + " DESC LIMIT 1";
+        public static final String		SORT_ORDER_ENDSAT_FIRST	= END_TIMESTAMP + " DESC";
 	}
 
 	/**

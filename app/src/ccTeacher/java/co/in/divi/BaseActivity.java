@@ -42,7 +42,6 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
 
 	protected HeaderFragment			header;
 	protected View						headerShadow;
-	private HomeworkPickerPanel			homeworkPickerPanel;
 
 	private boolean						showHeader;
 	private boolean						headerIsAnimating;

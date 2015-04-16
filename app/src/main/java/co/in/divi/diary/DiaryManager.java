@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import co.in.divi.Location;
 import co.in.divi.LocationManager;
+import co.in.divi.UserSessionProvider;
+import co.in.divi.model.UserData;
 
 public class DiaryManager {
 
@@ -65,6 +67,12 @@ public class DiaryManager {
         return currentEntry;
     }
 
+    public void pingListeners() {
+        if (isComposing()) {
+            callListeners();
+        }
+    }
+
     public void clearCurrentEntry() {
         this.currentEntry = null;
         state = DIARY_STATE.NORMAL;
@@ -72,7 +80,12 @@ public class DiaryManager {
     }
 
     public void startNewEntry(DiaryEntry.ENTRY_TYPE entryType) {
-        currentEntry = new DiaryEntry(entryType);
+        UserData userData = UserSessionProvider.getInstance(context).getUserData();
+        if(userData==null) {
+            Log.w(TAG,"user logged out, cannot create diary entry");
+            return;
+        }
+        currentEntry = new DiaryEntry(entryType, userData.uid, userData.name);
         state = DIARY_STATE.COMPOSE;
         callListeners();
     }
