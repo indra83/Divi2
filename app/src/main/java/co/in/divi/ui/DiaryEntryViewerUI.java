@@ -2,6 +2,7 @@ package co.in.divi.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.transition.Fade;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -50,7 +51,7 @@ public class DiaryEntryViewerUI extends LinearLayout {
     private TextView title, teacherName, dueDate, className, message;
     private LinearLayout resourcesContainer;
     private Button closeButton;
-    private FadeInNetworkImageView imageView;
+    private FadeInNetworkImageView profilePic;
 
     //Teacher panel
     private TextView reportText;
@@ -80,13 +81,20 @@ public class DiaryEntryViewerUI extends LinearLayout {
         reportButton = (Button) findViewById(R.id.reportButton);
         refreshButton = (ImageView) findViewById(R.id.refresh);
         reportText = (TextView) findViewById(R.id.reportText);
-        imageView = (FadeInNetworkImageView) findViewById(R.id.profile_pic);
+        profilePic = (FadeInNetworkImageView) findViewById(R.id.profile_pic);
 
         teacherName.setText(de.teacherName);
         className.setText("to " + de.classId);
         dueDate.setText(sdf.format(de.dueDate).toString());
         title.setText(de.title);
         message.setText(de.message);
+        profilePic.setErrorImageResId(R.drawable.ic_profile);
+        profilePic.setImageUrl(null, DiviApplication.get().getImageLoader());
+        if (de.teacherProfilePic != null) {
+            Uri picUri = Uri.parse(de.teacherProfilePic);
+            if (picUri != null && picUri.getHost() != null)
+                profilePic.setImageUrl(de.teacherProfilePic, DiviApplication.get().getImageLoader());
+        }
 
         closeButton.setOnClickListener(new OnClickListener() {
             @Override

@@ -25,6 +25,7 @@ public class HomeworkResourceView extends RelativeLayout {
     }
 
     public void init(final DiaryEntry.Resource res, final RemoveResourceHelper removeResourceHelper) {
+        setClickable(true);
         ImageView iconView = (ImageView) findViewById(R.id.icon);
         TextView chapterText = (TextView) findViewById(R.id.chapterText);
         TextView titleText = (TextView) findViewById(R.id.titleText);

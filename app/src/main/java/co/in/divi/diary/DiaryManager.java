@@ -85,7 +85,7 @@ public class DiaryManager {
             Log.w(TAG, "user logged out, cannot create diary entry");
             return;
         }
-        currentEntry = new DiaryEntry(entryType, userData.uid, userData.name);
+        currentEntry = new DiaryEntry(entryType, userData.uid, userData.name, userData.profilePic);
         state = DIARY_STATE.COMPOSE;
         callListeners();
     }

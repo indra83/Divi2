@@ -18,16 +18,18 @@ public class DiaryEntry {
     public String message;
     public String teacherId;
     public String teacherName;
+    public String teacherProfilePic;
     public ArrayList<Resource> resources;
 
     // mapped to the endsAt in Command.
     public transient Date dueDate;
     public transient long createdAt;
 
-    public DiaryEntry(ENTRY_TYPE type, String teacherId, String teacherName) {
+    public DiaryEntry(ENTRY_TYPE type, String teacherId, String teacherName, String profilePic) {
         entryType = type;
         this.teacherId = teacherId;
         this.teacherName = teacherName;
+        this.teacherProfilePic = profilePic;
         resources = new ArrayList<DiaryEntry.Resource>();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR,24);

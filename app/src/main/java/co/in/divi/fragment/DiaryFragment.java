@@ -159,6 +159,9 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
 
     private void refreshUI() {
         Log.d(TAG, "refreshUI");
+        if(!userSessionProvider.isLoggedIn()) {
+            return;
+        }
         if (userSessionProvider.getUserData().isTeacher()) {
             newHomeworkButton.setVisibility(View.VISIBLE);
             newAnnounceButton.setVisibility(View.VISIBLE);
