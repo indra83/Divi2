@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_root"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_home_title" >
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/icon"
@@ -31,8 +30,9 @@
         android:layout_below="@+id/title"
         android:layout_toLeftOf="@+id/date"
         android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/text_grey" />
+        android:textSize="18sp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/text_grey2" />
 
     <TextView
         android:id="@+id/date"

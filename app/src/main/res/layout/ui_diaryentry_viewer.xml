@@ -50,6 +50,32 @@
             android:layout_below="@+id/to" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/teacherPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:src="@drawable/ic_action_refresh" />
+
+        <TextView
+            android:id="@+id/reportText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/reportButton"
+            android:text="View Report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

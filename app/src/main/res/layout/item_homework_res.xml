@@ -2,24 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
+    android:layout_margin="@dimen/activity_horizontal_margin"
     android:background="@drawable/bg_homeworkpicker">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
 
     <TextView
         android:id="@+id/chapterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:textSize="16sp"
+        android:lines="1"
         android:layout_toRightOf="@+id/icon" />
 
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:lines="2"
         android:layout_alignLeft="@+id/chapterText"
         android:layout_below="@+id/chapterText" />
+
+    <ImageView
+        android:id="@+id/remove"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_width="40dp"
+        android:layout_height="fill_parent" />
 </co.in.divi.ui.HomeworkResourceView>

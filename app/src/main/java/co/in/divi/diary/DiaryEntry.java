@@ -22,6 +22,7 @@ public class DiaryEntry {
 
     // mapped to the endsAt in Command.
     public transient Date dueDate;
+    public transient long createdAt;
 
     public DiaryEntry(ENTRY_TYPE type, String teacherId, String teacherName) {
         entryType = type;

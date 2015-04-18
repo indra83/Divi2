@@ -46,7 +46,7 @@ import co.in.divi.util.ServerConfig;
 /**
  * Created by Indra on 4/12/2015.
  */
-public class DiaryEntryEditorUI extends LinearLayout {
+public class DiaryEntryEditorUI extends LinearLayout implements HomeworkResourceView.RemoveResourceHelper {
     private static final String TAG = DiaryEntryEditorUI.class.getSimpleName();
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
@@ -65,6 +65,7 @@ public class DiaryEntryEditorUI extends LinearLayout {
     private DiaryManager diaryManager;
     private UserSessionProvider userSessionProvider;
     private FragmentManager fragmentManager;
+
 
     public DiaryEntryEditorUI(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -153,7 +154,7 @@ public class DiaryEntryEditorUI extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (DiaryEntry.Resource res : de.resources) {
             HomeworkResourceView hrv = (HomeworkResourceView) inflater.inflate(R.layout.item_homework_res, resourcesContainer, false);
-            hrv.init(res);
+            hrv.init(res, this);
             resourcesContainer.addView(hrv);
         }
     }
@@ -227,6 +228,11 @@ public class DiaryEntryEditorUI extends LinearLayout {
             Toast.makeText(getContext(), "Error sending instruction", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    @Override
+    public void removeResource(DiaryEntry.Resource res) {
+        diaryManager.removeResourceFromHomework(res);
     }
 
     public static class DatePickerFragment extends DialogFragment

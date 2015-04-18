@@ -12,7 +12,8 @@
     <color name="text_topic_normal">#77828a</color>
     <color name="bg_back_s">#66ffffff</color>
     <color name="text_grey">#464646</color>
-    
+    <color name="text_grey2">#77828a</color>
+
     <color name="instruction_selected">#ffc8c8c8</color>
 
     <!-- Dashboard -->

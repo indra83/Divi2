@@ -90,6 +90,11 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"></activity>
+        <activity
+            android:name="co.in.divi.activity.DiaryReportActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
 
         <service
             android:name="co.in.divi.content.importer.ContentImportService"

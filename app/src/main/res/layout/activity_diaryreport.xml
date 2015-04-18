@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
     <fragment
         android:id="@+id/header"
@@ -14,7 +14,24 @@
         android:id="@+id/grid"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/header"/>
+        android:layout_below="@id/header"
+        android:columnWidth="190dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="auto_fit"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:stretchMode="spacingWidth"
+        android:verticalSpacing="10dp" />
+
+    <ProgressBar
+        android:id="@+id/progress1"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="5dp" />
+
 </RelativeLayout>
 
 

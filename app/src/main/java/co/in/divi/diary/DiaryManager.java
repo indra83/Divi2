@@ -81,8 +81,8 @@ public class DiaryManager {
 
     public void startNewEntry(DiaryEntry.ENTRY_TYPE entryType) {
         UserData userData = UserSessionProvider.getInstance(context).getUserData();
-        if(userData==null) {
-            Log.w(TAG,"user logged out, cannot create diary entry");
+        if (userData == null) {
+            Log.w(TAG, "user logged out, cannot create diary entry");
             return;
         }
         currentEntry = new DiaryEntry(entryType, userData.uid, userData.name);
@@ -115,6 +115,12 @@ public class DiaryManager {
 
             callListeners();
         }
+    }
+
+    public void removeResourceFromHomework(DiaryEntry.Resource res) {
+        Log.d(TAG, "removing - " + res.uri);
+        getCurrentEntry().resources.remove(res);
+        callListeners();
     }
 
     private void callListeners() {

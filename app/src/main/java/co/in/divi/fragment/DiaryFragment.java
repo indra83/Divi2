@@ -34,7 +34,7 @@ import co.in.divi.model.UserData;
 import co.in.divi.ui.DiaryEntryEditorUI;
 import co.in.divi.ui.DiaryEntryViewerUI;
 
-public class DiaryFragment extends Fragment implements DiaryManager.DiaryListener , DiaryEntryViewerUI.CloseViewer{
+public class DiaryFragment extends Fragment implements DiaryManager.DiaryListener, DiaryEntryViewerUI.CloseViewer {
     private static final String TAG = DiaryFragment.class.getName();
 
     private UserSessionProvider userSessionProvider;
@@ -119,12 +119,12 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DiaryEntry de = (DiaryEntry) view.getTag();
-                DiaryEntryViewerUI deViewer = (DiaryEntryViewerUI) ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                deViewer = (DiaryEntryViewerUI) ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                         .inflate(R.layout.ui_diaryentry_viewer, composeContainer, false);
                 composeContainer.removeAllViews();
                 composeContainer.addView(deViewer);
                 composeContainer.setVisibility(View.VISIBLE);
-                deViewer.init(de,DiaryFragment.this);
+                deViewer.init(de, DiaryFragment.this);
             }
         });
     }
@@ -141,6 +141,8 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
         diaryManager.removeListener(this);
         if (deEditor != null)
             deEditor.stop();
+        if (deViewer != null)
+            deViewer.stop();
     }
 
     @Override
@@ -188,6 +190,8 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
     public void closeViewer() {
         composeContainer.removeAllViews();
         composeContainer.setVisibility(View.GONE);
+        deViewer.stop();
+        deViewer = null;
     }
 
     private class DiaryEntryAdapter extends CursorAdapter {
@@ -215,6 +219,7 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
 
             DiaryEntry de = gson.fromJson(cursor.getString(cursor.getColumnIndex(Commands.DATA)), DiaryEntry.class);
             de.dueDate = new Date(cursor.getLong(cursor.getColumnIndex(Commands.END_TIMESTAMP)));
+            de.createdAt = cursor.getLong(cursor.getColumnIndex(Commands.CREATE_TIMESTAMP));
 
             if (de.entryType == DiaryEntry.ENTRY_TYPE.ANNOUNCEMENT) {
                 icon.setImageResource(R.drawable.bg_accuracy_0);
@@ -230,9 +235,9 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
                         break;
                     }
                 }
-                tvLine2.setText(className);
+                tvLine2.setText(" to "+className);
             } else {
-                tvLine2.setText(de.teacherName);
+                tvLine2.setText(" from "+de.teacherName);
             }
             date.setText(format.format(de.dueDate));
             view.setTag(de);
