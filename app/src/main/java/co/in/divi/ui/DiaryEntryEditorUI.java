@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class DiaryEntryEditorUI extends LinearLayout implements HomeworkResource
 
     private EditText titleET, messageET;
     private Button sendButton, cancelButton;
-    private View pickHomework;
+    private TextView pickHomework;
 
     private LinearLayout resourcesContainer;
     private Spinner classSpinner;
@@ -81,10 +82,11 @@ public class DiaryEntryEditorUI extends LinearLayout implements HomeworkResource
         titleET = (EditText) findViewById(R.id.titleET);
         dueET = (TextView) findViewById(R.id.dueET);
         messageET = (EditText) findViewById(R.id.messageET);
-        pickHomework = findViewById(R.id.pickHomework);
+        pickHomework = (TextView) findViewById(R.id.pickHomework);
         resourcesContainer = (LinearLayout) findViewById(R.id.resources);
         classSpinner = (Spinner) findViewById(R.id.classSpinner);
 
+        pickHomework.setPaintFlags(pickHomework.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         pickHomework.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

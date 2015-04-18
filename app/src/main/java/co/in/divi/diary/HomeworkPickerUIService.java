@@ -61,9 +61,9 @@ public class HomeworkPickerUIService extends Service implements DiaryManager.Dia
 
     private void addHomeworkPickerPanel() {
         removeHomeworkPickerPanel();
-        homeworkPickerPanel = (HomeworkPickerPanel) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.panel_homeworkpicker,
-                null, false);
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
+        homeworkPickerPanel = (HomeworkPickerPanel) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.panel_homeworkpicker, null, false);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
 
@@ -84,7 +84,7 @@ public class HomeworkPickerUIService extends Service implements DiaryManager.Dia
     public void onDiaryStateChange() {
         if (!DiaryManager.getInstance(this).isPickingHomework()) {
             stopSelf();
-            removeHomeworkPickerPanel();
+//            removeHomeworkPickerPanel();
         }
     }
 }
