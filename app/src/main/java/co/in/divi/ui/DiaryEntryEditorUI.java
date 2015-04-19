@@ -91,6 +91,7 @@ public class DiaryEntryEditorUI extends LinearLayout implements HomeworkResource
             @Override
             public void onClick(View v) {
                 if (diaryManager.isComposing()) {
+                    saveDiaryEntry();
                     diaryManager.startPicking();
                     ((BaseActivity) getContext()).closeDiary();
                 }

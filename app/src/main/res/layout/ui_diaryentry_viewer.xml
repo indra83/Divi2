@@ -14,6 +14,12 @@
         android:textColor="#464646"
         android:textSize="26sp" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/text_grey" />
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -32,7 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/profile_pic"
-            android:textColor="#46464646"
+            android:textColor="@color/text_grey"
             android:textSize="18sp" />
 
         <TextView
@@ -41,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/from"
             android:layout_below="@+id/from"
+            android:layout_marginLeft="10dp"
             android:textColor="#46464646"
             android:textSize="16sp" />
 
@@ -48,8 +55,10 @@
             android:id="@+id/date"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/to"
-            android:layout_below="@+id/to" />
+            android:layout_alignBottom="@+id/to"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/second_grey" />
     </RelativeLayout>
 
     <LinearLayout
@@ -83,8 +92,8 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="Homework Title"
         android:textColor="@color/text_grey"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -93,6 +102,7 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:text="Message"
         android:textColor="@color/second_grey"

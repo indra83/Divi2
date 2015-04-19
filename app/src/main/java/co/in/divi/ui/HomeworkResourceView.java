@@ -1,6 +1,7 @@
 package co.in.divi.ui;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import co.in.divi.Location;
 import co.in.divi.R;
 import co.in.divi.diary.DiaryEntry;
+import co.in.divi.util.Util;
 
 /**
  * Created by Indra on 4/8/2015.
@@ -26,6 +28,12 @@ public class HomeworkResourceView extends RelativeLayout {
 
     public void init(final DiaryEntry.Resource res, final RemoveResourceHelper removeResourceHelper) {
         setClickable(true);
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.openInstruction(getContext(), Uri.parse(res.uri));
+            }
+        });
         ImageView iconView = (ImageView) findViewById(R.id.icon);
         TextView chapterText = (TextView) findViewById(R.id.chapterText);
         TextView titleText = (TextView) findViewById(R.id.titleText);

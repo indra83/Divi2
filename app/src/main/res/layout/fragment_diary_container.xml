@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/header"
     android:clickable="true"
+    android:background="#80404040"
     android:orientation="horizontal">
 
     <View
@@ -57,6 +58,8 @@
             android:id="@+id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:paddingBottom="28dp"
+            android:clipToPadding="false"
             android:layout_below="@+id/buttonContainer"></ListView>
 
         <ScrollView

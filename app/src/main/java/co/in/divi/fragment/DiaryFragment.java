@@ -2,6 +2,7 @@ package co.in.divi.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import co.in.divi.UserSessionProvider;
 import co.in.divi.db.UserDBContract;
 import co.in.divi.db.UserDBContract.Commands;
 import co.in.divi.db.model.Command;
+import co.in.divi.db.sync.SyncDownService;
 import co.in.divi.diary.DiaryEntry;
 import co.in.divi.diary.DiaryManager;
 import co.in.divi.model.UserData;
@@ -95,6 +97,11 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
             @Override
             public void onClick(View v) {
                 // Start sync
+//                syncText.setText("Syncing...");
+                Intent startSyncDownService = new Intent(getActivity(), SyncDownService.class);
+                startSyncDownService.putExtra(SyncDownService.INTENT_EXTRA_ONLY_COMMAND, true);
+                getActivity().startService(startSyncDownService);
+
             }
         });
         diaryManager.addListener(this);
@@ -159,7 +166,7 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
 
     private void refreshUI() {
         Log.d(TAG, "refreshUI");
-        if(!userSessionProvider.isLoggedIn()) {
+        if (!userSessionProvider.isLoggedIn()) {
             return;
         }
         if (userSessionProvider.getUserData().isTeacher()) {
@@ -238,9 +245,9 @@ public class DiaryFragment extends Fragment implements DiaryManager.DiaryListene
                         break;
                     }
                 }
-                tvLine2.setText(" to "+className);
+                tvLine2.setText(" to " + className);
             } else {
-                tvLine2.setText(" from "+de.teacherName);
+                tvLine2.setText(" from " + de.teacherName);
             }
             date.setText(format.format(de.dueDate));
             view.setTag(de);

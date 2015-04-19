@@ -16,19 +16,19 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
+import co.in.divi.diary.DiaryManager;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
+import co.in.divi.Location.LOCATION_TYPE;
 import co.in.divi.UserSessionProvider.UserSessionChangeListener;
 import co.in.divi.activity.BlackoutActivity;
 import co.in.divi.activity.LoginActivity;
 import co.in.divi.activity.SyncDownActivity;
-import co.in.divi.diary.DiaryManager;
-import co.in.divi.diary.DiaryManager.DiaryChangeListener;
 import co.in.divi.fragment.DiaryFragment;
 import co.in.divi.fragment.HeaderFragment;
 import co.in.divi.ui.HomeworkPickerPanel;
 import co.in.divi.util.LogConfig;
 
-public abstract class BaseActivity extends Activity implements UserSessionChangeListener, LectureStatusChangeListener, DiaryChangeListener {
+public abstract class BaseActivity extends Activity implements UserSessionChangeListener, LectureStatusChangeListener, DiaryManager.DiaryListener {
     private static final String TAG = BaseActivity.class.getSimpleName();
     private static final String DIARY_FRAGMENT_TAG = "fragment_diary";
 
@@ -88,18 +88,18 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
                 startActivity(intent);
             }
         }
-        if (userSessionProvider.hasUserData() && userSessionProvider.getUserData().isTeacher()) {
-            if (diaryManager.isPickingHomework()) {
-                addHomeworkPickerPanel();
-            }
-        }
+//        if (userSessionProvider.hasUserData() && userSessionProvider.getUserData().isTeacher()) {
+//            if (diaryManager.isPickingHomework()) {
+//                addHomeworkPickerPanel();
+//            }
+//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         // Clear location
-        locationManager.setNewLocation(Location.LOCATION_TYPE.UNKNOWN, null, null, null, null);
+        locationManager.setNewLocation(LOCATION_TYPE.UNKNOWN, null, null, null, null);
         closeDiary();
     }
 
@@ -254,6 +254,7 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
     }
 
     public void closeDiary() {
+        Log.d(TAG,"closeDiary");
         if (getFragmentManager().findFragmentByTag(DIARY_FRAGMENT_TAG) != null) {
             getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag(DIARY_FRAGMENT_TAG)).commit();
         }
@@ -291,16 +292,9 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
     public abstract void onCourseChange();
 
     @Override
-    public void onHomeworkPickerStatusChange() {
-        if (userSessionProvider.isLoggedIn() && userSessionProvider.getUserData().isTeacher()) {
-            if (diaryManager.isPickingHomework()) {
-                addHomeworkPickerPanel();
-            } else {
-                removeHomeworkPickerPanel();
-            }
-        }
+    public void onDiaryStateChange() {
     }
-
+/*
     // homework picker
     private void addHomeworkPickerPanel() {
         removeHomeworkPickerPanel();
@@ -321,4 +315,5 @@ public abstract class BaseActivity extends Activity implements UserSessionChange
             homeworkPickerPanel = null;
         }
     }
+    */
 }

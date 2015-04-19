@@ -21,6 +21,7 @@ import android.util.Log;
 import android.widget.Toast;
 import co.in.divi.DiviService;
 import co.in.divi.UserSessionProvider;
+import co.in.divi.background.HeartbeatService;
 import co.in.divi.background.UniversalSyncCheckReceiver;
 import co.in.divi.db.UserDBContract;
 import co.in.divi.db.UserDBContract.Attempts;
@@ -243,6 +244,9 @@ public class SyncDownService extends DiviService {
 							Toast.makeText(getBaseContext(), "Error performing sync, terminating login..", Toast.LENGTH_LONG).show();
 						}
 					});
+
+                    Intent launchHeartbeatSync = new Intent(SyncDownService.this, HeartbeatService.class);
+                    startService(launchHeartbeatSync);
 					stopSelf();
 				}
 			} catch (Exception e) {

@@ -64,8 +64,8 @@ android {
 
         demo {
             applicationId "co.in.divi"
-            versionName "v2.6.6 (demo)"
-            versionCode 266
+            versionName "v2.7.0 (demo)"
+            versionCode 270
 
             buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
 //            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-dev.herokuapp.com/v2\""
