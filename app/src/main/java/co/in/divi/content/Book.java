@@ -13,6 +13,9 @@ public class Book implements Parcelable {
 	public String	bookTags;	// !! name in db table is different!!
 	public int		version;
 
+    public String streamUrl = "";
+    public String encryptPassPhrase = "";
+
 	private Book() {
 	}
 

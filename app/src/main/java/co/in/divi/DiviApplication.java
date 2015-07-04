@@ -10,6 +10,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.LruBitmapCache;
 import com.android.volley.toolbox.Volley;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 
@@ -54,6 +56,7 @@ public class DiviApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Fabric.with(this, new Crashlytics());
 
 		// error logging (if NOT playstore app)
 //        if(!Config.IS_PLAYSTORE_APP)

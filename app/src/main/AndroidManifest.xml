@@ -217,6 +217,9 @@
             android:excludeFromRecents="true"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0d58d4ba71646415d74f09c8cbbc4d55737c4909" />
     </application>
 
 </manifest>
