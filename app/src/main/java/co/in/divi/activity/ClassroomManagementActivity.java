@@ -25,7 +25,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.google.gson.Gson;
@@ -46,6 +45,7 @@ import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 public class ClassroomManagementActivity extends BaseActivity {
 

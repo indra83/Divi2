@@ -1,9 +1,5 @@
 package co.in.divi.ui;
 
-import java.util.HashMap;
-
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -20,6 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import co.in.divi.DiviApplication;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
@@ -32,15 +41,7 @@ import co.in.divi.model.ClassMembers.ClassMember;
 import co.in.divi.model.StudentScores;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
-
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 public class StudentScorecard extends LinearLayout {
 	private static final String			TAG	= StudentScorecard.class.getSimpleName();

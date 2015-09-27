@@ -3,25 +3,21 @@ package co.in.divi.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.transition.Fade;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
@@ -36,6 +32,7 @@ import co.in.divi.activity.DiaryReportActivity;
 import co.in.divi.diary.DiaryEntry;
 import co.in.divi.model.ClassMembers;
 import co.in.divi.util.ServerConfig;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 /**
  * Created by Indra on 4/13/2015.

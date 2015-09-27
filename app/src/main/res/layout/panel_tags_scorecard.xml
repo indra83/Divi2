@@ -38,7 +38,7 @@
                     android:background="@drawable/bg_scorecard_summary_top"
                     android:orientation="horizontal" >
 
-                    <com.android.volley.toolbox.FadeInNetworkImageView
+                    <co.in.divi.util.image.FadeInNetworkImageView
                         android:id="@+id/profile_pic"
                         android:layout_width="100dp"
                         android:layout_height="100dp"

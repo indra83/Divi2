@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
@@ -52,6 +51,7 @@ import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 public class UserDataPopup extends BaseDialogFragment {
     private static final String TAG = UserDataPopup.class.getSimpleName();

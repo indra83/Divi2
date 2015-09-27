@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
@@ -27,10 +25,10 @@ import org.json.JSONObject;
 import co.in.divi.BaseActivity;
 import co.in.divi.DiviApplication;
 import co.in.divi.R;
-import co.in.divi.UserSessionProvider;
 import co.in.divi.diary.DiaryEntry;
 import co.in.divi.model.ClassMembers;
 import co.in.divi.util.ServerConfig;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 /**
  * Created by Indra on 4/16/2015.

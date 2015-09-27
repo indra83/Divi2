@@ -1,8 +1,5 @@
 package co.in.divi.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,6 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import co.in.divi.DiviApplication;
 import co.in.divi.R;
 import co.in.divi.content.AssessmentFileModel;
@@ -27,9 +30,7 @@ import co.in.divi.db.model.Attempt;
 import co.in.divi.fragment.questions.QuestionFragmentFactory;
 import co.in.divi.util.TextUtil;
 import co.in.divi.util.Util;
-
-import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.google.gson.Gson;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 public class TagsScorecard extends LinearLayout implements View.OnClickListener {
 	private static final String								TAG				= TagsScorecard.class.getSimpleName();

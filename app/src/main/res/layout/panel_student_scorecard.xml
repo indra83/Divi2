@@ -19,7 +19,7 @@
             android:layout_alignParentTop="true"
             android:text="Back" />
 
-        <com.android.volley.toolbox.FadeInNetworkImageView
+        <co.in.divi.util.image.FadeInNetworkImageView
             android:id="@+id/profile_pic"
             android:layout_width="120dp"
             android:layout_height="120dp"

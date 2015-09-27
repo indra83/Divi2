@@ -1,17 +1,7 @@
 package co.in.divi.lecture;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONObject;
-
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -32,6 +22,24 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider;
 import co.in.divi.LectureSessionProvider.DashboardChangeListener;
@@ -45,7 +53,6 @@ import co.in.divi.content.Book;
 import co.in.divi.content.DatabaseHelper;
 import co.in.divi.content.DiviReference;
 import co.in.divi.content.Node;
-import co.in.divi.content.Topic;
 import co.in.divi.db.model.Attempt;
 import co.in.divi.model.ClassMembers.ClassMember;
 import co.in.divi.model.DashboardData;
@@ -59,18 +66,7 @@ import co.in.divi.util.Config;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.TextUtil;
 import co.in.divi.util.Util;
-import co.in.divi.vms.common.Challenge;
-import co.in.divi.vms.common.ChallengeXmlParser;
-import co.in.divi.vms.common.VMChallenges;
-
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
+import co.in.divi.util.image.FadeInNetworkImageView;
 
 public class DashboardDialog extends Dialog implements DashboardChangeListener, LectureStatusChangeListener {
 
