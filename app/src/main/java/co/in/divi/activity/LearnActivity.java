@@ -2,7 +2,6 @@ package co.in.divi.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -48,6 +47,7 @@ import co.in.divi.DiviApplication;
 import co.in.divi.LectureSessionProvider.FollowMeListener;
 import co.in.divi.Location;
 import co.in.divi.R;
+import co.in.divi.apps.AppLauncher;
 import co.in.divi.content.Book;
 import co.in.divi.content.DatabaseHelper;
 import co.in.divi.content.DiviReference;
@@ -66,7 +66,6 @@ import co.in.divi.fragment.HeaderFragment;
 import co.in.divi.fragment.LessonPlanFragment;
 import co.in.divi.fragment.TopicPageFragment;
 import co.in.divi.ui.RecyclingImageView;
-import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Util;
 import co.in.divi.util.image.ImageCache.ImageCacheParams;
@@ -534,6 +533,7 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 				if (app.id.equals(resourceId)) {
 					if (LogConfig.DEBUG_ACTIVITIES)
                         Log.d(TAG, "Opening app:" + app.src);
+					/*
 					if (Util.isAppExists(getPackageManager(), app.appPackage, app.appVersionCode)) {
 						// app exists, open app
 						Intent intent;
@@ -543,17 +543,6 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
 						} else {
 							intent = getPackageManager().getLaunchIntentForPackage(app.appPackage);
 						}
-//						intent.putExtra("UID", userSessionProvider.getUserData().uid);
-//						intent.putExtra("COURSE_ID", getDisplayedTopic().courseId);
-//						intent.putExtra("BOOK_ID", getDisplayedTopic().bookId);
-//						intent.putExtra("TOPIC_ID", getDisplayedTopic().id);
-//						intent.putExtra("VM_ID", app.id);
-//						intent.putExtra("VM_ACTIVITY", app.appActivityName);
-//						intent.putExtra(
-//								"BREADCRUMB",
-//								Breadcrumb.get(userSessionProvider.getCourseName(), currentBook.name, getDisplayedTopic().parentName,
-//										getDisplayedTopic().name, vm.title).getBreadcrumbArray());
-						// intent.putExtra("FRAGMENT", fragment);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK
 								| Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 						startActivity(intent);
@@ -575,6 +564,8 @@ public class LearnActivity extends BaseActivity implements FollowMeListener {
                             }
                         }
                     }
+                    */
+					AppLauncher.launchApp(getApplicationContext(),app.appPackage,app.appVersionCode,app.appActivityName);
 					return;
 				}
 			}

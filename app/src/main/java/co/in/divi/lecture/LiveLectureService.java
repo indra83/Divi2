@@ -60,6 +60,7 @@ import co.in.divi.SyncManager.SyncStatus;
 import co.in.divi.UserSessionProvider;
 import co.in.divi.activity.BlackoutActivity;
 import co.in.divi.activity.InstructionNotificationActivity;
+import co.in.divi.apps.AppLauncher;
 import co.in.divi.content.DiviReference;
 import co.in.divi.db.UserDBContract.Attempts;
 import co.in.divi.db.sync.SyncDownService;
@@ -68,7 +69,6 @@ import co.in.divi.model.Instruction;
 import co.in.divi.model.LectureInstruction;
 import co.in.divi.ui.TeacherPanel;
 import co.in.divi.util.Config;
-import co.in.divi.util.InstallAppService;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.ServerConfig;
 import co.in.divi.util.Util;
@@ -882,6 +882,7 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
 				if (uri != null)
 					Util.openInstruction(LiveLectureService.this, uri);
 				else {
+					/*
 					try {
 						Intent intent = getPackageManager().getLaunchIntentForPackage(externalAppPackageName);
                         if (intent != null) {
@@ -900,6 +901,8 @@ public class LiveLectureService extends Service implements DiviLocationChangeLis
                         installerIntent.putExtra(InstallAppService.INTENT_EXTRA_PACKAGE, externalAppPackageName);
                         startService(installerIntent);
                     }
+                    */
+					AppLauncher.launchApp(getApplicationContext(), externalAppPackageName, 0, null);
 				}
 			}
 		});

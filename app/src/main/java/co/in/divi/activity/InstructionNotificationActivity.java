@@ -1,8 +1,5 @@
 package co.in.divi.activity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,13 +13,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import co.in.divi.AlarmAlertWakeLock;
 import co.in.divi.Location;
 import co.in.divi.LocationManager;
 import co.in.divi.R;
+import co.in.divi.apps.AppLauncher;
 import co.in.divi.util.Config;
-import co.in.divi.util.InstallAppService;
 import co.in.divi.util.LogConfig;
 import co.in.divi.util.Util;
 
@@ -164,6 +164,7 @@ public class InstructionNotificationActivity extends Activity {
 		} else {
 			AlarmAlertWakeLock.releaseCpuLock();
 			if (getIntent().hasExtra(INTENT_EXTRA_EXTERNAL_APP)) {
+				/*
 				try {
 					Intent intent = getPackageManager().getLaunchIntentForPackage(getIntent().getStringExtra(INTENT_EXTRA_EXTERNAL_APP));
 					if (intent != null) {
@@ -179,6 +180,8 @@ public class InstructionNotificationActivity extends Activity {
 				} catch (Exception e) {
 					Toast.makeText(this, "Shared app not found on your tablet!", Toast.LENGTH_LONG).show();
 				}
+				*/
+				AppLauncher.launchApp(getApplicationContext(),getIntent().getStringExtra(INTENT_EXTRA_EXTERNAL_APP),0,null);
 			} else {
 				Util.openInstruction(InstructionNotificationActivity.this, getIntent().getData());
 			}

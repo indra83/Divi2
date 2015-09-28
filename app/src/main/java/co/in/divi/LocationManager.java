@@ -1,16 +1,18 @@
 package co.in.divi;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import co.in.divi.apps.TopAppProvider;
 import co.in.divi.content.DiviReference;
 import co.in.divi.logs.DiviLog;
 import co.in.divi.logs.LogsRecorderService;
@@ -61,21 +63,29 @@ public class LocationManager {
     public Location getLocation() {
         // IF location 'unknown', fill in the 3pApp details.
         if (Config.ENABLE_EXTERNAL_APP_SHARING && curLocation.getLocationType() == Location.LOCATION_TYPE.UNKNOWN) {
-            ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-            PackageManager pm = context.getPackageManager();
-            List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(10);
-            if (tasks.size() > 0) {
-                String pkgName = tasks.get(0).topActivity.getPackageName();
-                String appName = "n/a";
-                try {
-                    appName = pm.getApplicationLabel(pm.getApplicationInfo(pkgName, PackageManager.GET_META_DATA))
-                            .toString();
-                } catch (PackageManager.NameNotFoundException e) {
-                    Log.w(TAG, "error sharing external app:", e);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // check accessibility service
+                TopAppProvider topAppProvider = TopAppProvider.getInstance();
+                if(topAppProvider.isActive()) {
+                    curLocation.setAppDetails(topAppProvider.getTopAppPackage(), topAppProvider.getTopAppName());
                 }
-                curLocation.setAppDetails(pkgName, appName);
-            } else {
-                Log.w(TAG, "error getting app details");
+            }else {
+                ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                PackageManager pm = context.getPackageManager();
+                List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(10);
+                if (tasks.size() > 0) {
+                    String pkgName = tasks.get(0).topActivity.getPackageName();
+                    String appName = "n/a";
+                    try {
+                        appName = pm.getApplicationLabel(pm.getApplicationInfo(pkgName, PackageManager.GET_META_DATA))
+                                .toString();
+                    } catch (PackageManager.NameNotFoundException e) {
+                        Log.w(TAG, "error sharing external app:", e);
+                    }
+                    curLocation.setAppDetails(pkgName, appName);
+                } else {
+                    Log.w(TAG, "error getting app details");
+                }
             }
         }
         return curLocation;

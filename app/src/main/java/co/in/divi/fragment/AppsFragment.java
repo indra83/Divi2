@@ -11,7 +11,6 @@ import android.content.Loader;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,8 +32,8 @@ import co.in.divi.LectureSessionProvider;
 import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.R;
 import co.in.divi.UserSessionProvider;
+import co.in.divi.apps.AppLauncher;
 import co.in.divi.content.AllowedAppsProvider.Apps;
-import co.in.divi.util.Config;
 import co.in.divi.util.LogConfig;
 
 public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, LectureStatusChangeListener {
@@ -85,6 +83,7 @@ public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, L
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				App appToOpen = (App) appsAdapter.getItem(position);
+				/*
 				if (appToOpen.appVersionCode > appToOpen.versionCodeInTab) {
                     if (Config.IS_PLAYSTORE_APP) {
                         String appUrl = "market://details?id=" + appToOpen.appPackage;
@@ -102,6 +101,8 @@ public class AppsFragment extends Fragment implements LoaderCallbacks<Cursor>, L
 					Log.d(TAG, "got intent:" + intent.toUri(0));
 					startActivity(intent);
 				}
+				*/
+				AppLauncher.launchApp(getActivity(), appToOpen.appPackage, appToOpen.appVersionCode, null);
 			}
 		});
 		// listen for broadcasts and refresh list
