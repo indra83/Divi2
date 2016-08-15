@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import co.in.divi.util.InstallAppService;
@@ -22,6 +23,7 @@ public class AppLauncher {
     private static final String INTENT_EXTRA_ACTIVITY = "INTENT_EXTRA_ACTIVITY";
 
     public static final void launchApp(Context context, String pkgName, int versionCode, String activityName) {
+        Log.d(TAG, "launch App: " + pkgName + " - " + versionCode + " - " + activityName);
         // 1. App doesn't exist/outdated, launch install process.
         PackageManager pm = context.getPackageManager();
         if (!Util.isAppExists(pm, pkgName, versionCode)) {
@@ -37,6 +39,7 @@ public class AppLauncher {
             i.putExtra(INTENT_EXTRA_ACTIVITY, activityName);
         for (ResolveInfo resolveInfo : pm.queryBroadcastReceivers(i, PackageManager.MATCH_DEFAULT_ONLY)) {
             if (resolveInfo.activityInfo.packageName.equals(LOLLIPOP_LAUNCHER)) {
+                Log.d(TAG, "before broadcast");
                 context.sendBroadcast(i);
                 return;
             }
@@ -53,6 +56,20 @@ public class AppLauncher {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         context.startActivity(intent);
+    }
+
+    public static final void clearAllApps(Context context) {
+        // for blackout
+        PackageManager pm = context.getPackageManager();
+        Intent i = new Intent();
+        i.setAction(LAUNCH_ACTION);
+        for (ResolveInfo resolveInfo : pm.queryBroadcastReceivers(i, PackageManager.MATCH_DEFAULT_ONLY)) {
+            if (resolveInfo.activityInfo.packageName.equals(LOLLIPOP_LAUNCHER)) {
+                Log.d(TAG, "before blackout");
+                context.sendBroadcast(i);
+                return;
+            }
+        }
     }
 
     public static final void beginInstall(Context context, String pkgName) {

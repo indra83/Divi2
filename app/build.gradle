@@ -64,8 +64,8 @@ android {
 
         demo {
             applicationId "co.in.divi"
-            versionName "v2.7.0 (demo)"
-            versionCode 270
+            versionName "v2.7.2 (demo, L)"
+            versionCode 272
 
             buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
 //            buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-dev.herokuapp.com/v2\""
@@ -108,7 +108,7 @@ dependencies {
 //    ccTeacherCompile 'com.google.android.gms:play-services:6.1.+'
 
     compile 'com.commit451:PhotoView:1.2.4'
-    compile 'com.android.support:support-v13:21.0.3'
+    compile 'com.android.support:support-v13:23.0+'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'

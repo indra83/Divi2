@@ -7,6 +7,7 @@ import co.in.divi.LectureSessionProvider.LectureStatusChangeListener;
 import co.in.divi.Location;
 import co.in.divi.LocationManager;
 import co.in.divi.R;
+import co.in.divi.apps.AppLauncher;
 import co.in.divi.fragment.HeaderFragment;
 
 public class BlackoutActivity extends BaseActivity implements LectureStatusChangeListener {
@@ -22,6 +23,7 @@ public class BlackoutActivity extends BaseActivity implements LectureStatusChang
 	@Override
 	protected void onStart() {
 		super.onStart();
+		AppLauncher.clearAllApps(getApplicationContext());
 	}
 
 	@Override
