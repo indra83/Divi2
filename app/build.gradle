@@ -48,8 +48,8 @@ android {
 
         prod {
             applicationId "co.in.divi"
-            versionName "v2.6.9  (prod)"
-            versionCode 269
+            versionName "v2.7.3  (prod, L)"
+            versionCode 273
 
             buildConfigField STRING, "SERVER_ENDPOINT", "\"http://divi-service.herokuapp.com/v2\""
         }
