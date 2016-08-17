@@ -1,11 +1,5 @@
 package co.in.divi.fragment;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,11 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.URI;
+
 import co.in.divi.R;
 import co.in.divi.activity.LearnActivity;
 import co.in.divi.content.DiviReference;
@@ -78,14 +77,14 @@ public class TopicPageFragment extends Fragment implements TopicWebViewListener 
 		webView = (TopicWebView) rootView.findViewById(R.id.webView);
 		webView.setListener(this);
 		webView.addJavascriptInterface(new MainWindow(), "MainWindow");
-		if (LogConfig.DEBUG_ACTIVITIES) {
-			webView.setWebChromeClient(new WebChromeClient() {
-				public boolean onConsoleMessage(ConsoleMessage cm) {
-					Log.d(TAG, cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-					return true;
-				}
-			});
-		}
+//		if (LogConfig.DEBUG_ACTIVITIES) {
+//			webView.setWebChromeClient(new WebChromeClient() {
+//				public boolean onConsoleMessage(ConsoleMessage cm) {
+//					Log.d(TAG, cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
+//					return true;
+//				}
+//			});
+//		}
 		webView.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
