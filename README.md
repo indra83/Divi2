@@ -3,6 +3,8 @@ Opening up the codebase since the company shutdown...
 Not bothering documenting( or licensing), check out this [video](https://www.youtube.com/watch?v=2iK9bW1d3lg) to get an idea of the product.
 Reach out to @indra83 in case you have a use for this.
 
+[![Divi product video](https://img.youtube.com/vi/2iK9bW1d3lg/0.jpg)](https://www.youtube.com/watch?v=2iK9bW1d3lg)
+
 ## Brief about our company:
 Divi Learning Solutions is an education technology company based out of Bangalore, India. Our mission is to revolutionize content consumption, learning & training using tablets/mobile devices. Our products help students learn and educators teach better in classrooms - using personal tablets and Wi-Fi systems.
 
